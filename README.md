@@ -27,6 +27,9 @@ individual paper repos.
 
 The datasets here were consolidated from several independent research codebases, deduplicated where
 the same dataset appeared in multiple sources, and reorganized by **task** rather than by source paper.
+Every dataset is stored as a single unified format — **CSV** — chosen because it's what the
+streaming-ML ecosystem (River's `stream.iter_csv`, MOA, scikit-multiflow's `FileStream`) actually
+consumes row-by-row, unlike batch/columnar formats.
 
 ## 📂 Structure
 
@@ -35,32 +38,33 @@ StreamArena/
 ├── assets/
 │   └── streamarena_logo.png
 ├── datasets/                 # downloaded via download.py, not committed to git
-│   ├── classification/       # drift-labeled synthetic streams + real-world streams
-│   ├── regression/           # streaming/tabular regression sets (.arff)
-│   ├── clustering/           # streaming clustering sets (reuses classification streams + synthetic blobs)
-│   └── anomaly_detection/    # ODDS/ADBench-style outlier detection sets (.npz)
+│   ├── classification/
+│   │   ├── real/              # real-world streams (electricity, forest cover, airlines, ...)
+│   │   └── synth/              # synthetic drift generators (SEA, RBF, Hyperplane, Agrawal, ...)
+│   ├── regression/            # streaming/tabular regression sets
+│   ├── clustering/            # streaming clustering sets
+│   └── anomaly_detection/     # ODDS/ADBench-style outlier detection sets
 ├── examples/
-│   └── load_dataset.py       # minimal loader for each task/file type
+│   └── load_dataset.py       # one loader function for every dataset in the collection
 ├── download.py                # pulls datasets/ from Hugging Face Hub
 └── README.md
 ```
 
 ## 📊 Datasets
 
-| Task | Count | Formats | Notes |
-|---|---:|---|---|
-| **Classification** | 60 files + 12 sub-collections | `.csv`, `.arff` | Includes a 100-file drift-labeled synthetic stream set (`synthetic_streams/`, tagged sudden/gradual/incremental/recurring), classic drift benchmarks (SEA, RBF, Hyperplane, Agrawal), real-world streams (electricity, forest cover, airlines, poker, weather, KDD-99, insects), recurring-concept-drift ensembles (MNIST, Usenet, Gisette, Madelon, Dota, Spambase, RTG), and raw UCI HAR sensor data |
-| **Regression** | 30 files | `.arff` | Streaming/tabular regression sets: Friedman synthetics, housing (king's county, california, miami, brazilian), sensor/physical (sarcos, naval propulsion, superconductivity, kin8nm), and more |
-| **Clustering** | 13 files | `.csv` | Streaming clustering benchmarks — reuses classification drift streams plus a dedicated synthetic blobs set |
-| **Anomaly Detection** | 51 files | `.npz` | ODDS/ADBench-style outlier detection collection (annthyroid, mnist, shuttle, satellite, mammography, etc.) |
+All files are `.csv`. Anomaly-detection files hold feature columns plus a trailing `label` column;
+everything else follows the same feature-columns-plus-target convention.
 
-Each `.npz` anomaly-detection file bundles `X`/`y` arrays. Each `.arff` file is Weka-format and loads
-directly with `scipy.io.arff` or `liac-arff`. Synthetic drift streams are plain CSVs with a trailing
-label column.
+| Task | Count | Notes |
+|---|---:|---|
+| **Classification** | 144 files (23 real + 121 synthetic) | `real/`: electricity, forest cover, airlines, poker, weather, KDD-99, insects, Nomao, MNIST, Usenet, Gisette, Dota, Spambase, HAR, etc. `synth/`: classic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon) plus a 100-file drift-labeled stream set (`synthetic_streams/`, tagged sudden/gradual/incremental/recurring) |
+| **Regression** | 30 files | Friedman synthetics, housing (king's county, california, miami, brazilian), sensor/physical (sarcos, naval propulsion, superconductivity, kin8nm), and more |
+| **Clustering** | 13 files | Streaming clustering benchmarks — reuses classification drift streams plus a dedicated synthetic blobs set |
+| **Anomaly Detection** | 51 files | ODDS/ADBench-style outlier detection collection (annthyroid, mnist, shuttle, satellite, mammography, etc.) |
 
 ## ⚡ Quickstart
 
-Dataset files (~6.7GB) are hosted on the [Hugging Face Hub](https://huggingface.co/datasets/techynilesh/streamarena)
+Dataset files (~5GB) are hosted on the [Hugging Face Hub](https://huggingface.co/datasets/techynilesh/streamarena)
 rather than committed to this repo. Download them first:
 
 ```bash
@@ -69,17 +73,16 @@ python download.py                # download everything into ./datasets
 python download.py classification # or just one task
 ```
 
-Then load any dataset:
+Then load any dataset — it's always just a CSV:
 
 ```python
 import pandas as pd
 
-df = pd.read_csv("datasets/classification/electricity.csv")
+df = pd.read_csv("datasets/classification/real/electricity.csv")
 print(df.shape)
 ```
 
-See [`examples/load_dataset.py`](examples/load_dataset.py) for loaders covering every format in the
-collection (`.csv`, `.arff`, `.npz`, and the raw UCI HAR signal directory).
+See [`examples/load_dataset.py`](examples/load_dataset.py).
 
 ## 🛣️ Roadmap
 
