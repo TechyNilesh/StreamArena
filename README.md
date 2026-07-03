@@ -3,8 +3,6 @@
 
   <p align="center"><strong>A Curated Benchmark Collection for Machine Learning on Streaming Data</strong></p>
 
-  [🤗 Datasets on Hugging Face](https://huggingface.co/datasets/techynilesh/streamarena)
-
   <br/>
 
   ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
