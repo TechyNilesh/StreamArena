@@ -8,3 +8,7 @@ __MACOSX/
 # raw dataset files are hosted on Hugging Face Hub, not in git — see download.py
 datasets/*/
 !datasets/.gitkeep
+
+# per-run benchmark outputs (JSON/CSV) — aggregated results are published separately
+benchmarks/results/
+hs_err_pid*.log

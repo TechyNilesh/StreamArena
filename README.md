@@ -46,9 +46,19 @@ StreamArena/
 │   │   ├── real/               # real-world streams reused from classification
 │   │   └── synth/               # synthetic drift streams + blobs
 │   └── anomaly_detection/     # ODDS/ADBench-style outlier detection sets (all real-world)
+├── benchmarks/               # baseline benchmark harness (CapyMOA) — see BENCHMARK.md
+│   ├── common.py             # shared prequential-evaluation runner
+│   ├── make_jobs.py          # emit per-(algorithm × dataset) jobs for GNU parallel
+│   ├── classification/       # one CLI script per baseline algorithm
+│   ├── regression/
+│   ├── clustering/
+│   └── anomaly_detection/
 ├── examples/
-│   └── load_dataset.py       # one loader function for every dataset in the collection
+│   ├── load_dataset.py       # one loader function for every dataset in the collection
+│   ├── river_usage.py        # run a River model on a StreamArena dataset
+│   └── capymoa_usage.py      # run a CapyMOA model on a StreamArena dataset
 ├── download.py                # pulls datasets/ from Hugging Face Hub
+├── BENCHMARK.md               # evaluation protocol + how to run the baselines
 └── README.md
 ```
 
@@ -102,10 +112,13 @@ import pandas as pd
 from river import metrics, stream, tree
 
 path = "datasets/classification/real/electricity.csv"
-columns = pd.read_csv(path, nrows=0).columns.tolist()
-target = columns[-1]
-converters = {c: float for c in columns if c != target}
-converters[target] = int
+sample = pd.read_csv(path, nrows=100)
+target = sample.columns[-1]
+# Convert only numeric feature columns to float; categorical/string columns
+# (e.g. in adult.csv) pass through as-is — River trees handle them natively.
+converters = {
+    c: float for c in sample.columns[:-1] if pd.api.types.is_numeric_dtype(sample[c])
+}
 
 dataset = stream.iter_csv(path, target=target, converters=converters)
 model = tree.HoeffdingTreeClassifier()
@@ -136,14 +149,30 @@ results = prequential_evaluation(stream, learner)
 print("accuracy:", results.cumulative.accuracy())
 ```
 
-See [`examples/river_capymoa_usage.py`](examples/river_capymoa_usage.py) for the full runnable script.
+See [`examples/river_usage.py`](examples/river_usage.py) and
+[`examples/capymoa_usage.py`](examples/capymoa_usage.py) for the full runnable scripts.
+
+## 🏁 Benchmarks
+
+StreamArena ships a prequential (test-then-train) benchmark harness built on
+[CapyMOA](https://capymoa.org/), with 17 baseline algorithms across the four tasks — one CLI
+script per algorithm so sweeps parallelize trivially on a many-core machine:
+
+```bash
+pip install capymoa scikit-learn pandas
+python3 benchmarks/classification/hoeffding_tree.py --datasets real/electricity   # one run
+python3 benchmarks/make_jobs.py | parallel -j 32                                   # full sweep
+```
+
+See [`BENCHMARK.md`](BENCHMARK.md) for the protocol (metrics per task, seeds, windowed
+evaluation) and the full baseline list.
 
 ## 🛣️ Roadmap
 
-- [ ] Standardized train/test drift-aware splits per dataset
+- [x] Evaluation harness — prequential protocol + per-algorithm runner scripts ([BENCHMARK.md](BENCHMARK.md))
+- [ ] Baseline results for the full dataset × algorithm matrix
+- [ ] Public leaderboard
 - [ ] Unified `StreamArenaDataset` loader API across formats
-- [ ] Reference stream-learning baselines (Hoeffding Tree, ARF, HAT, streaming k-means, HS-Trees, etc.)
-- [ ] Leaderboard + evaluation harness (accuracy/prequential error, ARI, ROC-AUC by task)
 - [ ] Dataset cards documenting drift type, size, and source per dataset
 
 ## 📄 Citation
