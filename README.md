@@ -8,11 +8,8 @@
   <br/>
 
   ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white)
-  ![Pandas](https://img.shields.io/badge/-Pandas-150458?style=flat-square&logo=pandas&logoColor=white)
-  ![NumPy](https://img.shields.io/badge/-NumPy-013243?style=flat-square&logo=numpy&logoColor=white)
   ![Hugging Face](https://img.shields.io/badge/-Hugging%20Face-FFD21E?style=flat-square&logo=huggingface&logoColor=black)
   ![Streaming ML](https://img.shields.io/badge/-Streaming%20ML-0EA5E9?style=flat-square)
-  ![Concept Drift](https://img.shields.io/badge/-Concept%20Drift-8B5CF6?style=flat-square)
   ![Anomaly Detection](https://img.shields.io/badge/-Anomaly%20Detection-EF4444?style=flat-square)
   ![Classification](https://img.shields.io/badge/-Classification-16A34A?style=flat-square)
   ![Regression](https://img.shields.io/badge/-Regression-F59E0B?style=flat-square)
