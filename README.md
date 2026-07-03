@@ -37,11 +37,15 @@ StreamArena/
 │   └── streamarena_logo.png
 ├── datasets/                 # downloaded via download.py, not committed to git
 │   ├── classification/
-│   │   ├── real/              # real-world streams (electricity, forest cover, airlines, ...)
-│   │   └── synth/              # synthetic drift generators (SEA, RBF, Hyperplane, Agrawal, ...)
-│   ├── regression/            # streaming/tabular regression sets
-│   ├── clustering/            # streaming clustering sets
-│   └── anomaly_detection/     # ODDS/ADBench-style outlier detection sets
+│   │   ├── real/               # real-world streams (electricity, forest cover, airlines, ...)
+│   │   └── synth/               # synthetic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon, ...)
+│   ├── regression/
+│   │   ├── real/               # housing, wages, sensor/physical measurements, ...
+│   │   └── synth/               # Friedman & Hyperplane synthetic generators
+│   ├── clustering/
+│   │   ├── real/               # real-world streams reused from classification
+│   │   └── synth/               # synthetic drift streams + blobs
+│   └── anomaly_detection/     # ODDS/ADBench-style outlier detection sets (all real-world)
 ├── examples/
 │   └── load_dataset.py       # one loader function for every dataset in the collection
 ├── download.py                # pulls datasets/ from Hugging Face Hub
@@ -51,14 +55,15 @@ StreamArena/
 ## 📊 Datasets
 
 All files are `.csv`. Anomaly-detection files hold feature columns plus a trailing `label` column;
-everything else follows the same feature-columns-plus-target convention.
+everything else follows the same feature-columns-plus-target convention. Every task except
+anomaly detection (which is entirely real-world benchmark data) is split into `real/` and `synth/`.
 
 | Task | Count | Notes |
 |---|---:|---|
-| **Classification** | 144 files (23 real + 121 synthetic) | `real/`: electricity, forest cover, airlines, poker, weather, KDD-99, insects, Nomao, MNIST, Usenet, Gisette, Dota, Spambase, HAR, etc. `synth/`: classic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon) plus a 100-file drift-labeled stream set (`synthetic_streams/`, tagged sudden/gradual/incremental/recurring) |
-| **Regression** | 30 files | Friedman synthetics, housing (king's county, california, miami, brazilian), sensor/physical (sarcos, naval propulsion, superconductivity, kin8nm), and more |
-| **Clustering** | 13 files | Streaming clustering benchmarks — reuses classification drift streams plus a dedicated synthetic blobs set |
-| **Anomaly Detection** | 51 files | ODDS/ADBench-style outlier detection collection (annthyroid, mnist, shuttle, satellite, mammography, etc.) |
+| **Classification** | 44 files (23 real + 21 synthetic) | `real/`: electricity, forest cover, airlines, poker, weather, KDD-99, insects, Nomao, MNIST, Usenet, Gisette, Dota, Spambase, HAR, etc. `synth/`: classic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon) |
+| **Regression** | 30 files (25 real + 5 synthetic) | `real/`: housing (king's county, california, miami, brazilian), wages, sensor/physical (sarcos, naval propulsion, superconductivity, kin8nm), and more. `synth/`: Friedman & Hyperplane generators |
+| **Clustering** | 13 files (6 real + 7 synthetic) | Streaming clustering benchmarks — reuses classification drift streams plus a dedicated synthetic blobs set |
+| **Anomaly Detection** | 51 files | ODDS/ADBench-style outlier detection collection (annthyroid, mnist, shuttle, satellite, mammography, etc.) — all real-world, no `real/`/`synth/` split |
 
 ## ⚡ Quickstart
 

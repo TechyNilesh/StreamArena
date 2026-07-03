@@ -2,9 +2,9 @@
 
 Layout:
     classification/real/...      classification/synth/...
-    regression/*.csv
-    clustering/*.csv
-    anomaly_detection/*.csv      (feature columns + a trailing `label` column)
+    regression/real/...           regression/synth/...
+    clustering/real/...           clustering/synth/...
+    anomaly_detection/*.csv      (all real-world; feature columns + trailing `label` column)
 """
 
 from pathlib import Path
@@ -25,11 +25,14 @@ if __name__ == "__main__":
     sea = load_csv(DATASETS_ROOT / "classification" / "synth" / "sea_high_abrupt_drift.csv")
     print("classification/synth/sea_high_abrupt_drift.csv:", sea.shape)
 
-    kin8nm = load_csv(DATASETS_ROOT / "regression" / "kin8nm.csv")
-    print("regression/kin8nm.csv:", kin8nm.shape)
+    kin8nm = load_csv(DATASETS_ROOT / "regression" / "real" / "kin8nm.csv")
+    print("regression/real/kin8nm.csv:", kin8nm.shape)
+
+    fried = load_csv(DATASETS_ROOT / "regression" / "synth" / "fried.csv")
+    print("regression/synth/fried.csv:", fried.shape)
 
     cardio = load_csv(DATASETS_ROOT / "anomaly_detection" / "6_cardio.csv")
     print("anomaly_detection/6_cardio.csv:", cardio.shape)
 
-    blobs = load_csv(DATASETS_ROOT / "clustering" / "synthetic_blobs_100k_samples_5features_8clusters.csv")
-    print("clustering/synthetic_blobs_...csv:", blobs.shape)
+    blobs = load_csv(DATASETS_ROOT / "clustering" / "synth" / "synthetic_blobs_100k_samples_5features_8clusters.csv")
+    print("clustering/synth/synthetic_blobs_...csv:", blobs.shape)
