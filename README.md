@@ -25,9 +25,8 @@ It plays the same role for streaming/online ML that [TabArena](https://github.co
 plays for tabular ML: a single place to find curated, ready-to-use datasets instead of hunting through
 individual paper repos.
 
-The datasets here were consolidated from several independent research codebases (see
-[Provenance](#-provenance) below), deduplicated where the same dataset appeared in multiple sources,
-and reorganized by **task** rather than by source paper.
+The datasets here were consolidated from several independent research codebases, deduplicated where
+the same dataset appeared in multiple sources, and reorganized by **task** rather than by source paper.
 
 ## 📂 Structure
 
@@ -81,26 +80,6 @@ print(df.shape)
 
 See [`examples/load_dataset.py`](examples/load_dataset.py) for loaders covering every format in the
 collection (`.csv`, `.arff`, `.npz`, and the raw UCI HAR signal directory).
-
-## 🗃️ Provenance
-
-Datasets were consolidated from the following research codebases. Where the same dataset appeared
-in more than one source (byte-identical), duplicates were dropped and only one copy was kept.
-
-| Source | Contributed |
-|---|---|
-| `SAMLB` | Backbone task split (classification/regression/clustering/anomaly_detection) |
-| `ASML-CLS` | Classification streams (fully overlapped with SAMLB) |
-| `AutoDD` | Real-world streams (weather, poker, spam, rtg) + 100-file labeled synthetic drift set |
-| `AutoDSC` | Real-world streams (pendigits, kdd99, sensor, powersupply) + synthetic blobs family |
-| `Bayesian-Stream-Tuner` | Additional classification/regression `.arff` sets (nomao, sine-drift) |
-| `NOMAD` | Anomaly detection `.npz` collection (fully overlapped with SAMLB) |
-| `Auto-Reg` | Extended regression `.arff` set (superset of SAMLB's regression split) |
-| `SCURFS` | Recurring-concept-drift ensemble benchmarks (MNIST, Usenet, Gisette, Madelon, Dota, Spambase, RTG, KDDCup99) |
-| `ambient-ml-ai` | Raw UCI HAR sensor signals |
-
-> This is currently a **dataset collection**, not yet a runnable benchmark harness (no shared
-> fitting/evaluation code, leaderboard, or standardized splits). See [Roadmap](#-roadmap).
 
 ## 🛣️ Roadmap
 
