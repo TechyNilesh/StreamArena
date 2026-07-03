@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use StreamArena in your research, please cite it as below."
-title: "StreamArena: A Curated Benchmark Collection for Machine Learning on Streaming Data"
+title: "StreamArena: A Living Benchmark for Machine Learning on Streaming Data"
 authors:
   - family-names: "Verma"
     given-names: "Nilesh"

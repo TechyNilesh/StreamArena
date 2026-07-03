@@ -1,7 +1,7 @@
 <div align="center">
   <img src="assets/streamarena_logo.png?v=3" width="600" alt="StreamArena Logo"/>
 
-  <p align="center"><strong>A Curated Benchmark Collection for Machine Learning on Streaming Data</strong></p>
+  <p align="center"><strong>A Living Benchmark for Machine Learning on Streaming Data</strong></p>
 
   <br/>
 
@@ -101,7 +101,7 @@ If you use StreamArena in your research, please cite it as below (see also [CITA
 
 ```bibtex
 @misc{verma2026streamarena,
-  title  = {StreamArena: A Curated Benchmark Collection for Machine Learning on Streaming Data},
+  title  = {StreamArena: A Living Benchmark for Machine Learning on Streaming Data},
   author = {Verma, Nilesh},
   year   = {2026},
   url    = {https://github.com/TechyNilesh/StreamArena}
