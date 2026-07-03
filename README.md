@@ -54,6 +54,10 @@ StreamArena/
 
 ## 📊 Datasets
 
+See [`DATASETS.md`](DATASETS.md) for the full per-dataset table — exact instance/feature/class counts
+computed directly from each file, plus a best-effort source attribution (UCI, OpenML, DELVE, MOA/River
+generators, ODDS/ADBench, etc.) for every dataset.
+
 All files are `.csv`. Anomaly-detection files hold feature columns plus a trailing `label` column;
 everything else follows the same feature-columns-plus-target convention. Every task except
 anomaly detection (which is entirely real-world benchmark data) is split into `real/` and `synth/`.
