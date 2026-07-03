@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.DS_Store
+__MACOSX/
+.venv/
+*.egg-info/
+
+# raw dataset files are hosted on Hugging Face Hub, not in git — see download.py
+datasets/*/
+!datasets/.gitkeep
