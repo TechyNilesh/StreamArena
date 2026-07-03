@@ -2,7 +2,7 @@
 
 Usage:
     python3 benchmarks/clustering/clustream_with_kmeans.py                 # all datasets, default seeds
-    python3 benchmarks/clustering/clustream_with_kmeans.py --datasets synth/synth_blobs_sudden
+    python3 benchmarks/clustering/clustream_with_kmeans.py --datasets synth/synthetic_blobs_100k_samples_5features_8clusters
     python3 benchmarks/clustering/clustream_with_kmeans.py --list
 
 See BENCHMARK.md for the protocol; results land in benchmarks/results/.

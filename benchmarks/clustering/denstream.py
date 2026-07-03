@@ -2,7 +2,7 @@
 
 Usage:
     python3 benchmarks/clustering/denstream.py                 # all datasets, default seeds
-    python3 benchmarks/clustering/denstream.py --datasets synth/synth_blobs_sudden
+    python3 benchmarks/clustering/denstream.py --datasets synth/synthetic_blobs_100k_samples_5features_8clusters
     python3 benchmarks/clustering/denstream.py --list
 
 See BENCHMARK.md for the protocol; results land in benchmarks/results/.
