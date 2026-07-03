@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/streamarena_logo.png" width="600" alt="StreamArena Logo"/>
+  <img src="assets/streamarena_logo.png?v=2" width="600" alt="StreamArena Logo"/>
 
   <p align="center"><strong>A Curated Benchmark Collection for Machine Learning on Streaming Data</strong></p>
 
