@@ -91,6 +91,53 @@ print(df.shape)
 
 See [`examples/load_dataset.py`](examples/load_dataset.py).
 
+### Using it with River or CapyMOA
+
+Since every dataset is plain CSV, it plugs directly into the two most common Python streaming-ML
+libraries — no conversion needed.
+
+```python
+# River
+import pandas as pd
+from river import metrics, stream, tree
+
+path = "datasets/classification/real/electricity.csv"
+columns = pd.read_csv(path, nrows=0).columns.tolist()
+target = columns[-1]
+converters = {c: float for c in columns if c != target}
+converters[target] = int
+
+dataset = stream.iter_csv(path, target=target, converters=converters)
+model = tree.HoeffdingTreeClassifier()
+metric = metrics.Accuracy()
+
+for x, y in dataset:
+    y_pred = model.predict_one(x)
+    model.learn_one(x, y)
+    metric.update(y, y_pred)
+
+print(metric)
+```
+
+```python
+# CapyMOA (requires a working JVM — Java 11+)
+from capymoa.classifier import HoeffdingTree
+from capymoa.evaluation import prequential_evaluation
+from capymoa.stream import stream_from_file
+
+stream = stream_from_file(
+    "datasets/classification/real/electricity.csv",
+    dataset_name="Electricity",
+    class_index=-1,       # StreamArena's convention: label is the trailing column
+    target_type="categorical",
+)
+learner = HoeffdingTree(schema=stream.get_schema())
+results = prequential_evaluation(stream, learner)
+print("accuracy:", results.cumulative.accuracy())
+```
+
+See [`examples/river_capymoa_usage.py`](examples/river_capymoa_usage.py) for the full runnable script.
+
 ## 🛣️ Roadmap
 
 - [ ] Standardized train/test drift-aware splits per dataset
