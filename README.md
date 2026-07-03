@@ -91,8 +91,18 @@ collection (`.csv`, `.arff`, `.npz`, and the raw UCI HAR signal directory).
 
 ## 📄 Citation
 
-A citation entry will be added once StreamArena has an accompanying paper. Until then, please cite
-the original dataset sources where applicable.
+If you use StreamArena in your research, please cite it as below (see also [CITATION.cff](CITATION.cff)):
+
+```bibtex
+@misc{verma2026streamarena,
+  title  = {StreamArena: A Curated Benchmark Collection for Machine Learning on Streaming Data},
+  author = {Verma, Nilesh},
+  year   = {2026},
+  url    = {https://github.com/TechyNilesh/StreamArena}
+}
+```
+
+Please also cite the original dataset sources where applicable.
 
 ## 📜 License
 
