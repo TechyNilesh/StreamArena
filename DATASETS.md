@@ -97,7 +97,7 @@ The `Source` column gives a best-effort attribution to each dataset's original p
 | Dataset | #Instances | #Features | Target | Source |
 |---|---|---|---|---|
 | FriedmanGra | 100,000 | 10 | target | River [montiel2021] — FriedmanDrift (global recurring abrupt) |
-| FriedmanGsg | 99,972 | 10 | target | River [montiel2021] — FriedmanDrift (global slow gradual) |
+| FriedmanGsg | 99,971 | 10 | target | River [montiel2021] — FriedmanDrift (global slow gradual) |
 | FriedmanLea | 100,000 | 10 | target | River [montiel2021] — FriedmanDrift (local expanding abrupt) |
 | fried | 40,768 | 10 | target | Friedman [friedman1991] |
 | hyperA | 500,000 | 10 | target | MOA/River [bifet2010][montiel2021] — Hyperplane (regression) |
