@@ -46,7 +46,6 @@ The `Source` column gives a best-effort attribution to each dataset's original p
 | hyperplane_high_gradual_drift | 500,000 | 10 | 2 | MOA/River [bifet2010][montiel2021] — Hyperplane |
 | movingRBF | 200,000 | 10 | 5 | MOA [bifet2010] — Moving RandomRBF |
 | moving_squares | 200,000 | 2 | 4 | MOA [bifet2010] — Moving Squares |
-| rtg | 100,000 | 30 | 5 | MOA [bifet2010] — RandomTreeGenerator |
 | sea_high_abrupt_drift | 500,000 | 3 | 2 | Street & Kim [street2001] — SEA generator |
 | sea_high_mixed_drift | 500,000 | 3 | 2 | Street & Kim [street2001] — SEA generator |
 | sine_stream_with_drift | 50,000 | 4 | 2 | MOA/River [bifet2010][montiel2021] — Sine |

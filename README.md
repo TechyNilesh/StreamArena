@@ -74,7 +74,7 @@ anomaly detection (which is entirely real-world benchmark data) is split into `r
 
 | Task | Count | Notes |
 |---|---:|---|
-| **Classification** | 44 files (23 real + 21 synthetic) | `real/`: electricity, forest cover, airlines, poker, weather, KDD-99, insects, Nomao, MNIST, Usenet, Gisette, Dota, Spambase, HAR, etc. `synth/`: classic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon) |
+| **Classification** | 43 files (23 real + 20 synthetic) | `real/`: electricity, forest cover, airlines, poker, weather, KDD-99, insects, Nomao, MNIST, Usenet, Gisette, Dota, Spambase, HAR, etc. `synth/`: classic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon) |
 | **Regression** | 30 files (25 real + 5 synthetic) | `real/`: housing (king's county, california, miami, brazilian), wages, sensor/physical (sarcos, naval propulsion, superconductivity, kin8nm), and more. `synth/`: Friedman & Hyperplane generators |
 | **Clustering** | 13 files (6 real + 7 synthetic) | Streaming clustering benchmarks — reuses classification drift streams plus a dedicated synthetic blobs set |
 | **Anomaly Detection** | 51 files | ODDS/ADBench-style outlier detection collection (annthyroid, mnist, shuttle, satellite, mammography, etc.) — all real-world, no `real/`/`synth/` split |
