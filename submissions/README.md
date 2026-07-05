@@ -30,20 +30,36 @@ One JSON file per (dataset, seed) run:
   },
   "wallclock_s": 41.2,
   "cpu_time_s": 39.8,
+  "hyperparameters": {
+    "grace_period": 200,
+    "split_confidence": 1e-7,
+    "ensemble_size": 100,
+    "_defaults": "mycooltree 1.2.0 defaults unless listed"
+  },
   "submission": {
     "author": "Jane Doe",
     "contact_or_repo": "https://github.com/janedoe/mycooltree",
     "paper": "https://arxiv.org/abs/...",
     "library_versions": {"capymoa": "0.13.0"},
     "dataset_revision": "techynilesh/streamarena@main",
-    "notes": "default hyperparameters"
+    "notes": "anything the fields above don't capture"
   }
 }
 ```
 
 Required fields: `task`, `algorithm`, `dataset`, `seed`, `metrics`, `wallclock_s`,
-and a `submission` block with at least `author` and `contact_or_repo`.
-The `submission` block is what marks your rows with the *community* badge.
+`hyperparameters`, and a `submission` block with at least `author` and
+`contact_or_repo`. The `submission` block is what marks your rows with the
+*community* badge.
+
+**`hyperparameters`** is a machine-readable object documenting the single
+configuration used across all datasets of the task (the protocol forbids
+per-dataset tuning, so there is exactly one). List every parameter you set
+explicitly as `name: value`; parameters left at library defaults may be
+summarized with the `_defaults` key naming the library and version whose
+defaults apply (e.g. `"capymoa 0.13.0 defaults"`). If you ran pure defaults,
+`{"_defaults": "capymoa 0.13.0 defaults"}` is a complete, valid value —
+but the field itself must be present so reproducibility is never ambiguous.
 
 `metrics` must contain the task's metrics:
 

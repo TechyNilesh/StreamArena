@@ -27,11 +27,17 @@ def check(path):
     except json.JSONDecodeError as e:
         return [f"invalid JSON: {e}"]
 
-    for field in ("task", "algorithm", "dataset", "seed", "metrics", "wallclock_s", "submission"):
+    for field in ("task", "algorithm", "dataset", "seed", "metrics", "wallclock_s", "submission", "hyperparameters"):
         if field not in record:
             errors.append(f"missing field '{field}'")
     if errors:
         return errors
+
+    if not isinstance(record["hyperparameters"], dict) or not record["hyperparameters"]:
+        errors.append(
+            "hyperparameters must be a non-empty object — list set parameters as "
+            'name: value, or {"_defaults": "<library+version> defaults"} for pure defaults'
+        )
 
     task = record["task"]
     if task not in TASK_METRICS:

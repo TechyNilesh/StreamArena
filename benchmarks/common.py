@@ -156,6 +156,10 @@ def _run_one(task, csv_path, key, make_learner, seed, window, max_instances):
     )
     learner = make_learner(stream.get_schema(), seed)
     extras = {"capymoa_version": capymoa.__version__, "learner": str(learner)}
+    try:  # record the full MOA option string so the exact configuration is reproducible
+        extras["learner_config"] = str(learner.moa_learner.getOptions().getAsCLIString())
+    except Exception:
+        extras["learner_config"] = None
 
     if task == "clustering":
         metrics, windowed_df, timing = _run_clustering(stream, learner, window, max_instances)
