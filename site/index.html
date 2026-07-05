@@ -6,6 +6,7 @@
 <title>StreamArena Leaderboard</title>
 <meta name="description" content="A living benchmark for machine learning on streaming data — prequential evaluation of stream learners across classification, regression, clustering, and anomaly detection.">
 <link rel="icon" type="image/png" href="streamarena_logo.png">
+<script>try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
@@ -24,8 +25,19 @@
   --body: system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
 }
+:root[data-theme="dark"] {
+  --bg: #0F1A20;
+  --surface: #16242C;
+  --ink: #E8EEF1;
+  --muted: #93A5AE;
+  --line: #26363F;
+  --accent: #2FB8C3;
+  --accent-ink: #7ADCE4;
+  --clay: #D98B68;
+  --sand: #4A4034;
+}
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0F1A20;
     --surface: #16242C;
     --ink: #E8EEF1;
@@ -86,6 +98,17 @@ a.chip:hover { text-decoration: none; border-color: var(--accent); }
   fill: none; stroke: currentColor; stroke-width: 2;
   stroke-linecap: round; stroke-linejoin: round;
 }
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--surface);
+  color: var(--muted); cursor: pointer; flex: none;
+}
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+.theme-toggle .icon { width: 16px; height: 16px; }
+.icon-moon { display: none; }
+.theme-dark .icon-moon { display: block; }
+.theme-dark .icon-sun { display: none; }
 
 /* ---------- tabs ---------- */
 nav.tabs {
@@ -159,6 +182,21 @@ footer.colophon a { color: var(--accent-ink); }
   .howto dl { grid-template-columns: 1fr; gap: 2px; }
   .howto dd { margin-bottom: 8px; }
 }
+
+/* ---------- mobile ---------- */
+@media (max-width: 720px) {
+  header { padding-top: 26px; }
+  .topbar { justify-content: center; }
+  .logo { max-width: min(260px, 86vw); }
+  .hdr-links { gap: 12px; font-size: .88rem; justify-content: center; }
+  th.fp-col, td.fp { display: none; }   /* rank strips need width; hidden on phones */
+  table.board { min-width: 540px; }
+  table.board th, table.board td { padding: 8px 9px; }
+  nav.tabs button { padding: 10px 10px 9px; }
+  .stream-line { margin: 8px auto 14px; }
+  .tagline, .protocol { text-align: center; }
+  .chips { justify-content: center; }
+}
 </style>
 </head>
 <body>
@@ -178,6 +216,10 @@ footer.colophon a { color: var(--accent-ink); }
       <a class="cta" href="https://github.com/TechyNilesh/StreamArena/blob/main/submissions/README.md">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
         Submit results</a>
+      <button class="theme-toggle" type="button" aria-label="Switch theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      </button>
     </nav>
   </div>
   <svg class="stream-line" viewBox="0 0 420 12" aria-hidden="true" preserveAspectRatio="none">
@@ -225,6 +267,19 @@ footer.colophon a { color: var(--accent-ink); }
 </main>
 
 <script>
+// theme toggle — manual choice persists and overrides the system preference
+const rootEl = document.documentElement;
+const themeBtn = document.querySelector(".theme-toggle");
+const isDark = () =>
+  (rootEl.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark";
+const paintToggle = () => themeBtn.classList.toggle("theme-dark", !isDark()); // icon shows the theme you switch to
+themeBtn.addEventListener("click", () => {
+  rootEl.dataset.theme = isDark() ? "light" : "dark";
+  try { localStorage.setItem("theme", rootEl.dataset.theme); } catch (e) {}
+  paintToggle();
+});
+paintToggle();
+
 const ICON = p => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
 const TASK_META = {
   classification: { label: "Classification", icon: ICON('<path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"/><rect x="3" y="14" width="7" height="7" rx="1"/><circle cx="17.5" cy="17.5" r="3.5"/>') },
@@ -288,6 +343,7 @@ function renderBoard() {
   for (const col of cols) {
     const th = document.createElement("th");
     th.textContent = col.label;
+    if (col.key === "_fp") th.classList.add("fp-col");
     if (col.nosort) th.dataset.nosort = "";
     else {
       if (col.key === state.sortKey) th.innerHTML += ` <span class="dir">${state.sortAsc ? "▲" : "▼"}</span>`;
