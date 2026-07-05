@@ -1,0 +1,63 @@
+name: leaderboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "leaderboard/data/**"
+      - "submissions/**"
+      - "site/**"
+      - "benchmarks/aggregate.py"
+      - ".github/workflows/leaderboard.yml"
+  pull_request:
+    paths:
+      - "submissions/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate submissions
+        run: python3 benchmarks/validate_submission.py submissions/
+
+  build-and-deploy:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate any submissions
+        run: python3 benchmarks/validate_submission.py submissions/
+      - name: Build leaderboard
+        run: |
+          mkdir -p _site
+          cd benchmarks
+          python3 aggregate.py \
+            --results-dir /nonexistent \
+            --packed ../leaderboard/data/baseline_runs.json \
+            --submissions ../submissions \
+            --out ../_site/LEADERBOARD.md \
+            --json ../_site/leaderboard.json
+          cp ../site/index.html ../_site/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

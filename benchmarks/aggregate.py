@@ -12,6 +12,7 @@ Usage:
 
 import argparse
 import json
+import math
 import statistics
 from collections import defaultdict
 from pathlib import Path
@@ -68,7 +69,7 @@ def load_runs(results_dir=None, packed=None, submissions=None):
 
 def seed_mean(records, metric):
     values = [r["metrics"].get(metric) for r in records]
-    values = [v for v in values if v is not None]
+    values = [v for v in values if v is not None and math.isfinite(v)]
     return statistics.mean(values) if values else None
 
 
@@ -82,7 +83,9 @@ def rank_table(task_runs, spec):
     scores = defaultdict(dict)  # {dataset: {algorithm: value}} for the rank metric
     display_values = defaultdict(lambda: defaultdict(list))  # {algo: {display_metric: [values]}}
     wallclock = defaultdict(list)
+    submitted = defaultdict(bool)  # community submissions carry a "submission" block
     for (algorithm, dataset), records in task_runs.items():
+        submitted[algorithm] |= any("submission" in r for r in records)
         value = seed_mean(records, metric)
         if value is not None:
             scores[dataset][algorithm] = value
@@ -110,6 +113,7 @@ def rank_table(task_runs, spec):
             "wins": wins[algorithm],
             "n_datasets": len(algo_ranks),
             "total_wallclock_h": sum(wallclock[algorithm]) / 3600,
+            "submitted": submitted[algorithm],
         }
         for dmetric, agg, _ in spec["display"]:
             values = display_values[algorithm][dmetric]
@@ -219,8 +223,17 @@ def write_json(runs, out_path):
             "summary": summary,
             "per_dataset": {d: scores[d] for d in sorted(scores)},
         }
+    def no_nan(value):  # JSON.parse rejects Python's NaN/Infinity literals
+        if isinstance(value, float) and not math.isfinite(value):
+            return None
+        if isinstance(value, dict):
+            return {k: no_nan(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [no_nan(v) for v in value]
+        return value
+
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(data, indent=1))
+    out_path.write_text(json.dumps(no_nan(data), indent=1))
     print(f"Wrote {out_path}")
 
 

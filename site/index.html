@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StreamArena Leaderboard</title>
+<meta name="description" content="A living benchmark for machine learning on streaming data — prequential evaluation of stream learners across classification, regression, clustering, and anomaly detection.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F9FA;
+  --surface: #FFFFFF;
+  --ink: #17242D;
+  --muted: #5C6B73;
+  --line: #DCE3E7;
+  --accent: #0E7C86;
+  --accent-ink: #0A5A61;
+  --clay: #C96F4A;
+  --sand: #E4D5C3;
+  --display: "Sora", system-ui, sans-serif;
+  --body: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0F1A20;
+    --surface: #16242C;
+    --ink: #E8EEF1;
+    --muted: #93A5AE;
+    --line: #26363F;
+    --accent: #2FB8C3;
+    --accent-ink: #7ADCE4;
+    --clay: #D98B68;
+    --sand: #4A4034;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); line-height: 1.55;
+  font-size: 16px;
+}
+a { color: var(--accent-ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+/* ---------- header ---------- */
+header { padding: 44px 0 0; }
+.wordmark {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(1.9rem, 5vw, 2.8rem); letter-spacing: -0.02em;
+}
+.wordmark .arena { color: var(--accent); }
+.stream-line { display: block; margin: 6px 0 18px; width: min(420px, 100%); height: 12px; }
+.stream-line path {
+  fill: none; stroke: var(--accent); stroke-width: 2;
+  stroke-dasharray: 6 7; opacity: .75;
+  animation: flow 14s linear infinite;
+}
+@keyframes flow { to { stroke-dashoffset: -260; } }
+@media (prefers-reduced-motion: reduce) { .stream-line path { animation: none; } }
+.tagline { font-size: 1.05rem; max-width: 56ch; }
+.protocol {
+  margin-top: 10px; color: var(--muted); font-size: .88rem;
+  font-family: var(--mono);
+}
+.hdr-links { margin: 20px 0 0; display: flex; gap: 18px; flex-wrap: wrap; font-size: .92rem; }
+.hdr-links a.cta {
+  border: 1px solid var(--accent); color: var(--accent-ink);
+  padding: 5px 14px; border-radius: 999px;
+}
+.hdr-links a.cta:hover { background: var(--accent); color: var(--bg); text-decoration: none; }
+.hdr-links a { padding: 5px 0; }
+
+/* ---------- tabs ---------- */
+nav.tabs {
+  display: flex; gap: 4px; margin: 34px 0 0; border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+}
+nav.tabs button {
+  font: 600 .92rem var(--display); color: var(--muted);
+  background: none; border: none; border-bottom: 2px solid transparent;
+  padding: 10px 14px 9px; cursor: pointer; white-space: nowrap;
+}
+nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+nav.tabs button:hover { color: var(--ink); }
+
+/* ---------- board ---------- */
+.task-meta { margin: 18px 0 14px; color: var(--muted); font-size: .9rem; }
+.task-meta code { font-family: var(--mono); color: var(--ink); }
+.board-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table.board { border-collapse: collapse; width: 100%; min-width: 760px; }
+table.board th, table.board td { padding: 9px 12px; text-align: right; white-space: nowrap; }
+table.board th:nth-child(2), table.board td:nth-child(2) { text-align: left; }
+table.board thead th {
+  font: 600 .74rem var(--body); text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); border-bottom: 1px solid var(--line);
+  cursor: pointer; user-select: none;
+}
+table.board thead th[data-nosort] { cursor: default; }
+table.board thead th .dir { color: var(--accent); }
+table.board tbody tr { border-bottom: 1px solid var(--line); }
+table.board tbody tr:last-child { border-bottom: none; }
+table.board tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+td.num, td.rankcell { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .92rem; }
+td.rankcell { font-weight: 700; }
+td.algo { font-weight: 600; }
+td.algo .submitted {
+  font: 400 .7rem var(--body); color: var(--accent-ink);
+  border: 1px solid var(--accent); border-radius: 999px; padding: 1px 7px; margin-left: 8px;
+  vertical-align: 2px;
+}
+
+/* signature: per-dataset rank fingerprint */
+td.fp { text-align: left; }
+.fp-strip { display: inline-flex; gap: 2px; }
+.fp-cell { width: 7px; height: 16px; border-radius: 1.5px; background: var(--line); }
+
+/* ---------- per-dataset details ---------- */
+details.per-dataset { margin: 18px 0 0; }
+details.per-dataset summary {
+  cursor: pointer; font: 600 .92rem var(--display); color: var(--accent-ink);
+  padding: 4px 0;
+}
+details.per-dataset .board-scroll { margin-top: 10px; }
+table.detail { border-collapse: collapse; width: 100%; font-size: .85rem; }
+table.detail th, table.detail td { padding: 5px 10px; text-align: right; white-space: nowrap; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+table.detail th:first-child, table.detail td:first-child { text-align: left; font-family: var(--body); }
+table.detail thead th { font: 600 .72rem var(--body); color: var(--muted); border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--surface); }
+table.detail tbody tr:nth-child(odd) { background: color-mix(in srgb, var(--ink) 3%, transparent); }
+td.best { color: var(--accent-ink); font-weight: 700; }
+
+/* ---------- footer ---------- */
+.howto { margin: 44px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line); }
+.howto h2 { font: 600 1.05rem var(--display); margin-bottom: 10px; }
+.howto dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; font-size: .9rem; }
+.howto dt { font-family: var(--mono); color: var(--accent-ink); }
+.howto dd { color: var(--muted); }
+footer.colophon { margin: 40px 0 48px; color: var(--muted); font-size: .85rem; }
+footer.colophon a { color: var(--accent-ink); }
+@media (max-width: 640px) {
+  .howto dl { grid-template-columns: 1fr; gap: 2px; }
+  .howto dd { margin-bottom: 8px; }
+}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="wordmark">Stream<span class="arena">Arena</span></div>
+  <svg class="stream-line" viewBox="0 0 420 12" aria-hidden="true" preserveAspectRatio="none">
+    <path d="M0,6 C40,1 70,11 110,6 C150,1 180,11 220,5 C260,-1 290,12 330,7 C370,2 400,9 420,6"/>
+  </svg>
+  <p class="tagline">A living benchmark for machine learning on streaming data.
+  Every learner reads every stream once, in order, predicting before it trains.</p>
+  <p class="protocol">prequential (test-then-train) · default hyperparameters · seeded · CapyMOA runners</p>
+  <div class="hdr-links">
+    <a class="cta" href="https://github.com/TechyNilesh/StreamArena/blob/main/submissions/README.md">Submit results</a>
+    <a href="https://github.com/TechyNilesh/StreamArena">GitHub</a>
+    <a href="https://github.com/TechyNilesh/StreamArena/blob/main/BENCHMARK.md">Protocol</a>
+    <a href="https://huggingface.co/datasets/techynilesh/streamarena">Datasets</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <nav class="tabs" role="tablist" aria-label="Task"></nav>
+  <p class="task-meta"></p>
+  <div class="board-scroll"><table class="board" aria-live="polite"></table></div>
+  <details class="per-dataset">
+    <summary>Per-dataset scores</summary>
+    <div class="board-scroll"><table class="detail"></table></div>
+  </details>
+
+  <section class="howto">
+    <h2>How to read this board</h2>
+    <dl>
+      <dt>Avg rank</dt><dd>Algorithms are ranked 1st, 2nd, 3rd… on every dataset, then those ranks are averaged. Raw metric values are never averaged across datasets — scales differ.</dd>
+      <dt>Wins</dt><dd>Datasets where the algorithm placed first.</dd>
+      <dt>Fingerprint</dt><dd>One cell per dataset, teal (won) to clay (last). A solid-teal strip is consistent; a striped one is peaky. Hover a cell for the dataset.</dd>
+      <dt>κt</dt><dd>Kappa-temporal: skill over the predict-the-previous-label baseline. 100 perfect, 0 no better, negative worse. Shown as a median — it is unbounded below.</dd>
+      <dt>R²</dt><dd>1 is perfect, 0 is no better than predicting the mean.</dd>
+      <dt>Wallclock</dt><dd>Total compute across all datasets and seeds. Read it against rank — in streaming, a small quality gap for a 100× time gap is the whole story.</dd>
+    </dl>
+  </section>
+
+  <footer class="colophon">
+    <p>Results are community-reported against the pinned protocol; baseline runs by the StreamArena maintainers.
+    Rebuilt automatically from <a href="https://github.com/TechyNilesh/StreamArena/tree/main/submissions">submissions</a> on every merge ·
+    <a href="https://github.com/TechyNilesh/StreamArena#-citation">cite StreamArena</a></p>
+  </footer>
+</main>
+
+<script>
+const TASK_LABELS = {
+  classification: "Classification",
+  regression: "Regression",
+  clustering: "Clustering",
+  anomaly_detection: "Anomaly detection",
+};
+const state = { data: null, task: null, sortKey: "avg_rank", sortAsc: true };
+
+const fmt = (v, d = 2) => v == null ? "—" : Number(v).toFixed(d);
+
+function fingerprint(algorithm, perDataset, higherBetter) {
+  const datasets = Object.keys(perDataset);
+  const strip = document.createElement("span");
+  strip.className = "fp-strip";
+  for (const ds of datasets) {
+    const cell = document.createElement("span");
+    cell.className = "fp-cell";
+    const scores = perDataset[ds];
+    const value = scores[algorithm];
+    if (value != null) {
+      const ordered = Object.entries(scores).sort((a, b) => higherBetter ? b[1] - a[1] : a[1] - b[1]);
+      const pos = ordered.findIndex(([a]) => a === algorithm);
+      const t = ordered.length > 1 ? pos / (ordered.length - 1) : 0;
+      cell.style.background = `color-mix(in srgb, var(--clay) ${Math.round(t * 100)}%, var(--accent))`;
+      cell.title = `${ds}: rank ${pos + 1}/${ordered.length}`;
+    } else {
+      cell.title = `${ds}: not run`;
+    }
+    strip.appendChild(cell);
+  }
+  return strip;
+}
+
+function renderBoard() {
+  const td = state.data.tasks[state.task];
+  const displayCols = td.display_metrics;
+  const meta = document.querySelector(".task-meta");
+  meta.innerHTML = `Ranked per dataset on <code>${td.rank_metric}</code> (${td.higher_better ? "higher" : "lower"} is better) · ${Object.keys(td.per_dataset).length} datasets · ${td.summary.length} algorithms`;
+
+  const cols = [
+    { key: "_pos", label: "#", nosort: true },
+    { key: "algorithm", label: "Algorithm" },
+    { key: "avg_rank", label: "Avg rank" },
+    { key: "wins", label: "Wins" },
+    { key: "_fp", label: "Fingerprint", nosort: true },
+    ...displayCols.map(c => ({ key: c.key, label: c.label })),
+    { key: "n_datasets", label: "#Datasets" },
+    { key: "total_wallclock_h", label: "Wallclock (h)" },
+  ];
+
+  const rows = [...td.summary].sort((a, b) => {
+    const x = a[state.sortKey], y = b[state.sortKey];
+    if (typeof x === "string") return state.sortAsc ? x.localeCompare(y) : y.localeCompare(x);
+    return state.sortAsc ? (x ?? Infinity) - (y ?? Infinity) : (y ?? -Infinity) - (x ?? -Infinity);
+  });
+
+  const table = document.querySelector("table.board");
+  table.innerHTML = "";
+  const thead = table.createTHead().insertRow();
+  for (const col of cols) {
+    const th = document.createElement("th");
+    th.textContent = col.label;
+    if (col.nosort) th.dataset.nosort = "";
+    else {
+      if (col.key === state.sortKey) th.innerHTML += ` <span class="dir">${state.sortAsc ? "▲" : "▼"}</span>`;
+      th.addEventListener("click", () => {
+        state.sortAsc = state.sortKey === col.key ? !state.sortAsc : col.key !== "wins";
+        state.sortKey = col.key;
+        renderBoard();
+      });
+    }
+    thead.appendChild(th);
+  }
+  const tbody = table.createTBody();
+  rows.forEach((row, i) => {
+    const tr = tbody.insertRow();
+    const pos = tr.insertCell(); pos.className = "rankcell"; pos.textContent = i + 1;
+    const algo = tr.insertCell(); algo.className = "algo"; algo.textContent = row.algorithm;
+    if (row.submitted) algo.innerHTML += `<span class="submitted">community</span>`;
+    const ar = tr.insertCell(); ar.className = "num"; ar.textContent = fmt(row.avg_rank);
+    const w = tr.insertCell(); w.className = "num"; w.textContent = row.wins;
+    const fp = tr.insertCell(); fp.className = "fp";
+    fp.appendChild(fingerprint(row.algorithm, td.per_dataset, td.higher_better));
+    for (const c of displayCols) {
+      const cell = tr.insertCell(); cell.className = "num"; cell.textContent = fmt(row[c.key]);
+    }
+    const nd = tr.insertCell(); nd.className = "num"; nd.textContent = row.n_datasets;
+    const tw = tr.insertCell(); tw.className = "num"; tw.textContent = fmt(row.total_wallclock_h, 1);
+  });
+
+  renderDetail(td);
+}
+
+function renderDetail(td) {
+  const algorithms = td.summary.map(r => r.algorithm);
+  const table = document.querySelector("table.detail");
+  table.innerHTML = "";
+  const thead = table.createTHead().insertRow();
+  const h0 = document.createElement("th"); h0.textContent = "Dataset"; thead.appendChild(h0);
+  for (const a of algorithms) { const th = document.createElement("th"); th.textContent = a; thead.appendChild(th); }
+  const tbody = table.createTBody();
+  for (const [ds, scores] of Object.entries(td.per_dataset)) {
+    const tr = tbody.insertRow();
+    tr.insertCell().textContent = ds;
+    const values = algorithms.map(a => scores[a]).filter(v => v != null);
+    const best = td.higher_better ? Math.max(...values) : Math.min(...values);
+    for (const a of algorithms) {
+      const cell = tr.insertCell();
+      const v = scores[a];
+      cell.textContent = v == null ? "—" : Number(v).toFixed(3);
+      if (v === best) cell.className = "best";
+    }
+  }
+}
+
+function renderTabs() {
+  const nav = document.querySelector("nav.tabs");
+  nav.innerHTML = "";
+  for (const task of Object.keys(state.data.tasks)) {
+    const btn = document.createElement("button");
+    btn.role = "tab";
+    btn.setAttribute("aria-selected", task === state.task);
+    btn.textContent = TASK_LABELS[task] ?? task;
+    btn.addEventListener("click", () => {
+      state.task = task; state.sortKey = "avg_rank"; state.sortAsc = true;
+      renderTabs(); renderBoard();
+    });
+    nav.appendChild(btn);
+  }
+}
+
+fetch("leaderboard.json")
+  .then(r => r.json())
+  .then(data => {
+    state.data = data;
+    state.task = Object.keys(data.tasks)[0];
+    renderTabs();
+    renderBoard();
+  })
+  .catch(() => {
+    document.querySelector(".task-meta").textContent =
+      "Could not load leaderboard.json — the board rebuilds automatically on the next merge.";
+  });
+</script>
+</body>
+</html>
