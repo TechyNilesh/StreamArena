@@ -44,14 +44,23 @@ TASK_SPEC = {
 }
 
 
-def load_runs(results_dir):
-    """{task: {(algorithm, dataset): [run_record, ...]}} from ok result files."""
+def _iter_records(results_dir=None, packed=None, submissions=None):
+    if results_dir is not None and Path(results_dir).is_dir():
+        for path in sorted(Path(results_dir).rglob("*.json")):
+            if not path.name.endswith(".failed.json"):
+                yield json.loads(path.read_text())
+    if packed is not None and Path(packed).is_file():
+        yield from json.loads(Path(packed).read_text())
+    if submissions is not None and Path(submissions).is_dir():
+        for path in sorted(Path(submissions).rglob("*.json")):
+            yield json.loads(path.read_text())
+
+
+def load_runs(results_dir=None, packed=None, submissions=None):
+    """{task: {(algorithm, dataset): [run_record, ...]}} from ok run records."""
     runs = defaultdict(lambda: defaultdict(list))
-    for path in sorted(Path(results_dir).rglob("*.json")):
-        if path.name.endswith(".failed.json"):
-            continue
-        record = json.loads(path.read_text())
-        if record.get("status") != "ok":
+    for record in _iter_records(results_dir, packed, submissions):
+        if record.get("status", "ok") != "ok":
             continue
         runs[record["task"]][(record["algorithm"], record["dataset"])].append(record)
     return runs
@@ -193,20 +202,48 @@ def write_markdown(runs, out_path):
     print(f"Wrote {out_path}")
 
 
+def write_json(runs, out_path):
+    """Emit the leaderboard as JSON for the static site."""
+    data = {"tasks": {}}
+    for task in TASKS:
+        if task not in runs:
+            continue
+        spec = TASK_SPEC[task]
+        summary, scores = rank_table(runs[task], spec)
+        data["tasks"][task] = {
+            "rank_metric": spec["rank_on"][0],
+            "higher_better": spec["rank_on"][1],
+            "display_metrics": [
+                {"key": f"display_{m}", "label": label} for m, _, label in spec["display"]
+            ],
+            "summary": summary,
+            "per_dataset": {d: scores[d] for d in sorted(scores)},
+        }
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(data, indent=1))
+    print(f"Wrote {out_path}")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS_ROOT)
+    parser.add_argument("--packed", type=Path, help="Packed baseline_runs.json (see export_results.py).")
+    parser.add_argument("--submissions", type=Path, help="Directory of community-submitted run JSONs.")
     parser.add_argument("--out", type=Path, default=REPO_ROOT / "LEADERBOARD.md")
+    parser.add_argument("--json", type=Path, help="Also write leaderboard JSON for the static site.")
     args = parser.parse_args()
 
-    runs = load_runs(args.results_dir)
+    runs = load_runs(args.results_dir, args.packed, args.submissions)
     if not runs:
-        raise SystemExit(f"No ok result files under {args.results_dir}")
-    for task in runs:
-        n_failed = len(list(Path(args.results_dir, task).rglob("*.failed.json")))
-        if n_failed:
-            print(f"note: {task} has {n_failed} failed runs (excluded)")
+        raise SystemExit("No ok run records found")
+    if args.results_dir.is_dir():
+        for task in runs:
+            n_failed = len(list(Path(args.results_dir, task).rglob("*.failed.json")))
+            if n_failed:
+                print(f"note: {task} has {n_failed} failed runs (excluded)")
     write_markdown(runs, args.out)
+    if args.json:
+        write_json(runs, args.json)
 
 
 if __name__ == "__main__":
