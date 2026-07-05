@@ -51,7 +51,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .wrap { max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 48px); }
 
 /* ---------- header ---------- */
-header { padding: 34px 0 0; }
+header { padding: 56px 0 0; }
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
   gap: 16px 28px; flex-wrap: wrap;
@@ -65,7 +65,7 @@ header { padding: 34px 0 0; }
 }
 @keyframes flow { to { stroke-dashoffset: -260; } }
 @media (prefers-reduced-motion: reduce) { .stream-line path { animation: none; } }
-.tagline { font-size: 1.05rem; max-width: 56ch; }
+.tagline { font-size: 1.05rem; }
 .chips { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
 .chip {
   font-family: var(--mono); font-size: .76rem; color: var(--muted);
@@ -186,11 +186,11 @@ footer.colophon a { color: var(--accent-ink); }
   <p class="tagline">A living benchmark for machine learning on streaming data.
   Every learner reads every stream once, in order, predicting before it trains.</p>
   <div class="chips" aria-label="Protocol summary">
-    <span class="chip">test-then-train</span>
-    <span class="chip">single pass</span>
-    <span class="chip">no per-dataset tuning</span>
-    <span class="chip">10 seeds</span>
-    <a class="chip" href="https://capymoa.org">built on CapyMOA</a>
+    <span class="chip">Prequential</span>
+    <span class="chip">Single-pass</span>
+    <span class="chip">Concept drift</span>
+    <a class="chip" href="https://capymoa.org">CapyMOA</a>
+    <a class="chip" href="https://riverml.xyz">River</a>
   </div>
 </header>
 
