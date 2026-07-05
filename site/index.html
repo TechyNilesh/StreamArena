@@ -208,7 +208,7 @@ footer.colophon a { color: var(--accent-ink); }
     <dl>
       <dt>Avg rank</dt><dd>Algorithms are ranked 1st, 2nd, 3rd… on every dataset, then those ranks are averaged. Raw metric values are never averaged across datasets — scales differ.</dd>
       <dt>Wins</dt><dd>Datasets where the algorithm placed first.</dd>
-      <dt>Fingerprint</dt><dd>One cell per dataset, teal (won) to clay (last). A solid-teal strip is consistent; a striped one is peaky. Hover a cell for the dataset.</dd>
+      <dt>Rank per dataset</dt><dd>One cell per dataset (not per time window): teal = ranked 1st on that dataset, clay = ranked last. A solid-teal strip is consistent everywhere; scattered clay shows exactly where it loses. Hover a cell for the dataset name and rank.</dd>
       <dt>κt</dt><dd>Kappa-temporal: skill over the predict-the-previous-label baseline. 100 perfect, 0 no better, negative worse. Shown as a median — it is unbounded below.</dd>
       <dt>R²</dt><dd>Regression fit, scale-free across datasets: 1 is perfect, 0 is no better than predicting the mean.</dd>
       <dt>ARI</dt><dd>Clustering agreement with the ground-truth labels, scored over evaluation windows: 1 is perfect, 0 is random grouping.</dd>
@@ -270,7 +270,7 @@ function renderBoard() {
     { key: "algorithm", label: "Algorithm" },
     { key: "avg_rank", label: "Avg rank" },
     { key: "wins", label: "Wins" },
-    { key: "_fp", label: "Fingerprint", nosort: true },
+    { key: "_fp", label: "Rank per dataset", nosort: true },
     ...displayCols.map(c => ({ key: c.key, label: c.label })),
     { key: "n_datasets", label: "#Datasets" },
     { key: "total_wallclock_h", label: "Wallclock (h)" },
