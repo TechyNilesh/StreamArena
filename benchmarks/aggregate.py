@@ -1,4 +1,4 @@
-"""Aggregate per-run benchmark JSONs into ranking tables (RESULTS.md).
+"""Aggregate per-run benchmark JSONs into ranking tables (LEADERBOARD.md).
 
 Reads benchmarks/results/<task>/<algorithm>/<dataset>__seed<N>.json, averages
 metrics across seeds, ranks algorithms per dataset on the task's primary
@@ -6,8 +6,8 @@ metric, and reports average rank per algorithm (raw metric values are never
 averaged across datasets — scales differ).
 
 Usage:
-    python3 benchmarks/aggregate.py                    # writes RESULTS.md
-    python3 benchmarks/aggregate.py --results-dir ... --out RESULTS.md
+    python3 benchmarks/aggregate.py                    # writes LEADERBOARD.md
+    python3 benchmarks/aggregate.py --results-dir ... --out LEADERBOARD.md
 """
 
 import argparse
@@ -196,7 +196,7 @@ def write_markdown(runs, out_path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS_ROOT)
-    parser.add_argument("--out", type=Path, default=REPO_ROOT / "RESULTS.md")
+    parser.add_argument("--out", type=Path, default=REPO_ROOT / "LEADERBOARD.md")
     args = parser.parse_args()
 
     runs = load_runs(args.results_dir)
