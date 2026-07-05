@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StreamArena Datasets</title>
+<meta name="description" content="The full StreamArena dataset catalog — instance/feature/class counts and source citations for every stream, across classification, regression, clustering, and anomaly detection.">
+<link rel="icon" type="image/png" href="streamarena_logo.png">
+<script>try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F9FA; --surface: #FFFFFF; --ink: #17242D; --muted: #5C6B73;
+  --line: #DCE3E7; --accent: #0E7C86; --accent-ink: #0A5A61; --clay: #C96F4A;
+  --display: "Sora", system-ui, sans-serif;
+  --body: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
+}
+:root[data-theme="dark"] {
+  --bg: #0F1A20; --surface: #16242C; --ink: #E8EEF1; --muted: #93A5AE;
+  --line: #26363F; --accent: #2FB8C3; --accent-ink: #7ADCE4; --clay: #D98B68;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1A20; --surface: #16242C; --ink: #E8EEF1; --muted: #93A5AE;
+    --line: #26363F; --accent: #2FB8C3; --accent-ink: #7ADCE4; --clay: #D98B68;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); line-height: 1.55; font-size: 16px; }
+a { color: var(--accent-ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 48px); }
+
+header { padding: 56px 0 0; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap; }
+.logo { display: block; max-width: min(320px, 78vw); height: auto; }
+.hdr-links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; font-size: .92rem; }
+.hdr-links a { display: inline-flex; align-items: center; gap: 7px; padding: 5px 0; }
+.hdr-links a.cta { border: 1px solid var(--accent); color: var(--accent-ink); padding: 5px 14px; border-radius: 999px; }
+.hdr-links a.cta:hover { background: var(--accent); color: var(--bg); text-decoration: none; }
+.icon { width: 15px; height: 15px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--surface);
+  color: var(--muted); cursor: pointer; flex: none;
+}
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+.theme-toggle .icon { width: 16px; height: 16px; }
+.icon-moon { display: none; }
+.theme-dark .icon-moon { display: block; }
+.theme-dark .icon-sun { display: none; }
+
+h1 { font: 700 clamp(1.4rem, 3vw, 1.9rem) var(--display); margin: 34px 0 6px; letter-spacing: -0.01em; }
+.tagline { font-size: 1.02rem; color: var(--muted); max-width: 90ch; }
+.chips { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  font-family: var(--mono); font-size: .76rem; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 11px;
+  background: var(--surface); white-space: nowrap;
+}
+
+section.task { margin-top: 40px; }
+section.task h2 { font: 600 1.2rem var(--display); display: flex; align-items: center; gap: 9px; }
+section.task h2 .icon { width: 17px; height: 17px; color: var(--accent-ink); }
+section.task h3 { font: 600 .82rem var(--body); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 18px 0 8px; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+th, td { padding: 7px 12px; text-align: right; white-space: nowrap; }
+th:first-child, td:first-child, th:last-child, td:last-child { text-align: left; }
+td:first-child { font-weight: 600; }
+td { font-variant-numeric: tabular-nums; }
+thead th { font: 600 .72rem var(--body); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-bottom: 1px solid var(--line); }
+tbody tr { border-bottom: 1px solid var(--line); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+td:last-child { white-space: normal; min-width: 220px; color: var(--muted); }
+sup a { font-family: var(--mono); font-size: .72rem; }
+
+section.refs { margin: 48px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
+section.refs h2 { font: 600 1.2rem var(--display); margin-bottom: 6px; }
+section.refs p { color: var(--muted); font-size: .9rem; margin-bottom: 16px; }
+.ref { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); margin-bottom: 10px; }
+.ref summary {
+  cursor: pointer; padding: 9px 14px; font-family: var(--mono); font-size: .84rem;
+  color: var(--accent-ink); display: flex; align-items: center; gap: 10px;
+}
+.ref pre {
+  margin: 0; padding: 12px 14px; border-top: 1px solid var(--line);
+  font: .8rem var(--mono); overflow-x: auto; white-space: pre;
+}
+.copy-btn {
+  margin-left: auto; font: 500 .72rem var(--body); color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px;
+  background: none; cursor: pointer;
+}
+.copy-btn:hover { color: var(--accent-ink); border-color: var(--accent); }
+
+footer.colophon { margin: 40px 0 48px; color: var(--muted); font-size: .88rem; }
+.notice {
+  display: flex; gap: 12px; align-items: flex-start;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  border-radius: 10px; padding: 14px 18px;
+}
+.notice-icon { width: 18px; height: 18px; margin-top: 2px; color: var(--accent-ink); }
+.notice a { color: var(--accent-ink); }
+
+@media (max-width: 720px) {
+  header { padding-top: 26px; }
+  .topbar { justify-content: center; }
+  .logo { max-width: min(260px, 86vw); }
+  .hdr-links { gap: 12px; font-size: .88rem; justify-content: center; }
+  h1, .tagline { text-align: center; }
+  .chips { justify-content: center; }
+}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="topbar">
+    <a href="./"><img class="logo" src="streamarena_logo.png" alt="StreamArena"></a>
+    <nav class="hdr-links" aria-label="Site">
+      <a href="./">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        Leaderboard</a>
+      <a href="https://github.com/TechyNilesh/StreamArena">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        GitHub</a>
+      <a href="https://github.com/TechyNilesh/StreamArena/blob/main/BENCHMARK.md">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+        Protocol</a>
+      <a class="cta" href="https://huggingface.co/datasets/techynilesh/streamarena">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        Download</a>
+      <button class="theme-toggle" type="button" aria-label="Switch theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      </button>
+    </nav>
+  </div>
+  <h1>Dataset catalog</h1>
+  <p class="tagline">Every stream in StreamArena with exact instance, feature, and class counts computed
+  directly from the files, plus source attribution keyed to full BibTeX references below.
+  Counts and sources are maintained in
+  <a href="https://github.com/TechyNilesh/StreamArena/blob/main/DATASETS.md">DATASETS.md</a>.</p>
+  <div class="chips" aria-label="Catalog summary" id="catalog-chips"></div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<div class="wrap">
+  <footer class="colophon">
+    <div class="notice">
+      <svg class="icon notice-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <p>Source attributions are best-effort identifications of each dataset's original public origin —
+      verify against the original publication before citing precisely in academic work, and please cite
+      the original sources alongside StreamArena. Individual datasets retain their original licenses.</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+// theme toggle (shared behavior with the leaderboard page)
+const rootEl = document.documentElement;
+const themeBtn = document.querySelector(".theme-toggle");
+const isDark = () =>
+  (rootEl.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark";
+const paintToggle = () => themeBtn.classList.toggle("theme-dark", !isDark());
+themeBtn.addEventListener("click", () => {
+  rootEl.dataset.theme = isDark() ? "light" : "dark";
+  try { localStorage.setItem("theme", rootEl.dataset.theme); } catch (e) {}
+  paintToggle();
+});
+paintToggle();
+
+const TASK_ICONS = {
+  "Classification": '<path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"/><rect x="3" y="14" width="7" height="7" rx="1"/><circle cx="17.5" cy="17.5" r="3.5"/>',
+  "Regression": '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+  "Clustering": '<path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="7" height="5" x="7" y="7" rx="1"/><rect width="7" height="5" x="10" y="12" rx="1"/>',
+  "Anomaly Detection": '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 20h16a2 2 0 0 0 1.73-2Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+};
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const linkRefs = s => esc(s).replace(/\[([a-z0-9]+)\]/gi, (_, key) => `<sup><a href="#ref-${key}">[${key}]</a></sup>`);
+
+fetch("datasets.json").then(r => r.json()).then(data => {
+  const main = document.getElementById("main");
+  let total = 0;
+  for (const [task, tables] of Object.entries(data.tasks)) {
+    const section = document.createElement("section");
+    section.className = "task";
+    let html = `<h2><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${TASK_ICONS[task] ?? ""}</svg>${esc(task)}</h2>`;
+    for (const t of tables) {
+      total += t.rows.length;
+      if (t.section) html += `<h3>${esc(t.section)} · ${t.rows.length} datasets</h3>`;
+      else html += `<h3>${t.rows.length} datasets</h3>`;
+      html += `<div class="table-scroll"><table><thead><tr>` +
+        t.columns.map(c => `<th>${esc(c)}</th>`).join("") + `</tr></thead><tbody>` +
+        t.rows.map(r => `<tr>` + r.map((cell, i) =>
+          `<td>${i === r.length - 1 ? linkRefs(cell) : esc(cell)}</td>`).join("") + `</tr>`).join("") +
+        `</tbody></table></div>`;
+    }
+    section.innerHTML = html;
+    main.appendChild(section);
+  }
+
+  document.getElementById("catalog-chips").innerHTML =
+    [`${total} datasets`, `4 tasks`, `plain CSV`, `~5 GB`, `${Object.keys(data.references).length} cited sources`]
+      .map(c => `<span class="chip">${c}</span>`).join("");
+
+  const refs = document.createElement("section");
+  refs.className = "refs";
+  refs.innerHTML = `<h2>References</h2>
+    <p>BibTeX for every source key used in the tables above. Click an entry to expand, copy, and cite.</p>` +
+    Object.entries(data.references).map(([key, bib]) => `
+      <details class="ref" id="ref-${key}">
+        <summary>@${esc(key)}<button class="copy-btn" data-key="${esc(key)}">copy BibTeX</button></summary>
+        <pre>${esc(bib)}</pre>
+      </details>`).join("");
+  main.appendChild(refs);
+
+  main.addEventListener("click", e => {
+    const btn = e.target.closest(".copy-btn");
+    if (!btn) return;
+    e.preventDefault();
+    navigator.clipboard.writeText(data.references[btn.dataset.key]).then(() => {
+      btn.textContent = "copied ✓";
+      setTimeout(() => { btn.textContent = "copy BibTeX"; }, 1500);
+    });
+  });
+
+  // open + scroll to a reference when arriving via a citation link
+  if (location.hash.startsWith("#ref-")) {
+    const target = document.querySelector(location.hash);
+    if (target) { target.open = true; target.scrollIntoView({ block: "center" }); }
+  }
+}).catch(() => {
+  document.getElementById("main").textContent = "Could not load datasets.json.";
+});
+document.addEventListener("click", e => {
+  const a = e.target.closest('a[href^="#ref-"]');
+  if (!a) return;
+  const target = document.querySelector(a.getAttribute("href"));
+  if (target) target.open = true;
+});
+</script>
+</body>
+</html>

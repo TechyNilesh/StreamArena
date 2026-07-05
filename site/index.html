@@ -185,15 +185,26 @@ footer.colophon a { color: var(--accent-ink); }
   border-radius: 10px; padding: 14px 18px;
 }
 .notice-icon { width: 18px; height: 18px; margin-top: 2px; color: var(--accent-ink); }
-.notice p { margin-bottom: 10px; }
-.cite-badge {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: .8rem; font-family: var(--mono);
-  border: 1px solid var(--accent); border-radius: 999px; padding: 4px 12px;
-  color: var(--accent-ink);
+.cite-block {
+  margin-top: 14px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--surface); overflow: hidden;
 }
-.cite-badge:hover { background: var(--accent); color: var(--bg); text-decoration: none; }
-.cite-badge .icon { width: 13px; height: 13px; }
+.cite-head {
+  display: flex; align-items: center; gap: 9px; padding: 10px 16px;
+  font: 600 .9rem var(--display); color: var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+.cite-head .icon { color: var(--accent-ink); width: 16px; height: 16px; }
+.cite-block pre {
+  margin: 0; padding: 14px 16px; overflow-x: auto;
+  font: .84rem/1.6 var(--mono); color: var(--ink); white-space: pre;
+}
+.copy-btn {
+  margin-left: auto; font: 500 .74rem var(--body); color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px;
+  background: none; cursor: pointer;
+}
+.copy-btn:hover { color: var(--accent-ink); border-color: var(--accent); }
 @media (max-width: 640px) {
   .howto dl { grid-template-columns: 1fr; gap: 2px; }
   .howto dd { margin-bottom: 8px; }
@@ -226,7 +237,7 @@ footer.colophon a { color: var(--accent-ink); }
       <a href="https://github.com/TechyNilesh/StreamArena/blob/main/BENCHMARK.md">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
         Protocol</a>
-      <a href="https://huggingface.co/datasets/techynilesh/streamarena">
+      <a href="datasets.html">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
         Datasets</a>
       <a class="cta" href="https://github.com/TechyNilesh/StreamArena/blob/main/submissions/README.md">
@@ -278,13 +289,21 @@ footer.colophon a { color: var(--accent-ink); }
   <footer class="colophon">
     <div class="notice">
       <svg class="icon notice-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-      <div>
-        <p>Results are community-reported against the pinned protocol; baseline runs by the StreamArena maintainers.
-        The board rebuilds automatically from <a href="https://github.com/TechyNilesh/StreamArena/tree/main/submissions">submissions</a> on every merge.</p>
-        <a class="cite-badge" href="https://github.com/TechyNilesh/StreamArena#-citation">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-          Cite StreamArena</a>
+      <p>Results are community-reported against the pinned protocol; baseline runs by the StreamArena maintainers.
+      The board rebuilds automatically from <a href="https://github.com/TechyNilesh/StreamArena/tree/main/submissions">submissions</a> on every merge.</p>
+    </div>
+    <div class="cite-block">
+      <div class="cite-head">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+        <span>Cite StreamArena</span>
+        <button class="copy-btn" type="button">copy BibTeX</button>
       </div>
+<pre id="cite-bibtex">@misc{verma2026streamarena,
+  title  = {StreamArena: A Living Benchmark for Machine Learning on Streaming Data},
+  author = {Verma, Nilesh},
+  year   = {2026},
+  url    = {https://github.com/TechyNilesh/StreamArena}
+}</pre>
     </div>
   </footer>
 </main>
@@ -302,6 +321,15 @@ themeBtn.addEventListener("click", () => {
   paintToggle();
 });
 paintToggle();
+
+// citation copy
+const citeBtn = document.querySelector(".cite-block .copy-btn");
+citeBtn.addEventListener("click", () => {
+  navigator.clipboard.writeText(document.getElementById("cite-bibtex").textContent).then(() => {
+    citeBtn.textContent = "copied ✓";
+    setTimeout(() => { citeBtn.textContent = "copy BibTeX"; }, 1500);
+  });
+});
 
 const ICON = p => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
 const TASK_META = {

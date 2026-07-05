@@ -1,0 +1,1075 @@
+{
+ "tasks": {
+  "Classification": [
+   {
+    "section": "Real-world",
+    "columns": [
+     "Dataset",
+     "#Instances",
+     "#Features",
+     "#Classes",
+     "Source"
+    ],
+    "rows": [
+     [
+      "Dota",
+      "11,055",
+      "30",
+      "2",
+      "OpenML [openml]"
+     ],
+     [
+      "Gisette",
+      "7,000",
+      "5,000",
+      "2",
+      "NIPS 2003 FS Challenge [guyon2004]"
+     ],
+     [
+      "HAR",
+      "10,299",
+      "561",
+      "2",
+      "UCI [uci] \u2014 Human Activity Recognition Using Smartphones"
+     ],
+     [
+      "KDDCup99",
+      "100,000",
+      "41",
+      "2",
+      "UCI [uci] \u2014 KDD Cup 1999"
+     ],
+     [
+      "MNIST",
+      "70,000",
+      "784",
+      "2",
+      "LeCun et al. [lecun1998]"
+     ],
+     [
+      "Spambase",
+      "4,601",
+      "57",
+      "2",
+      "UCI [uci] \u2014 Spambase"
+     ],
+     [
+      "Usenet",
+      "18,846",
+      "658",
+      "20",
+      "Katakis et al. [katakis2010]"
+     ],
+     [
+      "adult",
+      "48,842",
+      "14",
+      "4",
+      "UCI [uci] \u2014 Adult / Census Income"
+     ],
+     [
+      "airlines",
+      "539,383",
+      "7",
+      "2",
+      "OpenML [openml] \u2014 Airlines"
+     ],
+     [
+      "electricity",
+      "45,312",
+      "8",
+      "2",
+      "Harries [harries1999] \u2014 Electricity Market"
+     ],
+     [
+      "forest_cover",
+      "581,012",
+      "54",
+      "7",
+      "UCI [uci] \u2014 Covertype"
+     ],
+     [
+      "insects",
+      "52,848",
+      "33",
+      "6",
+      "Souza et al. [souza2020]"
+     ],
+     [
+      "nomao",
+      "34,465",
+      "118",
+      "2",
+      "UCI [uci] \u2014 Nomao"
+     ],
+     [
+      "poker",
+      "829,201",
+      "10",
+      "10",
+      "UCI [uci] \u2014 Poker Hand"
+     ],
+     [
+      "real_kdd99",
+      "100,655",
+      "38",
+      "12",
+      "UCI [uci] \u2014 KDD Cup 1999 (resampled)"
+     ],
+     [
+      "real_pendigits",
+      "10,992",
+      "16",
+      "10",
+      "UCI [uci] \u2014 Pen-Based Recognition of Handwritten Digits"
+     ],
+     [
+      "real_powersupply",
+      "29,928",
+      "2",
+      "24",
+      "Zhu [zhu2010]"
+     ],
+     [
+      "real_sensor",
+      "2,219,803",
+      "5",
+      "55",
+      "Zhu [zhu2010]"
+     ],
+     [
+      "real_shuttle",
+      "58,000",
+      "9",
+      "7",
+      "UCI [uci] \u2014 Statlog (Shuttle), resampled"
+     ],
+     [
+      "shuttle",
+      "58,000",
+      "9",
+      "7",
+      "UCI [uci] \u2014 Statlog (Shuttle)"
+     ],
+     [
+      "spam",
+      "4,601",
+      "57",
+      "2",
+      "Concept-drift spam benchmark [katakis2010]"
+     ],
+     [
+      "vehicle_sensIT",
+      "98,528",
+      "100",
+      "3",
+      "UCI [uci] \u2014 SensIT Vehicle"
+     ],
+     [
+      "weather",
+      "18,159",
+      "8",
+      "2",
+      "Elwell & Polikar [elwell2011]"
+     ]
+    ]
+   },
+   {
+    "section": "Synthetic",
+    "columns": [
+     "Dataset",
+     "#Instances",
+     "#Features",
+     "#Classes",
+     "Source"
+    ],
+    "rows": [
+     [
+      "Madelon",
+      "2,600",
+      "500",
+      "2",
+      "Guyon et al. [guyon2004]"
+     ],
+     [
+      "RBF",
+      "10,000",
+      "10,000",
+      "2",
+      "MOA [bifet2010] \u2014 RandomRBF generator"
+     ],
+     [
+      "RBFm_100k",
+      "100,000",
+      "10",
+      "5",
+      "MOA [bifet2010] \u2014 RandomRBF generator"
+     ],
+     [
+      "RTG_2abrupt",
+      "100,000",
+      "30",
+      "5",
+      "MOA [bifet2010] \u2014 RandomTreeGenerator"
+     ],
+     [
+      "RTG_highdim_10k",
+      "10,000",
+      "450",
+      "2",
+      "MOA [bifet2010] \u2014 RandomTreeGenerator"
+     ],
+     [
+      "hyperplane_high_gradual_drift",
+      "500,000",
+      "10",
+      "2",
+      "MOA/River [bifet2010][montiel2021] \u2014 Hyperplane"
+     ],
+     [
+      "movingRBF",
+      "200,000",
+      "10",
+      "5",
+      "MOA [bifet2010] \u2014 Moving RandomRBF"
+     ],
+     [
+      "moving_squares",
+      "200,000",
+      "2",
+      "4",
+      "MOA [bifet2010] \u2014 Moving Squares"
+     ],
+     [
+      "sea_high_abrupt_drift",
+      "500,000",
+      "3",
+      "2",
+      "Street & Kim [street2001] \u2014 SEA generator"
+     ],
+     [
+      "sea_high_mixed_drift",
+      "500,000",
+      "3",
+      "2",
+      "Street & Kim [street2001] \u2014 SEA generator"
+     ],
+     [
+      "sine_stream_with_drift",
+      "50,000",
+      "4",
+      "2",
+      "MOA/River [bifet2010][montiel2021] \u2014 Sine"
+     ],
+     [
+      "synth_agrawal",
+      "100,000",
+      "9",
+      "2",
+      "Agrawal et al. [agrawal1993]"
+     ],
+     [
+      "synth_blobs_expanding",
+      "100,000",
+      "5",
+      "5",
+      "scikit-learn [pedregosa2011] \u2014 make_blobs"
+     ],
+     [
+      "synth_blobs_gradual",
+      "100,000",
+      "5",
+      "5",
+      "scikit-learn [pedregosa2011] \u2014 make_blobs"
+     ],
+     [
+      "synth_blobs_incremental",
+      "100,000",
+      "5",
+      "5",
+      "scikit-learn [pedregosa2011] \u2014 make_blobs"
+     ],
+     [
+      "synth_blobs_merge_split",
+      "100,000",
+      "5",
+      "5",
+      "scikit-learn [pedregosa2011] \u2014 make_blobs"
+     ],
+     [
+      "synth_blobs_sudden",
+      "100,000",
+      "5",
+      "5",
+      "scikit-learn [pedregosa2011] \u2014 make_blobs"
+     ],
+     [
+      "synth_rbf_fast",
+      "100,000",
+      "5",
+      "5",
+      "MOA [bifet2010] \u2014 RandomRBF generator"
+     ],
+     [
+      "synth_rbf_gradual",
+      "100,000",
+      "5",
+      "5",
+      "MOA [bifet2010] \u2014 RandomRBF generator"
+     ],
+     [
+      "synth_rbf_random",
+      "100,000",
+      "4",
+      "4",
+      "MOA [bifet2010] \u2014 RandomRBF generator"
+     ]
+    ]
+   }
+  ],
+  "Regression": [
+   {
+    "section": "Real-world",
+    "columns": [
+     "Dataset",
+     "#Instances",
+     "#Features",
+     "Target",
+     "Source"
+    ],
+    "rows": [
+     [
+      "House8L",
+      "22,784",
+      "8",
+      "target",
+      "DELVE [delve]"
+     ],
+     [
+      "MetroTraffic",
+      "48,204",
+      "7",
+      "target",
+      "UCI [uci] \u2014 Metro Interstate Traffic Volume"
+     ],
+     [
+      "WGN0331_data",
+      "15,628",
+      "7",
+      "Avg$PerMWHr",
+      "NZ Electricity Market (EMI) \u2014 node pricing data"
+     ],
+     [
+      "abalone",
+      "4,977",
+      "8",
+      "target",
+      "UCI [uci] \u2014 Abalone"
+     ],
+     [
+      "ailerons",
+      "13,750",
+      "40",
+      "target",
+      "DELVE [delve] \u2014 Ailerons"
+     ],
+     [
+      "bike",
+      "17,379",
+      "12",
+      "cnt",
+      "UCI/Kaggle [uci] \u2014 Bike Sharing Demand"
+     ],
+     [
+      "brazilian_houses",
+      "10,692",
+      "12",
+      "total",
+      "OpenML [openml] \u2014 Brazilian Houses to Rent"
+     ],
+     [
+      "california_housing",
+      "20,640",
+      "8",
+      "medianHouseValue",
+      "StatLib \u2014 California Housing"
+     ],
+     [
+      "cps88wages",
+      "28,155",
+      "6",
+      "wage",
+      "Current Population Survey 1988"
+     ],
+     [
+      "cpu_activity",
+      "8,192",
+      "21",
+      "usr",
+      "DELVE [delve] \u2014 Comp-Activ"
+     ],
+     [
+      "diamonds",
+      "53,940",
+      "9",
+      "price",
+      "ggplot2/Kaggle \u2014 Diamonds"
+     ],
+     [
+      "elevators",
+      "16,599",
+      "18",
+      "target",
+      "DELVE [delve] \u2014 Elevators"
+     ],
+     [
+      "fifa",
+      "19,178",
+      "28",
+      "wage_eur",
+      "Kaggle \u2014 FIFA player ratings"
+     ],
+     [
+      "health_insurance",
+      "22,272",
+      "12",
+      "whrswk",
+      "AER package (R) \u2014 Health Insurance"
+     ],
+     [
+      "kin8nm",
+      "8,192",
+      "8",
+      "y",
+      "DELVE [delve] \u2014 Kinematics of Robot Arm"
+     ],
+     [
+      "kings_county",
+      "21,613",
+      "21",
+      "price",
+      "Kaggle \u2014 King County House Sales"
+     ],
+     [
+      "miami_housing",
+      "13,932",
+      "16",
+      "SALE_PRC",
+      "Kaggle \u2014 Miami Housing"
+     ],
+     [
+      "naval_propulsion_plant",
+      "11,934",
+      "15",
+      "gt_compressor_decay_state_coefficient",
+      "UCI [uci] \u2014 Naval Propulsion Plants"
+     ],
+     [
+      "physiochemical_protein",
+      "45,730",
+      "9",
+      "RMSD",
+      "UCI [uci] \u2014 Physicochemical Properties of Protein Tertiary Structure"
+     ],
+     [
+      "pumadyn32nh",
+      "8,192",
+      "32",
+      "thetadd6",
+      "DELVE [delve] \u2014 Puma Dynamics"
+     ],
+     [
+      "sarcos",
+      "48,933",
+      "27",
+      "V22",
+      "SARCOS \u2014 robot arm inverse dynamics"
+     ],
+     [
+      "superconductivity",
+      "21,263",
+      "81",
+      "critical_temp",
+      "UCI [uci] \u2014 Superconductivity Data"
+     ],
+     [
+      "video_transcoding_noID",
+      "68,784",
+      "19",
+      "utime",
+      "UCI [uci] \u2014 Online Video Characteristics and Transcoding Time"
+     ],
+     [
+      "wave_energy",
+      "72,000",
+      "48",
+      "energy_total",
+      "UCI [uci] \u2014 Large-scale Wave Energy Farm"
+     ],
+     [
+      "white_wine",
+      "4,898",
+      "11",
+      "quality",
+      "UCI [uci] \u2014 Wine Quality (white)"
+     ]
+    ]
+   },
+   {
+    "section": "Synthetic",
+    "columns": [
+     "Dataset",
+     "#Instances",
+     "#Features",
+     "Target",
+     "Source"
+    ],
+    "rows": [
+     [
+      "FriedmanGra",
+      "100,000",
+      "10",
+      "target",
+      "River [montiel2021] \u2014 FriedmanDrift (global recurring abrupt)"
+     ],
+     [
+      "FriedmanGsg",
+      "99,971",
+      "10",
+      "target",
+      "River [montiel2021] \u2014 FriedmanDrift (global slow gradual)"
+     ],
+     [
+      "FriedmanLea",
+      "100,000",
+      "10",
+      "target",
+      "River [montiel2021] \u2014 FriedmanDrift (local expanding abrupt)"
+     ],
+     [
+      "fried",
+      "40,768",
+      "10",
+      "target",
+      "Friedman [friedman1991]"
+     ],
+     [
+      "hyperA",
+      "500,000",
+      "10",
+      "target",
+      "MOA/River [bifet2010][montiel2021] \u2014 Hyperplane (regression)"
+     ]
+    ]
+   }
+  ],
+  "Clustering": [
+   {
+    "section": "Real-world",
+    "columns": [
+     "Dataset",
+     "#Instances",
+     "#Features",
+     "#Classes",
+     "Source"
+    ],
+    "rows": [
+     [
+      "adult",
+      "48,842",
+      "14",
+      "4",
+      "UCI [uci] \u2014 Adult / Census Income"
+     ],
+     [
+      "electricity",
+      "45,312",
+      "8",
+      "2",
+      "Harries [harries1999] \u2014 Electricity Market"
+     ],
+     [
+      "forest_cover",
+      "581,012",
+      "54",
+      "7",
+      "UCI [uci] \u2014 Covertype"
+     ],
+     [
+      "insects",
+      "52,848",
+      "33",
+      "6",
+      "Souza et al. [souza2020]"
+     ],
+     [
+      "new_airlines",
+      "539,383",
+      "7",
+      "2",
+      "OpenML [openml] \u2014 Airlines"
+     ],
+     [
+      "vehicle_sensIT",
+      "98,528",
+      "100",
+      "3",
+      "UCI [uci] \u2014 SensIT Vehicle"
+     ]
+    ]
+   },
+   {
+    "section": "Synthetic",
+    "columns": [
+     "Dataset",
+     "#Instances",
+     "#Features",
+     "#Classes",
+     "Source"
+    ],
+    "rows": [
+     [
+      "hyperplane_high_gradual_drift",
+      "500,000",
+      "10",
+      "2",
+      "MOA/River [bifet2010][montiel2021] \u2014 Hyperplane"
+     ],
+     [
+      "movingRBF",
+      "200,000",
+      "10",
+      "5",
+      "MOA [bifet2010] \u2014 Moving RandomRBF"
+     ],
+     [
+      "moving_squares",
+      "200,000",
+      "2",
+      "4",
+      "MOA [bifet2010] \u2014 Moving Squares"
+     ],
+     [
+      "sea_high_abrupt_drift",
+      "500,000",
+      "3",
+      "2",
+      "Street & Kim [street2001] \u2014 SEA generator"
+     ],
+     [
+      "sea_high_mixed_drift",
+      "500,000",
+      "3",
+      "2",
+      "Street & Kim [street2001] \u2014 SEA generator"
+     ],
+     [
+      "synth_RandomRBFDrift",
+      "100,000",
+      "4",
+      "4",
+      "MOA [bifet2010] \u2014 RandomRBF generator"
+     ],
+     [
+      "synthetic_blobs_100k_samples_5features_8clusters",
+      "100,000",
+      "5",
+      "8",
+      "scikit-learn [pedregosa2011] \u2014 make_blobs"
+     ]
+    ]
+   }
+  ],
+  "Anomaly Detection": [
+   {
+    "section": null,
+    "columns": [
+     "Dataset",
+     "#Instances",
+     "#Features",
+     "Anomaly Rate",
+     "Source"
+    ],
+    "rows": [
+     [
+      "10_cover",
+      "286,048",
+      "10",
+      "0.96%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "11_donors",
+      "619,326",
+      "10",
+      "5.93%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "12_fault",
+      "1,941",
+      "27",
+      "34.67%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "13_fraud",
+      "284,807",
+      "29",
+      "0.17%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "14_glass",
+      "214",
+      "7",
+      "4.21%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "15_Hepatitis",
+      "80",
+      "19",
+      "16.25%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "16_http",
+      "567,498",
+      "3",
+      "0.39%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "17_InternetAds",
+      "1,966",
+      "1,555",
+      "18.72%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "18_Ionosphere",
+      "351",
+      "32",
+      "35.9%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "19_landsat",
+      "6,435",
+      "36",
+      "20.71%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "1_ALOI",
+      "49,534",
+      "27",
+      "3.04%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "20_letter",
+      "1,600",
+      "32",
+      "6.25%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "21_Lymphography",
+      "148",
+      "18",
+      "4.05%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "22_magic.gamma",
+      "19,020",
+      "10",
+      "35.16%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "23_mammography",
+      "11,183",
+      "6",
+      "2.32%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "24_mnist",
+      "7,603",
+      "100",
+      "9.21%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "25_musk",
+      "3,062",
+      "166",
+      "3.17%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "26_optdigits",
+      "5,216",
+      "64",
+      "2.88%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "27_PageBlocks",
+      "5,393",
+      "10",
+      "9.46%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "28_pendigits",
+      "6,870",
+      "16",
+      "2.27%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "29_Pima",
+      "768",
+      "8",
+      "34.9%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "2_annthyroid",
+      "7,200",
+      "6",
+      "7.42%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "30_satellite",
+      "6,435",
+      "36",
+      "31.64%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "31_satimage-2",
+      "5,803",
+      "36",
+      "1.22%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "32_shuttle",
+      "49,097",
+      "9",
+      "7.15%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "33_skin",
+      "245,057",
+      "3",
+      "20.75%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "34_smtp",
+      "95,156",
+      "3",
+      "0.03%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "35_SpamBase",
+      "4,207",
+      "57",
+      "39.91%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "36_speech",
+      "3,686",
+      "400",
+      "1.65%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "37_Stamps",
+      "340",
+      "9",
+      "9.12%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "38_thyroid",
+      "3,772",
+      "6",
+      "2.47%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "39_vertebral",
+      "240",
+      "6",
+      "12.5%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "3_backdoor",
+      "95,329",
+      "196",
+      "2.44%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "40_vowels",
+      "1,456",
+      "12",
+      "3.43%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "41_Waveform",
+      "3,443",
+      "21",
+      "2.9%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "42_WBC",
+      "223",
+      "9",
+      "4.48%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "43_WDBC",
+      "367",
+      "30",
+      "2.72%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "44_Wilt",
+      "4,819",
+      "5",
+      "5.33%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "45_wine",
+      "129",
+      "13",
+      "7.75%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "46_WPBC",
+      "198",
+      "33",
+      "23.74%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "47_yeast",
+      "1,484",
+      "8",
+      "34.16%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "48_chess",
+      "28,056",
+      "6",
+      "0.1%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "49_kddcup99_prob",
+      "64,759",
+      "6",
+      "6.43%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "4_breastw",
+      "683",
+      "9",
+      "34.99%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "50_bank",
+      "41,188",
+      "10",
+      "11.27%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "51_kddcup99_u2r",
+      "60,821",
+      "6",
+      "0.37%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "5_campaign",
+      "41,188",
+      "62",
+      "11.27%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "6_cardio",
+      "1,831",
+      "21",
+      "9.61%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "7_Cardiotocography",
+      "2,114",
+      "21",
+      "22.04%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "8_celeba",
+      "202,599",
+      "39",
+      "2.24%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ],
+     [
+      "9_census",
+      "299,285",
+      "500",
+      "6.2%",
+      "ODDS [rayana2016] / ADBench [han2022]"
+     ]
+    ]
+   }
+  ]
+ },
+ "references": {
+  "uci": "@misc{uci,\n  title        = {{UCI} Machine Learning Repository},\n  author       = {Dua, Dheeru and Graff, Casey},\n  year         = {2019},\n  institution  = {University of California, Irvine, School of Information and Computer Sciences},\n  url          = {https://archive.ics.uci.edu}\n}",
+  "openml": "@article{openml,\n  title   = {{OpenML}: Networked Science in Machine Learning},\n  author  = {Vanschoren, Joaquin and van Rijn, Jan N. and Bischl, Bernd and Torgo, Luis},\n  journal = {ACM SIGKDD Explorations Newsletter},\n  volume  = {15},\n  number  = {2},\n  pages   = {49--60},\n  year    = {2013}\n}",
+  "delve": "@misc{delve,\n  title        = {{DELVE}: Data for Evaluating Learning in Valid Experiments},\n  author       = {Rasmussen, Carl Edward and Neal, Radford M. and Hinton, Geoffrey and van Camp, Drew and Revow, Michael and Ghahramani, Zoubin and Kustra, Rafal and Tibshirani, Robert},\n  institution  = {University of Toronto, Department of Computer Science},\n  url          = {https://www.cs.toronto.edu/~delve/}\n}",
+  "guyon2004": "@inproceedings{guyon2004,\n  title     = {Result Analysis of the {NIPS} 2003 Feature Selection Challenge},\n  author    = {Guyon, Isabelle and Gunn, Steve and Ben-Hur, Asa and Dror, Gideon},\n  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},\n  volume    = {17},\n  year      = {2004}\n}",
+  "lecun1998": "@article{lecun1998,\n  title   = {Gradient-Based Learning Applied to Document Recognition},\n  author  = {LeCun, Yann and Bottou, L{\\'e}on and Bengio, Yoshua and Haffner, Patrick},\n  journal = {Proceedings of the IEEE},\n  volume  = {86},\n  number  = {11},\n  pages   = {2278--2324},\n  year    = {1998}\n}",
+  "harries1999": "@techreport{harries1999,\n  title       = {{SPLICE-2} Comparative Evaluation: Electricity Pricing},\n  author      = {Harries, Michael},\n  institution = {University of New South Wales, School of Computer Science and Engineering},\n  year        = {1999}\n}",
+  "souza2020": "@article{souza2020,\n  title   = {Challenges in Benchmarking Stream Learning Algorithms with Real-World Data},\n  author  = {Souza, Vinicius M. A. and dos Reis, Denis M. and Maletzke, Andre G. and Batista, Gustavo E. A. P. A.},\n  journal = {Data Mining and Knowledge Discovery},\n  volume  = {34},\n  pages   = {1805--1858},\n  year    = {2020}\n}",
+  "zhu2010": "@misc{zhu2010,\n  title  = {Stream Data Mining Repository},\n  author = {Zhu, Xingquan},\n  year   = {2010},\n  url    = {https://www.cse.fau.edu/~xqzhu/stream.html}\n}",
+  "elwell2011": "@article{elwell2011,\n  title   = {Incremental Learning of Concept Drift in Nonstationary Environments},\n  author  = {Elwell, Ryan and Polikar, Robi},\n  journal = {IEEE Transactions on Neural Networks},\n  volume  = {22},\n  number  = {10},\n  pages   = {1517--1531},\n  year    = {2011}\n}",
+  "street2001": "@inproceedings{street2001,\n  title     = {A Streaming Ensemble Algorithm ({SEA}) for Large-Scale Classification},\n  author    = {Street, W. Nick and Kim, YongSeog},\n  booktitle = {Proceedings of the 7th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},\n  pages     = {377--382},\n  year      = {2001}\n}",
+  "agrawal1993": "@article{agrawal1993,\n  title   = {Database Mining: A Performance Perspective},\n  author  = {Agrawal, Rakesh and Imielinski, Tomasz and Swami, Arun},\n  journal = {IEEE Transactions on Knowledge and Data Engineering},\n  volume  = {5},\n  number  = {6},\n  pages   = {914--925},\n  year    = {1993}\n}",
+  "bifet2010": "@article{bifet2010,\n  title   = {{MOA}: Massive Online Analysis},\n  author  = {Bifet, Albert and Holmes, Geoffrey and Kirkby, Richard and Pfahringer, Bernhard},\n  journal = {Journal of Machine Learning Research},\n  volume  = {11},\n  pages   = {1601--1604},\n  year    = {2010}\n}",
+  "montiel2021": "@article{montiel2021,\n  title   = {River: Machine Learning for Streaming Data in Python},\n  author  = {Montiel, Jacob and Halford, Max and Mastelini, Saulo Martiello and Bolmier, Geoffrey and Sourty, Raphael and Vaysse, Robin and Zouitine, Adil and Gomes, Heitor Murilo and Read, Jesse and Abdessalem, Talel and Bifet, Albert},\n  journal = {Journal of Machine Learning Research},\n  volume  = {22},\n  number  = {110},\n  pages   = {1--8},\n  year    = {2021}\n}",
+  "friedman1991": "@article{friedman1991,\n  title   = {Multivariate Adaptive Regression Splines},\n  author  = {Friedman, Jerome H.},\n  journal = {The Annals of Statistics},\n  volume  = {19},\n  number  = {1},\n  pages   = {1--67},\n  year    = {1991}\n}",
+  "pedregosa2011": "@article{pedregosa2011,\n  title   = {Scikit-learn: Machine Learning in {P}ython},\n  author  = {Pedregosa, Fabian and Varoquaux, Ga{\\\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and Vanderplas, Jake and Passos, Alexandre and Cournapeau, David and Brucher, Matthieu and Perrot, Matthieu and Duchesnay, {\\'E}douard},\n  journal = {Journal of Machine Learning Research},\n  volume  = {12},\n  pages   = {2825--2830},\n  year    = {2011}\n}",
+  "katakis2010": "@article{katakis2010,\n  title   = {Tracking Recurring Contexts Using Ensemble Classifiers: An Application to Email Filtering},\n  author  = {Katakis, Ioannis and Tsoumakas, Grigorios and Vlahavas, Ioannis},\n  journal = {Knowledge and Information Systems},\n  volume  = {22},\n  number  = {3},\n  pages   = {371--391},\n  year    = {2010}\n}",
+  "rayana2016": "@misc{rayana2016,\n  title        = {{ODDS} Library},\n  author       = {Rayana, Shebuti},\n  year         = {2016},\n  institution  = {Stony Brook University, Department of Computer Science},\n  url          = {http://odds.cs.stonybrook.edu}\n}",
+  "han2022": "@inproceedings{han2022,\n  title     = {{ADBench}: Anomaly Detection Benchmark},\n  author    = {Han, Songqiao and Hu, Xiyang and Huang, Hailiang and Jiang, Mingqi and Zhao, Yue},\n  booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Datasets and Benchmarks Track},\n  volume    = {35},\n  year      = {2022}\n}"
+ }
+}
