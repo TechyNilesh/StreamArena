@@ -18,12 +18,29 @@ from pathlib import Path
 
 from common import DEFAULT_RESULTS_ROOT, REPO_ROOT, TASKS
 
-# metric used for ranking, and whether higher is better
-PRIMARY_METRIC = {
-    "classification": ("kappa_t", True),
-    "regression": ("rmse", False),
-    "clustering": ("ari_mean", True),
-    "anomaly_detection": ("auc", True),
+# Per task: metric used for per-dataset ranking (higher_better), plus the
+# scale-safe display aggregates shown on the leaderboard. Raw kappa_t and RMSE
+# must never be averaged across datasets (unbounded / scale-dependent), so
+# classification shows median kappa_t + mean accuracy and regression shows
+# median R². Within a dataset, kappa_t ranks identically to accuracy (fixed
+# NoChange reference) and R² identically to RMSE.
+TASK_SPEC = {
+    "classification": {
+        "rank_on": ("kappa_t", True),
+        "display": [("kappa_t", "median", "Median κt"), ("accuracy", "mean", "Mean acc")],
+    },
+    "regression": {
+        "rank_on": ("rmse", False),
+        "display": [("r2", "median", "Median R²")],
+    },
+    "clustering": {
+        "rank_on": ("ari_mean", True),
+        "display": [("ari_mean", "mean", "Mean ARI")],
+    },
+    "anomaly_detection": {
+        "rank_on": ("auc", True),
+        "display": [("auc", "mean", "Mean AUC")],
+    },
 }
 
 
@@ -46,37 +63,50 @@ def seed_mean(records, metric):
     return statistics.mean(values) if values else None
 
 
-def rank_table(task_runs, metric, higher_better):
-    """Per-dataset ranks on the seed-averaged primary metric.
+def rank_table(task_runs, spec):
+    """Per-dataset ranks on the seed-averaged ranking metric, plus wins and
+    scale-safe display aggregates.
 
     Returns (per_algorithm_summary, per_dataset_scores).
     """
-    scores = defaultdict(dict)  # {dataset: {algorithm: value}}
+    metric, higher_better = spec["rank_on"]
+    scores = defaultdict(dict)  # {dataset: {algorithm: value}} for the rank metric
+    display_values = defaultdict(lambda: defaultdict(list))  # {algo: {display_metric: [values]}}
     wallclock = defaultdict(list)
     for (algorithm, dataset), records in task_runs.items():
         value = seed_mean(records, metric)
         if value is not None:
             scores[dataset][algorithm] = value
+        for dmetric, _, _ in spec["display"]:
+            dvalue = seed_mean(records, dmetric)
+            if dvalue is not None:
+                display_values[algorithm][dmetric].append(dvalue)
         wallclock[algorithm].extend(
             r["wallclock_s"] for r in records if r.get("wallclock_s") is not None
         )
 
     ranks = defaultdict(list)
+    wins = defaultdict(int)
     for dataset, by_algo in scores.items():
         ordered = sorted(by_algo, key=by_algo.get, reverse=higher_better)
         for position, algorithm in enumerate(ordered, start=1):
             ranks[algorithm].append(position)
+        wins[ordered[0]] += 1
 
     summary = []
     for algorithm, algo_ranks in ranks.items():
-        summary.append(
-            {
-                "algorithm": algorithm,
-                "avg_rank": statistics.mean(algo_ranks),
-                "n_datasets": len(algo_ranks),
-                "total_wallclock_h": sum(wallclock[algorithm]) / 3600,
-            }
-        )
+        row = {
+            "algorithm": algorithm,
+            "avg_rank": statistics.mean(algo_ranks),
+            "wins": wins[algorithm],
+            "n_datasets": len(algo_ranks),
+            "total_wallclock_h": sum(wallclock[algorithm]) / 3600,
+        }
+        for dmetric, agg, _ in spec["display"]:
+            values = display_values[algorithm][dmetric]
+            fn = statistics.median if agg == "median" else statistics.mean
+            row[f"display_{dmetric}"] = fn(values) if values else None
+        summary.append(row)
     summary.sort(key=lambda row: row["avg_rank"])
     return summary, scores
 
@@ -97,21 +127,29 @@ def write_markdown(runs, out_path):
     for task in TASKS:
         if task not in runs:
             continue
-        metric, higher_better = PRIMARY_METRIC[task]
-        summary, scores = rank_table(runs[task], metric, higher_better)
+        spec = TASK_SPEC[task]
+        metric, higher_better = spec["rank_on"]
+        summary, scores = rank_table(runs[task], spec)
         direction = "higher is better" if higher_better else "lower is better"
+        display_headers = [label for _, _, label in spec["display"]]
         lines += [
             f"## {task.replace('_', ' ').title()}",
             "",
-            f"Primary metric: **{metric}** ({direction}). "
+            f"Ranked per dataset on **{metric}** ({direction}). "
             f"{len(scores)} datasets, {len(summary)} algorithms.",
             "",
-            "| Rank | Algorithm | Avg rank | #Datasets | Total wallclock (h) |",
-            "|---:|---|---:|---:|---:|",
+            "| Rank | Algorithm | Avg rank | Wins | "
+            + " | ".join(display_headers)
+            + " | #Datasets | Total wallclock (h) |",
+            "|---:|---|---:|---:|" + "---:|" * len(display_headers) + "---:|---:|",
         ]
         for position, row in enumerate(summary, start=1):
+            display_cells = " | ".join(
+                fmt(row[f"display_{dmetric}"], 2) for dmetric, _, _ in spec["display"]
+            )
             lines.append(
                 f"| {position} | {row['algorithm']} | {row['avg_rank']:.2f} "
+                f"| {row['wins']} | {display_cells} "
                 f"| {row['n_datasets']} | {row['total_wallclock_h']:.2f} |"
             )
         lines += ["", f"<details><summary>Per-dataset {metric}</summary>", ""]
