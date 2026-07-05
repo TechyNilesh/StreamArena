@@ -33,10 +33,16 @@ def check(path):
     if errors:
         return errors
 
-    if not isinstance(record["hyperparameters"], dict) or not record["hyperparameters"]:
+    hp = record["hyperparameters"]
+    if not isinstance(hp, dict) or not hp:
         errors.append(
-            "hyperparameters must be a non-empty object — list set parameters as "
-            'name: value, or {"_defaults": "<library+version> defaults"} for pure defaults'
+            "hyperparameters must be a non-empty object listing every "
+            "hyperparameter of the algorithm as name: value"
+        )
+    elif "_defaults" in hp:
+        errors.append(
+            "hyperparameters must spell out the full configuration — "
+            "'_defaults' shorthand is not accepted (defaults change between versions)"
         )
 
     task = record["task"]

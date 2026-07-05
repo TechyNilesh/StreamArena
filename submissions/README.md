@@ -34,7 +34,7 @@ One JSON file per (dataset, seed) run:
     "grace_period": 200,
     "split_confidence": 1e-7,
     "ensemble_size": 100,
-    "_defaults": "mycooltree 1.2.0 defaults unless listed"
+    "leaf_prediction": "NaiveBayesAdaptive"
   },
   "submission": {
     "author": "Jane Doe",
@@ -54,12 +54,13 @@ Required fields: `task`, `algorithm`, `dataset`, `seed`, `metrics`, `wallclock_s
 
 **`hyperparameters`** is a machine-readable object documenting the single
 configuration used across all datasets of the task (the protocol forbids
-per-dataset tuning, so there is exactly one). List every parameter you set
-explicitly as `name: value`; parameters left at library defaults may be
-summarized with the `_defaults` key naming the library and version whose
-defaults apply (e.g. `"capymoa 0.13.0 defaults"`). If you ran pure defaults,
-`{"_defaults": "capymoa 0.13.0 defaults"}` is a complete, valid value —
-but the field itself must be present so reproducibility is never ambiguous.
+per-dataset tuning, so there is exactly one). It must list **every
+hyperparameter of the algorithm as `name: value`** — including the ones you
+left at their library defaults. "Defaults" change between library versions,
+so spelling the full configuration out is the only unambiguous record. Most
+libraries expose this in one call (e.g. CapyMOA's
+`learner.moa_learner.getOptions().getAsCLIString()`, scikit-style
+`get_params()`).
 
 `metrics` must contain the task's metrics:
 
