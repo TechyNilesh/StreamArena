@@ -152,13 +152,6 @@
       "UCI [uci] \u2014 Statlog (Shuttle)"
      ],
      [
-      "spam",
-      "4,601",
-      "57",
-      "2",
-      "Concept-drift spam benchmark [katakis2010]"
-     ],
-     [
       "vehicle_sensIT",
       "98,528",
       "100",

@@ -17,6 +17,10 @@
 
 ---
 
+**🏆 Live leaderboard: [techynilesh.github.io/StreamArena](https://techynilesh.github.io/StreamArena/)** ·
+[Dataset catalog](https://techynilesh.github.io/StreamArena/datasets.html) ·
+[Submit your results](submissions/README.md)
+
 StreamArena aggregates datasets for **stream learning** — classification, regression, clustering,
 and anomaly detection under concept drift — into one consistently organized, task-first collection.
 It plays the same role for streaming/online ML that [TabArena](https://github.com/autogluon/tabarena)
@@ -49,10 +53,15 @@ StreamArena/
 ├── benchmarks/               # baseline benchmark harness (CapyMOA) — see BENCHMARK.md
 │   ├── common.py             # shared prequential-evaluation runner
 │   ├── make_jobs.py          # emit per-(algorithm × dataset) jobs for GNU parallel
+│   ├── aggregate.py          # results -> LEADERBOARD.md + leaderboard.json
+│   ├── validate_submission.py # CI check for community submissions
 │   ├── classification/       # one CLI script per baseline algorithm
 │   ├── regression/
 │   ├── clustering/
 │   └── anomaly_detection/
+├── site/                      # static leaderboard + dataset catalog (GitHub Pages)
+├── submissions/               # community results — open a PR, board rebuilds on merge
+├── leaderboard/data/          # packed baseline run records used by CI
 ├── examples/
 │   ├── load_dataset.py       # one loader function for every dataset in the collection
 │   ├── river_usage.py        # run a River model on a StreamArena dataset
@@ -74,7 +83,7 @@ anomaly detection (which is entirely real-world benchmark data) is split into `r
 
 | Task | Count | Notes |
 |---|---:|---|
-| **Classification** | 43 files (23 real + 20 synthetic) | `real/`: electricity, forest cover, airlines, poker, weather, KDD-99, insects, Nomao, MNIST, Usenet, Gisette, Dota, Spambase, HAR, etc. `synth/`: classic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon) |
+| **Classification** | 42 files (22 real + 20 synthetic) | `real/`: electricity, forest cover, airlines, poker, weather, KDD-99, insects, Nomao, MNIST, Usenet, Gisette, Dota, Spambase, HAR, etc. `synth/`: classic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon) |
 | **Regression** | 30 files (25 real + 5 synthetic) | `real/`: housing (king's county, california, miami, brazilian), wages, sensor/physical (sarcos, naval propulsion, superconductivity, kin8nm), and more. `synth/`: Friedman & Hyperplane generators |
 | **Clustering** | 13 files (6 real + 7 synthetic) | Streaming clustering benchmarks — reuses classification drift streams plus a dedicated synthetic blobs set |
 | **Anomaly Detection** | 51 files | ODDS/ADBench-style outlier detection collection (annthyroid, mnist, shuttle, satellite, mammography, etc.) — all real-world, no `real/`/`synth/` split |
@@ -170,8 +179,8 @@ evaluation) and the full baseline list.
 ## 🛣️ Roadmap
 
 - [x] Evaluation harness — prequential protocol + per-algorithm runner scripts ([BENCHMARK.md](BENCHMARK.md))
-- [ ] Baseline results for the full dataset × algorithm matrix
-- [ ] Public leaderboard
+- [x] Baseline results for the full dataset × algorithm matrix ([LEADERBOARD.md](LEADERBOARD.md))
+- [x] Public leaderboard with community submissions — [techynilesh.github.io/StreamArena](https://techynilesh.github.io/StreamArena/)
 - [ ] Unified `StreamArenaDataset` loader API across formats
 - [ ] Dataset cards documenting drift type, size, and source per dataset
 

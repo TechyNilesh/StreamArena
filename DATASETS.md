@@ -30,7 +30,6 @@ The `Source` column gives a best-effort attribution to each dataset's original p
 | real_sensor | 2,219,803 | 5 | 55 | Zhu [zhu2010] |
 | real_shuttle | 58,000 | 9 | 7 | UCI [uci] — Statlog (Shuttle), resampled |
 | shuttle | 58,000 | 9 | 7 | UCI [uci] — Statlog (Shuttle) |
-| spam | 4,601 | 57 | 2 | Concept-drift spam benchmark [katakis2010] |
 | vehicle_sensIT | 98,528 | 100 | 3 | UCI [uci] — SensIT Vehicle |
 | weather | 18,159 | 8 | 2 | Elwell & Polikar [elwell2011] |
 
