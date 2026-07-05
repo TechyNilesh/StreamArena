@@ -210,7 +210,9 @@ footer.colophon a { color: var(--accent-ink); }
       <dt>Wins</dt><dd>Datasets where the algorithm placed first.</dd>
       <dt>Fingerprint</dt><dd>One cell per dataset, teal (won) to clay (last). A solid-teal strip is consistent; a striped one is peaky. Hover a cell for the dataset.</dd>
       <dt>κt</dt><dd>Kappa-temporal: skill over the predict-the-previous-label baseline. 100 perfect, 0 no better, negative worse. Shown as a median — it is unbounded below.</dd>
-      <dt>R²</dt><dd>1 is perfect, 0 is no better than predicting the mean.</dd>
+      <dt>R²</dt><dd>Regression fit, scale-free across datasets: 1 is perfect, 0 is no better than predicting the mean.</dd>
+      <dt>ARI</dt><dd>Clustering agreement with the ground-truth labels, scored over evaluation windows: 1 is perfect, 0 is random grouping.</dd>
+      <dt>AUC</dt><dd>Anomaly detection ROC-AUC over the full stream of scores: 1 is perfect, 0.5 is random.</dd>
       <dt>Wallclock</dt><dd>Total compute across all datasets and seeds. Read it against rank — in streaming, a small quality gap for a 100× time gap is the whole story.</dd>
     </dl>
   </section>
