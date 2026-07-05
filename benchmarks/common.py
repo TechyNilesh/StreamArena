@@ -74,11 +74,19 @@ def _parse_args(task, algorithm, stochastic):
     return parser.parse_args()
 
 
-def run(task, algorithm, make_learner, stochastic=False):
+def count_rows(csv_path):
+    with open(csv_path) as f:
+        return sum(1 for _ in f) - 1
+
+
+def run(task, algorithm, make_learner, stochastic=False, max_rows=None):
     """Entry point called by every per-algorithm script.
 
     :param make_learner: callable (schema, seed) -> CapyMOA learner.
     :param stochastic: seeds 1-10 by default instead of just 1.
+    :param max_rows: skip datasets with more instances than this — a
+        documented coverage cap for algorithms too slow for huge streams
+        (see BENCHMARK.md).
     """
     assert task in TASKS, f"unknown task {task}"
     args = _parse_args(task, algorithm, stochastic)
@@ -96,6 +104,11 @@ def run(task, algorithm, make_learner, stochastic=False):
         raise SystemExit(f"No CSVs found under {DATASETS_ROOT / task} — run download.py first.")
 
     for key, csv_path in datasets.items():
+        if max_rows is not None:
+            n = count_rows(csv_path)
+            if n > max_rows:
+                print(f"[skip] {key}: {n} rows exceeds {algorithm}'s {max_rows}-row coverage cap")
+                continue
         for seed in args.seeds:
             json_path, windowed_path = result_paths(args.results_dir, task, algorithm, key, seed)
             if json_path.exists() and not args.force:

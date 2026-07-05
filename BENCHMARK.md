@@ -39,6 +39,14 @@ held-back labels. Labels are never shown to the clusterer.
 
 Anomaly note: detectors are unsupervised; labels are used only to compute AUC.
 
+Coverage caps (documented, not silent): the two pure-Python detectors are too
+slow for the largest streams at default settings. RobustRandomCutForest
+(~0.18 s/instance) runs only on datasets ≤ 25,000 instances. Online
+Isolation Forest runs everywhere, but datasets over 200,000 instances use
+seeds 1–3 instead of 1–10. HalfSpaceTrees (Java) covers all datasets at full
+seeds. Reduced coverage is visible in the per-algorithm #Datasets column of
+the results.
+
 ## Baseline algorithms (v0 — 17)
 
 | Task | Naive floors | Classics | Modern ensembles |
