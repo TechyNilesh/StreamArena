@@ -20,8 +20,8 @@ Ranked per dataset on **kappa_t** (higher is better). 42 datasets, 7 algorithms.
 
 | Rank | Algorithm | Avg rank | Wins | Median κt | Median κ | Mean acc | #Datasets | Total wallclock (h) |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|
-| 1 | StreamingRandomPatches | 1.83 | 18 | 74.58 | 86.20 | 85.04 | 42 | 188.61 |
-| 2 | AdaptiveRandomForest | 1.93 | 16 | 72.23 | 84.76 | 84.88 | 42 | 118.51 |
+| 1 | StreamingRandomPatches | 1.83 | 18 | 74.58 | 86.20 | 85.04 | 42 | 217.13 |
+| 2 | AdaptiveRandomForest | 1.93 | 16 | 72.23 | 84.76 | 84.88 | 42 | 134.48 |
 | 3 | HoeffdingAdaptiveTree | 2.98 | 5 | 70.53 | 75.90 | 81.70 | 42 | 0.78 |
 | 4 | HoeffdingTree | 4.10 | 0 | 52.06 | 65.29 | 74.45 | 42 | 0.70 |
 | 5 | NaiveBayes | 5.48 | 1 | 3.49 | 8.52 | 62.27 | 42 | 0.67 |
@@ -49,7 +49,7 @@ Ranked per dataset on **kappa_t** (higher is better). 42 datasets, 7 algorithms.
 | real/real_kdd99 | 97.144 | 95.587 | 95.950 | 86.802 | -266.411 | 0.000 | -135.894 |
 | real/real_pendigits | 94.340 | 93.043 | 87.851 | 84.525 | 80.793 | 0.000 | -1.146 |
 | real/real_powersupply | 17.416 | 16.904 | 15.488 | 4.194 | 4.163 | 0.000 | 3.475 |
-| real/real_sensor | 91.995 | 89.377 | 72.936 | 12.625 | 1.895 | 0.000 | 2.839 |
+| real/real_sensor | 92.022 | 89.385 | 72.936 | 12.625 | 1.895 | 0.000 | 2.839 |
 | real/real_shuttle | 99.243 | 98.975 | 96.467 | 95.674 | 77.652 | 0.000 | 39.660 |
 | real/shuttle | 99.252 | 98.978 | 94.425 | 49.584 | 39.665 | 0.000 | 39.660 |
 | real/vehicle_sensIT | 74.393 | 74.387 | 62.526 | 61.647 | 59.611 | 0.000 | 19.943 |
