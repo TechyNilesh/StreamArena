@@ -80,6 +80,11 @@ tbody tr:last-child { border-bottom: none; }
 tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
 td:last-child { white-space: normal; min-width: 220px; color: var(--muted); }
 sup a { font-family: var(--mono); font-size: .72rem; }
+.imb-badge {
+  font: 600 .64rem var(--body); text-transform: uppercase; letter-spacing: .05em;
+  color: var(--clay); border: 1px solid color-mix(in srgb, var(--clay) 55%, var(--line));
+  border-radius: 999px; padding: 1px 7px; margin-left: 6px; vertical-align: 1px;
+}
 
 section.refs { margin: 48px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
 section.refs h2 { font: 600 1.2rem var(--display); margin-bottom: 6px; }
@@ -185,6 +190,14 @@ const TASK_ICONS = {
 };
 const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const linkRefs = s => esc(s).replace(/\[([a-z0-9]+)\]/gi, (_, key) => `<sup><a href="#ref-${key}">[${key}]</a></sup>`);
+// class-imbalance ratio cell: flag IR >= 3 (majority class at least 3x the minority)
+const irCell = v => {
+  const ir = parseFloat(v);
+  if (!isFinite(ir)) return esc(v);
+  return ir >= 3
+    ? `${esc(v)} <span class="imb-badge" title="Imbalance ratio ≥ 3 — prefer kappa metrics over accuracy here">imbalanced</span>`
+    : esc(v);
+};
 
 fetch("datasets.json").then(r => r.json()).then(data => {
   const main = document.getElementById("main");
@@ -199,8 +212,12 @@ fetch("datasets.json").then(r => r.json()).then(data => {
       else html += `<h3>${t.rows.length} datasets</h3>`;
       html += `<div class="table-scroll"><table><thead><tr>` +
         t.columns.map(c => `<th>${esc(c)}</th>`).join("") + `</tr></thead><tbody>` +
-        t.rows.map(r => `<tr>` + r.map((cell, i) =>
-          `<td>${i === r.length - 1 ? linkRefs(cell) : esc(cell)}</td>`).join("") + `</tr>`).join("") +
+        t.rows.map(r => `<tr>` + r.map((cell, i) => {
+          const col = t.columns[i] ?? "";
+          if (i === r.length - 1) return `<td>${linkRefs(cell)}</td>`;
+          if (col.startsWith("Imbalance")) return `<td>${irCell(cell)}</td>`;
+          return `<td>${esc(cell)}</td>`;
+        }).join("") + `</tr>`).join("") +
         `</tbody></table></div>`;
     }
     section.innerHTML = html;

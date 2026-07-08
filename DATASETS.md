@@ -2,61 +2,63 @@
 
 Exact instance/feature counts computed directly from each CSV. `#Classes` is the number of unique values in the label column; for regression, the `Target` column name is shown instead. For anomaly detection, the percentage shown is the minority-class (anomaly) rate.
 
+`Imbalance (IR)` is the class-imbalance ratio — the majority class count divided by the minority class count (1.0 = perfectly balanced). Datasets with IR ≥ 3 are flagged as imbalanced on the [dataset catalog](https://techynilesh.github.io/StreamArena/datasets.html); on those, prefer the chance-corrected kappa metrics over raw accuracy.
+
 The `Source` column gives a best-effort attribution to each dataset's original public origin, keyed to full BibTeX entries in the [References](#references) section at the bottom. These are best-effort identifications based on well-known dataset naming conventions — verify against the original publication before citing precisely in academic work.
 
 ## Classification
 
 ### Real-world
 
-| Dataset | #Instances | #Features | #Classes | Source |
-|---|---|---|---|---|
-| Dota | 11,055 | 30 | 2 | OpenML [openml] |
-| Gisette | 7,000 | 5,000 | 2 | NIPS 2003 FS Challenge [guyon2004] |
-| HAR | 10,299 | 561 | 2 | UCI [uci] — Human Activity Recognition Using Smartphones |
-| KDDCup99 | 100,000 | 41 | 2 | UCI [uci] — KDD Cup 1999 |
-| MNIST | 70,000 | 784 | 2 | LeCun et al. [lecun1998] |
-| Spambase | 4,601 | 57 | 2 | UCI [uci] — Spambase |
-| Usenet | 18,846 | 658 | 20 | Katakis et al. [katakis2010] |
-| adult | 48,842 | 14 | 4 | UCI [uci] — Adult / Census Income |
-| airlines | 539,383 | 7 | 2 | OpenML [openml] — Airlines |
-| electricity | 45,312 | 8 | 2 | Harries [harries1999] — Electricity Market |
-| forest_cover | 581,012 | 54 | 7 | UCI [uci] — Covertype |
-| insects | 52,848 | 33 | 6 | Souza et al. [souza2020] |
-| nomao | 34,465 | 118 | 2 | UCI [uci] — Nomao |
-| poker | 829,201 | 10 | 10 | UCI [uci] — Poker Hand |
-| real_kdd99 | 100,655 | 38 | 12 | UCI [uci] — KDD Cup 1999 (resampled) |
-| real_pendigits | 10,992 | 16 | 10 | UCI [uci] — Pen-Based Recognition of Handwritten Digits |
-| real_powersupply | 29,928 | 2 | 24 | Zhu [zhu2010] |
-| real_sensor | 2,219,803 | 5 | 55 | Zhu [zhu2010] |
-| real_shuttle | 58,000 | 9 | 7 | UCI [uci] — Statlog (Shuttle), resampled |
-| shuttle | 58,000 | 9 | 7 | UCI [uci] — Statlog (Shuttle) |
-| vehicle_sensIT | 98,528 | 100 | 3 | UCI [uci] — SensIT Vehicle |
-| weather | 18,159 | 8 | 2 | Elwell & Polikar [elwell2011] |
+| Dataset | #Instances | #Features | #Classes | Imbalance (IR) | Source |
+|---|---|---|---|---|---|
+| Dota | 11,055 | 30 | 2 | 1.3 | OpenML [openml] |
+| Gisette | 7,000 | 5,000 | 2 | 1.0 | NIPS 2003 FS Challenge [guyon2004] |
+| HAR | 10,299 | 561 | 2 | 5.0 | UCI [uci] — Human Activity Recognition Using Smartphones |
+| KDDCup99 | 100,000 | 41 | 2 | 28.8 | UCI [uci] — KDD Cup 1999 |
+| MNIST | 70,000 | 784 | 2 | 9.1 | LeCun et al. [lecun1998] |
+| Spambase | 4,601 | 57 | 2 | 1.5 | UCI [uci] — Spambase |
+| Usenet | 18,846 | 658 | 20 | 1.6 | Katakis et al. [katakis2010] |
+| adult | 48,842 | 14 | 4 | 6.4 | UCI [uci] — Adult / Census Income |
+| airlines | 539,383 | 7 | 2 | 1.2 | OpenML [openml] — Airlines |
+| electricity | 45,312 | 8 | 2 | 1.4 | Harries [harries1999] — Electricity Market |
+| forest_cover | 581,012 | 54 | 7 | 103.1 | UCI [uci] — Covertype |
+| insects | 52,848 | 33 | 6 | 1.0 | Souza et al. [souza2020] |
+| nomao | 34,465 | 118 | 2 | 2.5 | UCI [uci] — Nomao |
+| poker | 829,201 | 10 | 10 | 207763.0 | UCI [uci] — Poker Hand |
+| real_kdd99 | 100,655 | 38 | 12 | 97278.0 | UCI [uci] — KDD Cup 1999 (resampled) |
+| real_pendigits | 10,992 | 16 | 10 | 1.1 | UCI [uci] — Pen-Based Recognition of Handwritten Digits |
+| real_powersupply | 29,928 | 2 | 24 | 1.0 | Zhu [zhu2010] |
+| real_sensor | 2,219,803 | 5 | 55 | 32.2 | Zhu [zhu2010] |
+| real_shuttle | 58,000 | 9 | 7 | 4558.6 | UCI [uci] — Statlog (Shuttle), resampled |
+| shuttle | 58,000 | 9 | 7 | 4558.6 | UCI [uci] — Statlog (Shuttle) |
+| vehicle_sensIT | 98,528 | 100 | 3 | 2.2 | UCI [uci] — SensIT Vehicle |
+| weather | 18,159 | 8 | 2 | 2.2 | Elwell & Polikar [elwell2011] |
 
 ### Synthetic
 
-| Dataset | #Instances | #Features | #Classes | Source |
-|---|---|---|---|---|
-| Madelon | 2,600 | 500 | 2 | Guyon et al. [guyon2004] |
-| RBF | 10,000 | 10,000 | 2 | MOA [bifet2010] — RandomRBF generator |
-| RBFm_100k | 100,000 | 10 | 5 | MOA [bifet2010] — RandomRBF generator |
-| RTG_2abrupt | 100,000 | 30 | 5 | MOA [bifet2010] — RandomTreeGenerator |
-| RTG_highdim_10k | 10,000 | 450 | 2 | MOA [bifet2010] — RandomTreeGenerator |
-| hyperplane_high_gradual_drift | 500,000 | 10 | 2 | MOA/River [bifet2010][montiel2021] — Hyperplane |
-| movingRBF | 200,000 | 10 | 5 | MOA [bifet2010] — Moving RandomRBF |
-| moving_squares | 200,000 | 2 | 4 | MOA [bifet2010] — Moving Squares |
-| sea_high_abrupt_drift | 500,000 | 3 | 2 | Street & Kim [street2001] — SEA generator |
-| sea_high_mixed_drift | 500,000 | 3 | 2 | Street & Kim [street2001] — SEA generator |
-| sine_stream_with_drift | 50,000 | 4 | 2 | MOA/River [bifet2010][montiel2021] — Sine |
-| synth_agrawal | 100,000 | 9 | 2 | Agrawal et al. [agrawal1993] |
-| synth_blobs_expanding | 100,000 | 5 | 5 | scikit-learn [pedregosa2011] — make_blobs |
-| synth_blobs_gradual | 100,000 | 5 | 5 | scikit-learn [pedregosa2011] — make_blobs |
-| synth_blobs_incremental | 100,000 | 5 | 5 | scikit-learn [pedregosa2011] — make_blobs |
-| synth_blobs_merge_split | 100,000 | 5 | 5 | scikit-learn [pedregosa2011] — make_blobs |
-| synth_blobs_sudden | 100,000 | 5 | 5 | scikit-learn [pedregosa2011] — make_blobs |
-| synth_rbf_fast | 100,000 | 5 | 5 | MOA [bifet2010] — RandomRBF generator |
-| synth_rbf_gradual | 100,000 | 5 | 5 | MOA [bifet2010] — RandomRBF generator |
-| synth_rbf_random | 100,000 | 4 | 4 | MOA [bifet2010] — RandomRBF generator |
+| Dataset | #Instances | #Features | #Classes | Imbalance (IR) | Source |
+|---|---|---|---|---|---|
+| Madelon | 2,600 | 500 | 2 | 1.0 | Guyon et al. [guyon2004] |
+| RBF | 10,000 | 10,000 | 2 | 1.1 | MOA [bifet2010] — RandomRBF generator |
+| RBFm_100k | 100,000 | 10 | 5 | 3.2 | MOA [bifet2010] — RandomRBF generator |
+| RTG_2abrupt | 100,000 | 30 | 5 | 13.4 | MOA [bifet2010] — RandomTreeGenerator |
+| RTG_highdim_10k | 10,000 | 450 | 2 | 1.1 | MOA [bifet2010] — RandomTreeGenerator |
+| hyperplane_high_gradual_drift | 500,000 | 10 | 2 | 1.0 | MOA/River [bifet2010][montiel2021] — Hyperplane |
+| movingRBF | 200,000 | 10 | 5 | 3.3 | MOA [bifet2010] — Moving RandomRBF |
+| moving_squares | 200,000 | 2 | 4 | 1.0 | MOA [bifet2010] — Moving Squares |
+| sea_high_abrupt_drift | 500,000 | 3 | 2 | 1.6 | Street & Kim [street2001] — SEA generator |
+| sea_high_mixed_drift | 500,000 | 3 | 2 | 1.4 | Street & Kim [street2001] — SEA generator |
+| sine_stream_with_drift | 50,000 | 4 | 2 | 1.0 | MOA/River [bifet2010][montiel2021] — Sine |
+| synth_agrawal | 100,000 | 9 | 2 | 2.0 | Agrawal et al. [agrawal1993] |
+| synth_blobs_expanding | 100,000 | 5 | 5 | 1.0 | scikit-learn [pedregosa2011] — make_blobs |
+| synth_blobs_gradual | 100,000 | 5 | 5 | 1.0 | scikit-learn [pedregosa2011] — make_blobs |
+| synth_blobs_incremental | 100,000 | 5 | 5 | 1.0 | scikit-learn [pedregosa2011] — make_blobs |
+| synth_blobs_merge_split | 100,000 | 5 | 5 | 1.0 | scikit-learn [pedregosa2011] — make_blobs |
+| synth_blobs_sudden | 100,000 | 5 | 5 | 1.0 | scikit-learn [pedregosa2011] — make_blobs |
+| synth_rbf_fast | 100,000 | 5 | 5 | 1.3 | MOA [bifet2010] — RandomRBF generator |
+| synth_rbf_gradual | 100,000 | 5 | 5 | 1.6 | MOA [bifet2010] — RandomRBF generator |
+| synth_rbf_random | 100,000 | 4 | 4 | 3.4 | MOA [bifet2010] — RandomRBF generator |
 
 
 ## Regression
@@ -106,26 +108,26 @@ The `Source` column gives a best-effort attribution to each dataset's original p
 
 ### Real-world
 
-| Dataset | #Instances | #Features | #Classes | Source |
-|---|---|---|---|---|
-| adult | 48,842 | 14 | 4 | UCI [uci] — Adult / Census Income |
-| electricity | 45,312 | 8 | 2 | Harries [harries1999] — Electricity Market |
-| forest_cover | 581,012 | 54 | 7 | UCI [uci] — Covertype |
-| insects | 52,848 | 33 | 6 | Souza et al. [souza2020] |
-| new_airlines | 539,383 | 7 | 2 | OpenML [openml] — Airlines |
-| vehicle_sensIT | 98,528 | 100 | 3 | UCI [uci] — SensIT Vehicle |
+| Dataset | #Instances | #Features | #Classes | Imbalance (IR) | Source |
+|---|---|---|---|---|---|
+| adult | 48,842 | 14 | 4 | 6.4 | UCI [uci] — Adult / Census Income |
+| electricity | 45,312 | 8 | 2 | 1.4 | Harries [harries1999] — Electricity Market |
+| forest_cover | 581,012 | 54 | 7 | 103.1 | UCI [uci] — Covertype |
+| insects | 52,848 | 33 | 6 | 1.0 | Souza et al. [souza2020] |
+| new_airlines | 539,383 | 7 | 2 | 1.2 | OpenML [openml] — Airlines |
+| vehicle_sensIT | 98,528 | 100 | 3 | 2.2 | UCI [uci] — SensIT Vehicle |
 
 ### Synthetic
 
-| Dataset | #Instances | #Features | #Classes | Source |
-|---|---|---|---|---|
-| hyperplane_high_gradual_drift | 500,000 | 10 | 2 | MOA/River [bifet2010][montiel2021] — Hyperplane |
-| movingRBF | 200,000 | 10 | 5 | MOA [bifet2010] — Moving RandomRBF |
-| moving_squares | 200,000 | 2 | 4 | MOA [bifet2010] — Moving Squares |
-| sea_high_abrupt_drift | 500,000 | 3 | 2 | Street & Kim [street2001] — SEA generator |
-| sea_high_mixed_drift | 500,000 | 3 | 2 | Street & Kim [street2001] — SEA generator |
-| synth_RandomRBFDrift | 100,000 | 4 | 4 | MOA [bifet2010] — RandomRBF generator |
-| synthetic_blobs_100k_samples_5features_8clusters | 100,000 | 5 | 8 | scikit-learn [pedregosa2011] — make_blobs |
+| Dataset | #Instances | #Features | #Classes | Imbalance (IR) | Source |
+|---|---|---|---|---|---|
+| hyperplane_high_gradual_drift | 500,000 | 10 | 2 | 1.0 | MOA/River [bifet2010][montiel2021] — Hyperplane |
+| movingRBF | 200,000 | 10 | 5 | 3.3 | MOA [bifet2010] — Moving RandomRBF |
+| moving_squares | 200,000 | 2 | 4 | 1.0 | MOA [bifet2010] — Moving Squares |
+| sea_high_abrupt_drift | 500,000 | 3 | 2 | 1.6 | Street & Kim [street2001] — SEA generator |
+| sea_high_mixed_drift | 500,000 | 3 | 2 | 1.4 | Street & Kim [street2001] — SEA generator |
+| synth_RandomRBFDrift | 100,000 | 4 | 4 | 3.4 | MOA [bifet2010] — RandomRBF generator |
+| synthetic_blobs_100k_samples_5features_8clusters | 100,000 | 5 | 8 | 1.0 | scikit-learn [pedregosa2011] — make_blobs |
 
 
 ## Anomaly Detection

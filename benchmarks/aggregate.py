@@ -28,7 +28,11 @@ from common import DEFAULT_RESULTS_ROOT, REPO_ROOT, TASKS
 TASK_SPEC = {
     "classification": {
         "rank_on": ("kappa_t", True),
-        "display": [("kappa_t", "median", "Median κt"), ("accuracy", "mean", "Mean acc")],
+        "display": [
+            ("kappa_t", "median", "Median κt"),
+            ("kappa", "median", "Median κ"),
+            ("accuracy", "mean", "Mean acc"),
+        ],
     },
     "regression": {
         "rank_on": ("rmse", False),

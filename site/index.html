@@ -279,6 +279,7 @@ footer.colophon a { color: var(--accent-ink); }
       <dt>Wins</dt><dd>Datasets where the algorithm placed first.</dd>
       <dt>Rank per dataset</dt><dd>One cell per dataset (not per time window): teal = ranked 1st on that dataset, clay = ranked last. A solid-teal strip is consistent everywhere; scattered clay shows exactly where it loses. Hover a cell for the dataset name and rank.</dd>
       <dt>κt</dt><dd>Kappa-temporal: skill over the predict-the-previous-label baseline. 100 perfect, 0 no better, negative worse. Shown as a median — it is unbounded below.</dd>
+      <dt>κ</dt><dd>Cohen's kappa: chance-corrected accuracy, robust to class imbalance — the number to trust on skewed streams (imbalanced datasets are flagged in the <a href="datasets.html">catalog</a>).</dd>
       <dt>R²</dt><dd>Regression fit, scale-free across datasets: 1 is perfect, 0 is no better than predicting the mean.</dd>
       <dt>ARI</dt><dd>Clustering agreement with the ground-truth labels, scored over evaluation windows: 1 is perfect, 0 is random grouping.</dd>
       <dt>AUC</dt><dd>Anomaly detection ROC-AUC over the full stream of scores: 1 is perfect, 0.5 is random.</dd>
