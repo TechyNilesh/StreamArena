@@ -191,7 +191,7 @@ If you use StreamArena in your research, please cite it as below (see also [CITA
 ```bibtex
 @misc{verma2026streamarena,
   title  = {StreamArena: A Living Benchmark for Machine Learning on Streaming Data},
-  author = {Verma, Nilesh},
+  author = {Verma, Nilesh and Bifet, Albert and Pfahringer, Bernhard and Bahri, Maroua},
   year   = {2026},
   url    = {https://github.com/TechyNilesh/StreamArena}
 }
