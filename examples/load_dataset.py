@@ -25,14 +25,14 @@ if __name__ == "__main__":
     sea = load_csv(DATASETS_ROOT / "classification" / "synth" / "sea_high_abrupt_drift.csv")
     print("classification/synth/sea_high_abrupt_drift.csv:", sea.shape)
 
-    kin8nm = load_csv(DATASETS_ROOT / "regression" / "real" / "kin8nm.csv")
-    print("regression/real/kin8nm.csv:", kin8nm.shape)
+    bike = load_csv(DATASETS_ROOT / "regression" / "real" / "bike.csv")
+    print("regression/real/bike.csv:", bike.shape)
 
     fried = load_csv(DATASETS_ROOT / "regression" / "synth" / "fried.csv")
     print("regression/synth/fried.csv:", fried.shape)
 
-    cardio = load_csv(DATASETS_ROOT / "anomaly_detection" / "6_cardio.csv")
-    print("anomaly_detection/6_cardio.csv:", cardio.shape)
+    fraud = load_csv(DATASETS_ROOT / "anomaly_detection" / "13_fraud.csv")
+    print("anomaly_detection/13_fraud.csv:", fraud.shape)
 
     blobs = load_csv(DATASETS_ROOT / "clustering" / "synth" / "synthetic_blobs_100k_samples_5features_8clusters.csv")
     print("clustering/synth/synthetic_blobs_...csv:", blobs.shape)

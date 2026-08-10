@@ -2,7 +2,7 @@
 
 Usage:
     python3 benchmarks/anomaly_detection/half_space_trees.py                 # all datasets, default seeds
-    python3 benchmarks/anomaly_detection/half_space_trees.py --datasets 6_cardio
+    python3 benchmarks/anomaly_detection/half_space_trees.py --datasets 13_fraud
     python3 benchmarks/anomaly_detection/half_space_trees.py --list
 
 See BENCHMARK.md for the protocol; results land in benchmarks/results/.

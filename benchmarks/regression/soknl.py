@@ -2,7 +2,7 @@
 
 Usage:
     python3 benchmarks/regression/soknl.py                 # all datasets, default seeds
-    python3 benchmarks/regression/soknl.py --datasets real/kin8nm
+    python3 benchmarks/regression/soknl.py --datasets real/bike
     python3 benchmarks/regression/soknl.py --list
 
 See BENCHMARK.md for the protocol; results land in benchmarks/results/.

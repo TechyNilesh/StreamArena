@@ -2,7 +2,7 @@
 
 Usage:
     python3 benchmarks/regression/target_mean.py                 # all datasets, default seeds
-    python3 benchmarks/regression/target_mean.py --datasets real/kin8nm
+    python3 benchmarks/regression/target_mean.py --datasets real/bike
     python3 benchmarks/regression/target_mean.py --list
 
 See BENCHMARK.md for the protocol; results land in benchmarks/results/.

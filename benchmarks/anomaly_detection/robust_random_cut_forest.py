@@ -7,7 +7,7 @@ visible in results as reduced #Datasets coverage — see BENCHMARK.md.
 
 Usage:
     python3 benchmarks/anomaly_detection/robust_random_cut_forest.py                 # all datasets, default seeds
-    python3 benchmarks/anomaly_detection/robust_random_cut_forest.py --datasets 6_cardio
+    python3 benchmarks/anomaly_detection/robust_random_cut_forest.py --datasets 13_fraud
     python3 benchmarks/anomaly_detection/robust_random_cut_forest.py --list
 
 See BENCHMARK.md for the protocol; results land in benchmarks/results/.

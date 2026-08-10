@@ -42,7 +42,7 @@ StreamArena/
 ├── datasets/                 # downloaded via download.py, not committed to git
 │   ├── classification/
 │   │   ├── real/               # real-world streams (electricity, forest cover, airlines, ...)
-│   │   └── synth/               # synthetic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon, ...)
+│   │   └── synth/               # synthetic drift generators (SEA, RBF, Hyperplane, Agrawal, blobs, ...)
 │   ├── regression/
 │   │   ├── real/               # housing, wages, sensor/physical measurements, ...
 │   │   └── synth/               # Friedman & Hyperplane synthetic generators
@@ -83,10 +83,12 @@ anomaly detection (which is entirely real-world benchmark data) is split into `r
 
 | Task | Count | Notes |
 |---|---:|---|
-| **Classification** | 42 files (22 real + 20 synthetic) | `real/`: electricity, forest cover, airlines, poker, weather, KDD-99, insects, Nomao, MNIST, Usenet, Gisette, Dota, Spambase, HAR, etc. `synth/`: classic drift generators (SEA, RBF, Hyperplane, Agrawal, Madelon) |
-| **Regression** | 30 files (25 real + 5 synthetic) | `real/`: housing (king's county, california, miami, brazilian), wages, sensor/physical (sarcos, naval propulsion, superconductivity, kin8nm), and more. `synth/`: Friedman & Hyperplane generators |
+| **Classification** | 23 files (10 real + 13 synthetic) | `real/`: electricity, forest cover, airlines, poker, weather, insects, Nomao, adult, power supply, sensor stream. `synth/`: classic drift generators (SEA, RBF, Hyperplane, Agrawal, random tree, blobs) |
+| **Regression** | 15 files (10 real + 5 synthetic) | `real/`: temporal/sensor streams (metro traffic, bike sharing, sarcos, elevators, ailerons, superconductivity, wave energy, video transcoding, california housing, fifa). `synth/`: Friedman & Hyperplane generators |
 | **Clustering** | 13 files (6 real + 7 synthetic) | Streaming clustering benchmarks — reuses classification drift streams plus a dedicated synthetic blobs set |
-| **Anomaly Detection** | 51 files | ODDS/ADBench-style outlier detection collection (annthyroid, mnist, shuttle, satellite, mammography, etc.) — all real-world, no `real/`/`synth/` split |
+| **Anomaly Detection** | 1 file | Credit-card fraud (time-ordered transaction stream). The former ODDS/ADBench static collection was removed in the 2026-08 audit — block-appended anomalies and i.i.d. tabular data don't test streaming detection |
+
+The catalog was pruned from 136 to 52 datasets in August 2026 after a leakage/stream-validity audit: removed datasets had target leakage in features, were sorted by class or target (the stream order gave away the answer), were duplicates of other entries, or were static i.i.d. tabular sets with no temporal structure.
 
 ## ⚡ Quickstart
 

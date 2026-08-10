@@ -80,7 +80,7 @@ libraries expose this in one call (e.g. CapyMOA's
   Partial dataset coverage is fine — the leaderboard ranks you only where you ran.
 - **Datasets**: use the current files from the
   [Hugging Face Hub](https://huggingface.co/datasets/techynilesh/streamarena);
-  dataset keys are the harness keys (`real/electricity`, `6_cardio`, …) —
+  dataset keys are the harness keys (`real/electricity`, `13_fraud`, …) —
   `python3 benchmarks/classification/hoeffding_tree.py --list` prints them.
 - **Honesty**: results are currently accepted on trust with provenance recorded
   in git history. Submissions may be spot-checked by re-running; irreproducible
