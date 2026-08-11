@@ -11,6 +11,7 @@ Protocol details live in BENCHMARK.md at the repo root.
 
 import argparse
 import json
+import math
 import platform
 import resource
 import socket
@@ -173,6 +174,10 @@ def _run_one(task, csv_path, key, make_learner, seed, window, max_instances):
             stream, learner, max_instances=max_instances, window_size=window
         )
         metrics = {"auc": results.cumulative.auc(), "s_auc": results.cumulative.s_auc()}
+    elif task == "classification":
+        metrics, windowed_df, timing = _run_classification(stream, learner, window, max_instances)
+        extras.update(timing)
+        return metrics, extras, windowed_df
     else:
         from capymoa.evaluation import prequential_evaluation
 
@@ -180,27 +185,92 @@ def _run_one(task, csv_path, key, make_learner, seed, window, max_instances):
             stream, learner, max_instances=max_instances, window_size=window
         )
         cumulative = results.cumulative
-        if task == "classification":
-            metrics = {
-                "accuracy": cumulative.accuracy(),
-                "kappa": cumulative.kappa(),
-                "kappa_t": cumulative.kappa_t(),
-                "kappa_m": cumulative.kappa_m(),
-                "f1_score": cumulative.f1_score(),
-            }
-        else:
-            metrics = {
-                "rmse": cumulative.rmse(),
-                "mae": cumulative.mae(),
-                "rmae": cumulative.rmae(),
-                "r2": cumulative.r2(),
-                "adjusted_r2": cumulative.adjusted_r2(),
-            }
+        metrics = {
+            "rmse": cumulative.rmse(),
+            "mae": cumulative.mae(),
+            "rmae": cumulative.rmae(),
+            "r2": cumulative.r2(),
+            "adjusted_r2": cumulative.adjusted_r2(),
+        }
     metrics = {k: (None if v is None else float(v)) for k, v in metrics.items()}
     extras["wallclock_s"] = round(float(results.wallclock()), 3)
     extras["cpu_time_s"] = round(float(results.cpu_time()), 3)
     windowed_df = results.windowed.metrics_per_window()
     return metrics, extras, windowed_df
+
+
+_LOG_LOSS_EPS = 1e-7  # probability floor: a confident wrong prediction costs -ln(eps) ≈ 16.1 nats
+
+
+def _run_classification(stream, learner, window, max_instances):
+    """Manual prequential loop for classification.
+
+    CapyMOA's prequential_evaluation only exposes hard-prediction metrics, so
+    we drive the test-then-train loop ourselves to also compute probability
+    metrics: cumulative log-loss (the ranking metric — a proper scoring rule
+    that, unlike accuracy/kappa, cannot be satisfied by shadowing recent
+    labels) and, on binary datasets, ROC-AUC / PR-AUC over the full stream of
+    scores. Hard-prediction metrics still come from CapyMOA's evaluators; the
+    prediction fed to them is argmax over the learner's votes, matching MOA's
+    own prediction rule.
+    """
+    import numpy as np
+    from capymoa.evaluation import ClassificationEvaluator, ClassificationWindowedEvaluator
+
+    schema = stream.get_schema()
+    n_classes = schema.get_num_classes()
+    cumulative = ClassificationEvaluator(schema=schema)
+    windowed = ClassificationWindowedEvaluator(schema=schema, window_size=window)
+
+    log_loss_sum, seen = 0.0, 0
+    binary = n_classes == 2
+    pos_scores, y_true = ([], []) if binary else (None, None)
+
+    t0_wall, t0_cpu = time.perf_counter(), time.process_time()
+    while stream.has_more_instances():
+        if max_instances is not None and seen >= max_instances:
+            break
+        instance = stream.next_instance()
+        votes = learner.predict_proba(instance)
+        proba = np.zeros(n_classes)
+        if votes is not None and len(votes) > 0:
+            v = np.clip(np.nan_to_num(np.asarray(votes, dtype=float)), 0.0, None)
+            proba[: len(v)] = v[:n_classes]
+        total = proba.sum()
+        proba = proba / total if total > 0 else np.full(n_classes, 1.0 / n_classes)
+
+        y = instance.y_index
+        pred = int(np.argmax(proba))
+        cumulative.update(y, pred)
+        windowed.update(y, pred)
+        log_loss_sum += -math.log(max(proba[y], _LOG_LOSS_EPS))
+        if binary:
+            pos_scores.append(proba[1])
+            y_true.append(y)
+
+        learner.train(instance)
+        seen += 1
+
+    timing = {
+        "wallclock_s": round(time.perf_counter() - t0_wall, 3),
+        "cpu_time_s": round(time.process_time() - t0_cpu, 3),
+    }
+    metrics = {
+        "accuracy": cumulative.accuracy(),
+        "kappa": cumulative.kappa(),
+        "kappa_t": cumulative.kappa_t(),
+        "kappa_m": cumulative.kappa_m(),
+        "f1_score": cumulative.f1_score(),
+        "log_loss": log_loss_sum / seen if seen else None,
+        "roc_auc": None,
+        "pr_auc": None,
+    }
+    if binary and len(set(y_true)) == 2:
+        from sklearn.metrics import average_precision_score, roc_auc_score
+
+        metrics["roc_auc"] = float(roc_auc_score(y_true, pos_scores))
+        metrics["pr_auc"] = float(average_precision_score(y_true, pos_scores))
+    return metrics, windowed.metrics_per_window(), timing
 
 
 def _run_clustering(stream, learner, window, max_instances):

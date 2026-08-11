@@ -27,8 +27,14 @@ from common import DEFAULT_RESULTS_ROOT, REPO_ROOT, TASKS
 # NoChange reference) and R² identically to RMSE.
 TASK_SPEC = {
     "classification": {
-        "rank_on": ("kappa_t", True),
+        # Log-loss is the ranking metric: a proper scoring rule over predicted
+        # probabilities, so it can't be gamed by shadowing recent labels the way
+        # accuracy/kappa (and even kappa_t) can on autocorrelated streams.
+        # Kappa metrics stay as display-only columns for continuity.
+        "rank_on": ("log_loss", False),
         "display": [
+            ("log_loss", "median", "Median log-loss"),
+            ("roc_auc", "mean", "Mean AUC (binary)"),
             ("kappa_t", "median", "Median κt"),
             ("kappa", "median", "Median κ"),
             ("accuracy", "mean", "Mean acc"),
@@ -149,11 +155,19 @@ def write_markdown(runs, out_path):
         "of averaging raw metric values because raw values are not comparable "
         "across datasets (different scales, class balances, and difficulty).",
         "- **Wins** — number of datasets where the algorithm ranked 1st.",
+        "- **Median log-loss** — the classification ranking metric: mean "
+        "negative log-probability assigned to the true label (nats, lower is "
+        "better; 0 = perfectly confident and correct). A proper scoring rule "
+        "over predicted probabilities — unlike accuracy-family metrics "
+        "(kappa included), it cannot be satisfied by echoing recent labels "
+        "on autocorrelated streams.",
+        "- **Mean AUC (binary)** — ROC-AUC over the full stream of predicted "
+        "scores, averaged over binary datasets only (threshold-free, robust "
+        "to class imbalance).",
         "- **Median κt (kappa-temporal)** — classification skill relative to "
         "the NoChange baseline that always predicts the previous label: "
         "100 is perfect, 0 means no better than NoChange, negative means "
-        "worse. On temporally correlated streams plain accuracy is inflated, "
-        "so κt is the honest streaming metric. Median (not mean) because κt "
+        "worse. Display-only. Median (not mean) because κt "
         "is unbounded below on near-constant streams.",
         "- **Mean acc** — plain prequential accuracy, for intuition only.",
         "- **Median R²** — regression fit quality, scale-free across datasets "

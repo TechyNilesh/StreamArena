@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 TASK_METRICS = {
-    "classification": {"accuracy", "kappa", "kappa_t", "kappa_m"},
+    "classification": {"accuracy", "kappa", "kappa_t", "kappa_m", "log_loss"},
     "regression": {"rmse", "mae", "r2"},
     "clustering": {"ari_mean", "ari_last"},
     "anomaly_detection": {"auc"},

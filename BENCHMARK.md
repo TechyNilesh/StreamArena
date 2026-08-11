@@ -26,7 +26,7 @@ shared harness ([`benchmarks/common.py`](benchmarks/common.py)) built on
 
 | Task | Cumulative metrics | Primary |
 |---|---|---|
-| Classification | accuracy, kappa, kappa-temporal (κt), kappa-M, F1 | **κt** (accuracy alone is misleading on temporally correlated streams — beat the NoChange baseline first) |
+| Classification | log-loss, ROC-AUC + PR-AUC (binary only), accuracy, kappa, kappa-temporal (κt), kappa-M, F1 | **log-loss** (a proper scoring rule over predicted probabilities — accuracy-family metrics, κt included, can be satisfied by echoing recent labels on autocorrelated streams; log-loss cannot) |
 | Regression | RMSE, MAE, RMAE, R², adjusted R² | **RMSE** |
 | Clustering | windowed ARI vs. ground-truth labels (mean + last window) | **mean ARI** |
 | Anomaly detection | ROC-AUC, sliding-window AUC (s-AUC) | **ROC-AUC** |
