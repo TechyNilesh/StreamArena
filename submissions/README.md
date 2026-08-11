@@ -26,7 +26,8 @@ One JSON file per (dataset, seed) run:
   "status": "ok",
   "window_size": 1000,
   "metrics": {
-    "accuracy": 88.1, "kappa": 75.2, "kappa_t": 35.0, "kappa_m": 70.1, "f1_score": 87.9
+    "accuracy": 88.1, "kappa": 75.2, "kappa_t": 35.0, "kappa_m": 70.1, "f1_score": 87.9,
+    "log_loss": 0.31, "roc_auc": 0.94, "pr_auc": 0.91
   },
   "wallclock_s": 41.2,
   "cpu_time_s": 39.8,
@@ -66,7 +67,7 @@ libraries expose this in one call (e.g. CapyMOA's
 
 | task | required metrics |
 |---|---|
-| `classification` | `accuracy`, `kappa`, `kappa_t`, `kappa_m` |
+| `classification` | `accuracy`, `kappa`, `kappa_t`, `kappa_m`, `log_loss` (ranking metric; `roc_auc`/`pr_auc` expected on binary datasets) |
 | `regression` | `rmse`, `mae`, `r2` |
 | `clustering` | `ari_mean`, `ari_last` |
 | `anomaly_detection` | `auc` |
