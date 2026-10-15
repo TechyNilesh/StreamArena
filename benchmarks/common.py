@@ -147,11 +147,36 @@ def run(task, algorithm, make_learner, stochastic=False, max_rows=None):
             print(f"[done] {key} seed {seed}: {metrics}", flush=True)
 
 
+def _without_timestamp(csv_path):
+    """v2 datasets carry a leading ``timestamp`` column for event-time replay.
+
+    The prequential harness must not see it as a feature (CapyMOA would read
+    it as a nominal attribute with one value per row), so stream from a cached
+    copy with that column removed. The copy lives next to the results and is
+    reused across algorithms and seeds.
+    """
+    with open(csv_path) as f:
+        header = f.readline().strip().split(",")
+    if header[0] != "timestamp":
+        return csv_path
+    cache = DEFAULT_RESULTS_ROOT / ".nots" / csv_path.relative_to(DATASETS_ROOT)
+    if cache.exists() and cache.stat().st_mtime >= csv_path.stat().st_mtime:
+        return cache
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    tmp = cache.with_suffix(".tmp")
+    with open(csv_path) as src, open(tmp, "w") as dst:
+        for line in src:
+            dst.write(line.split(",", 1)[1])
+    tmp.rename(cache)
+    return cache
+
+
 def _run_one(task, csv_path, key, make_learner, seed, window, max_instances):
     import capymoa
     from capymoa.stream import stream_from_file
 
     target_type = "numeric" if task == "regression" else "categorical"
+    csv_path = _without_timestamp(csv_path)
     stream = stream_from_file(
         str(csv_path), dataset_name=key.replace("/", "_"), class_index=-1, target_type=target_type
     )

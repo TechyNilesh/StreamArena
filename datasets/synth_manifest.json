@@ -1,0 +1,866 @@
+{
+  "sea_abrupt": {
+    "path": "classification/synth/sea_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 3,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "SEA",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 3,
+      "seed": 1
+    },
+    "after": {
+      "generator": "SEA",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 3,
+      "seed": 2
+    }
+  },
+  "sea_gradual": {
+    "path": "classification/synth/sea_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 3,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "SEA",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 3,
+      "seed": 1
+    },
+    "after": {
+      "generator": "SEA",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 3,
+      "seed": 2
+    }
+  },
+  "agrawal_abrupt": {
+    "path": "classification/synth/agrawal_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 9,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "Agrawal",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 9,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Agrawal",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 9,
+      "seed": 2
+    }
+  },
+  "agrawal_gradual": {
+    "path": "classification/synth/agrawal_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 9,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "Agrawal",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 9,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Agrawal",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 9,
+      "seed": 2
+    }
+  },
+  "stagger_abrupt": {
+    "path": "classification/synth/stagger_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 3,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "STAGGER",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 3,
+      "seed": 1
+    },
+    "after": {
+      "generator": "STAGGER",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 3,
+      "seed": 2
+    }
+  },
+  "stagger_gradual": {
+    "path": "classification/synth/stagger_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 3,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "STAGGER",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 3,
+      "seed": 1
+    },
+    "after": {
+      "generator": "STAGGER",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 3,
+      "seed": 2
+    }
+  },
+  "hyperplane_abrupt": {
+    "path": "classification/synth/hyperplane_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "Hyperplane",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Hyperplane",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "hyperplane_gradual": {
+    "path": "classification/synth/hyperplane_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "Hyperplane",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Hyperplane",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "rbf_abrupt": {
+    "path": "classification/synth/rbf_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 4,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "RandomRBF",
+      "task": "classification",
+      "n_classes": 4,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "RandomRBF",
+      "task": "classification",
+      "n_classes": 4,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "rbf_gradual": {
+    "path": "classification/synth/rbf_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 4,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "RandomRBF",
+      "task": "classification",
+      "n_classes": 4,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "RandomRBF",
+      "task": "classification",
+      "n_classes": 4,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "randomtree_abrupt": {
+    "path": "classification/synth/randomtree_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 3,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "RandomTree",
+      "task": "classification",
+      "n_classes": 3,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "RandomTree",
+      "task": "classification",
+      "n_classes": 3,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "randomtree_gradual": {
+    "path": "classification/synth/randomtree_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 3,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "RandomTree",
+      "task": "classification",
+      "n_classes": 3,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "RandomTree",
+      "task": "classification",
+      "n_classes": 3,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "led_abrupt": {
+    "path": "classification/synth/led_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 10,
+    "n_features": 24,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "LED",
+      "task": "classification",
+      "n_classes": 10,
+      "n_features": 24,
+      "seed": 1
+    },
+    "after": {
+      "generator": "LED",
+      "task": "classification",
+      "n_classes": 10,
+      "n_features": 24,
+      "seed": 2
+    }
+  },
+  "led_gradual": {
+    "path": "classification/synth/led_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 10,
+    "n_features": 24,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "LED",
+      "task": "classification",
+      "n_classes": 10,
+      "n_features": 24,
+      "seed": 1
+    },
+    "after": {
+      "generator": "LED",
+      "task": "classification",
+      "n_classes": 10,
+      "n_features": 24,
+      "seed": 2
+    }
+  },
+  "waveform_abrupt": {
+    "path": "classification/synth/waveform_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 3,
+    "n_features": 40,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "Waveform",
+      "task": "classification",
+      "n_classes": 3,
+      "n_features": 40,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Waveform",
+      "task": "classification",
+      "n_classes": 3,
+      "n_features": 40,
+      "seed": 2
+    }
+  },
+  "waveform_gradual": {
+    "path": "classification/synth/waveform_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 3,
+    "n_features": 40,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "Waveform",
+      "task": "classification",
+      "n_classes": 3,
+      "n_features": 40,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Waveform",
+      "task": "classification",
+      "n_classes": 3,
+      "n_features": 40,
+      "seed": 2
+    }
+  },
+  "mixed_abrupt": {
+    "path": "classification/synth/mixed_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 4,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "Mixed",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 4,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Mixed",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 4,
+      "seed": 2
+    }
+  },
+  "mixed_gradual": {
+    "path": "classification/synth/mixed_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "classification",
+    "n_classes": 2,
+    "n_features": 4,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "Mixed",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 4,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Mixed",
+      "task": "classification",
+      "n_classes": 2,
+      "n_features": 4,
+      "seed": 2
+    }
+  },
+  "friedman_abrupt": {
+    "path": "regression/synth/friedman_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "Friedman",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Friedman",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "friedman_gradual": {
+    "path": "regression/synth/friedman_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "Friedman",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Friedman",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "hyperplane_reg_abrupt": {
+    "path": "regression/synth/hyperplane_reg_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "HyperplaneRegression",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "HyperplaneRegression",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "hyperplane_reg_gradual": {
+    "path": "regression/synth/hyperplane_reg_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "HyperplaneRegression",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "HyperplaneRegression",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "mv_abrupt": {
+    "path": "regression/synth/mv_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "Mv",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Mv",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "mv_gradual": {
+    "path": "regression/synth/mv_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "Mv",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Mv",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "planes2d_abrupt": {
+    "path": "regression/synth/planes2d_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "Planes2D",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Planes2D",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "planes2d_gradual": {
+    "path": "regression/synth/planes2d_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 10,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "Planes2D",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 1
+    },
+    "after": {
+      "generator": "Planes2D",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 10,
+      "seed": 2
+    }
+  },
+  "seasonal_sensor_abrupt": {
+    "path": "regression/synth/seasonal_sensor_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 13,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "SeasonalSensor",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 13,
+      "seed": 1
+    },
+    "after": {
+      "generator": "SeasonalSensor",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 13,
+      "seed": 2
+    }
+  },
+  "seasonal_sensor_gradual": {
+    "path": "regression/synth/seasonal_sensor_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 13,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "SeasonalSensor",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 13,
+      "seed": 1
+    },
+    "after": {
+      "generator": "SeasonalSensor",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 13,
+      "seed": 2
+    }
+  },
+  "regime_walk_abrupt": {
+    "path": "regression/synth/regime_walk_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 19,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "RegimeSwitchingWalk",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 19,
+      "seed": 1
+    },
+    "after": {
+      "generator": "RegimeSwitchingWalk",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 19,
+      "seed": 2
+    }
+  },
+  "regime_walk_gradual": {
+    "path": "regression/synth/regime_walk_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 19,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "RegimeSwitchingWalk",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 19,
+      "seed": 1
+    },
+    "after": {
+      "generator": "RegimeSwitchingWalk",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 19,
+      "seed": 2
+    }
+  },
+  "poisson_demand_abrupt": {
+    "path": "regression/synth/poisson_demand_abrupt.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 31,
+    "seed": 1,
+    "drift": "abrupt",
+    "position": 250000,
+    "width": 10000,
+    "period": 250000,
+    "before": {
+      "generator": "PoissonDemand",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 31,
+      "seed": 1
+    },
+    "after": {
+      "generator": "PoissonDemand",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 31,
+      "seed": 2
+    }
+  },
+  "poisson_demand_gradual": {
+    "path": "regression/synth/poisson_demand_gradual.csv",
+    "n": 500000,
+    "generator": "DriftStream",
+    "task": "regression",
+    "n_classes": null,
+    "n_features": 31,
+    "seed": 1,
+    "drift": "gradual",
+    "position": 250000,
+    "width": 50000,
+    "period": 250000,
+    "before": {
+      "generator": "PoissonDemand",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 31,
+      "seed": 1
+    },
+    "after": {
+      "generator": "PoissonDemand",
+      "task": "regression",
+      "n_classes": null,
+      "n_features": 31,
+      "seed": 2
+    }
+  }
+}

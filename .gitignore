@@ -12,3 +12,6 @@ datasets/*/
 # per-run benchmark outputs (JSON/CSV) — aggregated results are published separately
 benchmarks/results/
 hs_err_pid*.log
+
+# paper draft is private, not published with the repo
+paper/
