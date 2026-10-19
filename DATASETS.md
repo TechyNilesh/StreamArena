@@ -11,7 +11,9 @@ thinning; `h` is the prediction horizon in steps of the stream's native cadence.
 | Dataset | #Instances | #Features | #Classes | Span | Source |
 |---|---:|---:|---:|---|---|
 | airquality_aqi_delhi | 36,449 | 25 | 6 | 2022-08-04 → 2026-09-30 | Open-Meteo air-quality API (CAMS global/European reanalysis), CC BY 4.0 |
+| bike_rider_type_nyc | 960,486 | 12 | 2 | 2016-01-01 → 2025-12-31 | Citi Bike NYC System Data (Lyft), NYCBS Data Use Policy |
 | crypto_direction | 918,533 | 21 | 2 | 2018-01-01 → 2026-09-30 | Binance public market data archive (data.binance.vision) |
+| flight_delay_bts | 897,939 | 13 | 2 | 2016-01-01 → 2025-12-31 | US Bureau of Transportation Statistics, Reporting Carrier On-Time Performance, public domain |
 | flood_potomac | 371,905 | 24 | 2 | 2016-01-01 → 2026-10-01 | USGS NWIS Instantaneous Values web service, public domain |
 | grid_carbon_index_gb | 142,779 | 24 | 5 | 2018-05-11 → 2026-09-30 | NESO Carbon Intensity API, CC BY 4.0 |
 | quake_significant | 452,947 | 19 | 2 | 2010-01-01 → 2026-09-30 | USGS Earthquake Hazards Program ComCat, FDSN event service, public domain |
@@ -19,6 +21,7 @@ thinning; `h` is the prediction horizon in steps of the stream's native cadence.
 | weather_rain_auckland | 94,218 | 32 | 2 | 2016-01-01 → 2026-09-30 | Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0 |
 | weather_rain_berlin | 94,218 | 32 | 2 | 2016-01-01 → 2026-09-30 | Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0 |
 | weather_rain_phoenix | 94,218 | 32 | 2 | 2016-01-01 → 2026-09-30 | Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0 |
+| wiki_revert_simple | 943,600 | 18 | 2 | 2016-01-01 → 2026-09-30 | Wikimedia Foundation mediawiki_history dumps, CC0 |
 
 ### Synthetic
 
@@ -51,11 +54,13 @@ thinning; `h` is the prediction horizon in steps of the stream's native cadence.
 |---|---:|---:|---:|---|---|
 | airquality_pm25_delhi | 36,449 | 25 | h=1 | 2022-08-04 → 2026-09-30 | Open-Meteo air-quality API (CAMS global/European reanalysis), CC BY 4.0 |
 | airquality_pm25_losangeles | 36,449 | 25 | h=1 | 2022-08-04 → 2026-09-30 | Open-Meteo air-quality API (CAMS global/European reanalysis), CC BY 4.0 |
+| bike_demand_nyc | 829,520 | 33 | h=1 | 2016-01-02 → 2025-12-31 | Citi Bike NYC System Data (Lyft), NYCBS Data Use Policy |
 | crypto_btc_1m | 918,533 | 21 | h=1 | 2018-01-01 → 2026-09-30 | Binance public market data archive (data.binance.vision) |
 | energy_price_agile | 150,816 | 55 | h=48 | 2018-02-22 → 2026-09-29 | Octopus Energy public tariff API (Agile Octopus, region C London) |
 | grid_carbon_gb | 142,779 | 24 | h=1 | 2018-05-11 → 2026-09-30 | NESO Carbon Intensity API, CC BY 4.0 |
 | grid_load_de | 376,880 | 25 | h=4 | 2016-01-01 → 2026-09-30 | Energy-Charts (Fraunhofer ISE) public_power API, CC BY 4.0 |
 | river_discharge_potomac | 371,901 | 24 | h=4 | 2016-01-01 → 2026-10-01 | USGS NWIS Instantaneous Values web service, public domain |
+| taxi_demand_nyc | 876,370 | 34 | h=1 | 2016-01-02 → 2026-01-02 | NYC Taxi & Limousine Commission trip record data, public |
 | tide_level_battery | 934,841 | 20 | h=10 | 2016-01-01 → 2026-09-30 | NOAA CO-OPS Tides & Currents API, public domain |
 | weather_temp_auckland | 94,217 | 20 | h=1 | 2016-01-01 → 2026-09-30 | Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0 |
 | weather_temp_berlin | 94,217 | 20 | h=1 | 2016-01-01 → 2026-09-30 | Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0 |

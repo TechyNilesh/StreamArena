@@ -19,6 +19,7 @@ information a learner had at prediction time.
 from __future__ import annotations
 
 import json
+import os
 import time
 from abc import ABC, abstractmethod
 from collections.abc import Callable
@@ -71,13 +72,16 @@ def cached_download(url: str, cache_dir: Path, name: str | None = None) -> Path:
     path = cache_dir / (name or url.rsplit("/", 1)[-1])
     if path.exists() and path.stat().st_size > 0:
         return path
-    tmp = path.with_suffix(path.suffix + ".part")
+    tmp = path.with_suffix(path.suffix + f".{os.getpid()}.part")  # unique: builders may share a file
     with _session.get(url, stream=True, timeout=600) as r:
         r.raise_for_status()
         with open(tmp, "wb") as f:
             for chunk in r.iter_content(1 << 20):
                 f.write(chunk)
-    tmp.rename(path)
+    if path.exists() and path.stat().st_size > 0:  # another process finished first
+        tmp.unlink()
+    else:
+        os.replace(tmp, path)
     return path
 
 

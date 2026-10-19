@@ -42,12 +42,19 @@ def _iter_citibike_csvs(years: range):
         path = cached_download(TRIPDATA + key, CACHE_ROOT / "citibike")
         with zipfile.ZipFile(path) as z:
             for n in z.namelist():
+                if "__MACOSX" in n or n.rsplit("/", 1)[-1].startswith("._"):
+                    continue  # macOS resource forks masquerade as .zip/.csv
                 if n.endswith(".zip"):  # yearly zips contain monthly zips
-                    with zipfile.ZipFile(io.BytesIO(z.read(n))) as z2:
+                    try:
+                        z2 = zipfile.ZipFile(io.BytesIO(z.read(n)))
+                    except zipfile.BadZipFile:
+                        print(f"  [citibike] skipping non-zip entry {n}", flush=True)
+                        continue
+                    with z2:
                         for n2 in z2.namelist():
-                            if n2.endswith(".csv") and "__MACOSX" not in n2:
+                            if n2.endswith(".csv") and "__MACOSX" not in n2 and not n2.rsplit("/", 1)[-1].startswith("._"):
                                 yield n2, z2.open(n2)
-                elif n.endswith(".csv") and "__MACOSX" not in n:
+                elif n.endswith(".csv"):
                     yield n, z.open(n)
 
 
@@ -55,12 +62,19 @@ _COLS = {  # old schema -> new schema
     "starttime": "started_at", "stoptime": "ended_at", "start station id": "start_station_id",
     "end station id": "end_station_id", "usertype": "member_casual", "tripduration": "tripduration",
     "start station latitude": "start_lat", "start station longitude": "start_lng",
+    "start time": "started_at", "stop time": "ended_at", "user type": "member_casual",
+    "trip duration": "tripduration",  # late-2016/2017 header variant
 }
 
 
 def _read_trips(f, usecols) -> pd.DataFrame:
-    df = pd.read_csv(f, low_memory=False)
+    # dtype=str: pandas' type inference segfaults on some 2025 files where station ids
+    # mix "3911.05" with "SYS016"; every numeric column is converted explicitly below.
+    df = pd.read_csv(f, dtype=str)
     df = df.rename(columns={c: _COLS.get(c.strip().lower(), c.strip().lower()) for c in df.columns})
+    for c in ("start_lat", "start_lng", "tripduration"):
+        if c in df:
+            df[c] = pd.to_numeric(df[c], errors="coerce")
     if "member_casual" in df and df["member_casual"].dtype == object:
         df["member_casual"] = df["member_casual"].replace({"Subscriber": "member", "Customer": "casual"})
     keep = [c for c in usecols if c in df]

@@ -45,6 +45,8 @@ def parse_tables(text):
 def parse_references(text):
     """{key: bibtex_entry} from the References section's bibtex block."""
     refs = {}
+    if "## References" not in text:  # v2 DATASETS.md cites sources inline per row
+        return refs
     block = text.split("## References", 1)[1]
     for match in re.finditer(r"@\w+\{([^,]+),", block):
         key = match.group(1).strip()

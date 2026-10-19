@@ -149,8 +149,9 @@ footer.colophon { margin: 40px 0 48px; color: var(--muted); font-size: .88rem; }
     </nav>
   </div>
   <p class="tagline">Every stream in StreamArena with exact instance, feature, and class counts computed
-  directly from the files, plus source attribution keyed to full BibTeX references below.
-  Counts and sources are maintained in
+  directly from the files. Real-world streams are rebuilt from the multi-year archives of public open
+  APIs with a declared feature contract and delayed labels; synthetic streams come from generators with
+  pinned seeds. Counts and sources are maintained in
   <a href="https://github.com/TechyNilesh/StreamArena/blob/main/DATASETS.md">DATASETS.md</a>.</p>
   <div class="chips" aria-label="Catalog summary" id="catalog-chips"></div>
 </header>
@@ -201,13 +202,14 @@ const irCell = v => {
 
 fetch("datasets.json").then(r => r.json()).then(data => {
   const main = document.getElementById("main");
-  let total = 0;
+  let total = 0, nReal = 0, nSynth = 0;
   for (const [task, tables] of Object.entries(data.tasks)) {
     const section = document.createElement("section");
     section.className = "task";
     let html = `<h2><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${TASK_ICONS[task] ?? ""}</svg>${esc(task)}</h2>`;
     for (const t of tables) {
       total += t.rows.length;
+      if (/synth/i.test(t.section ?? "")) nSynth += t.rows.length; else nReal += t.rows.length;
       if (t.section) html += `<h3>${esc(t.section)} · ${t.rows.length} datasets</h3>`;
       else html += `<h3>${t.rows.length} datasets</h3>`;
       html += `<div class="table-scroll"><table><thead><tr>` +
@@ -225,19 +227,20 @@ fetch("datasets.json").then(r => r.json()).then(data => {
   }
 
   document.getElementById("catalog-chips").innerHTML =
-    [`${total} datasets`, `4 tasks`, `plain CSV`, `~5 GB`, `${Object.keys(data.references).length} cited sources`]
+    [`${total} datasets`, `${Object.keys(data.tasks).length} tasks`, `${nReal} from live open APIs`, `${nSynth} synthetic`, `plain CSV`, `~3.6 GB`,
+     ...(Object.keys(data.references).length ? [`${Object.keys(data.references).length} cited sources`] : [])]
       .map(c => `<span class="chip">${c}</span>`).join("");
 
   const refs = document.createElement("section");
   refs.className = "refs";
-  refs.innerHTML = `<h2>References</h2>
+  if (Object.keys(data.references).length) refs.innerHTML = `<h2>References</h2>
     <p>BibTeX for every source key used in the tables above. Click an entry to expand, copy, and cite.</p>` +
     Object.entries(data.references).map(([key, bib]) => `
       <details class="ref" id="ref-${key}">
         <summary>@${esc(key)}<button class="copy-btn" data-key="${esc(key)}">copy BibTeX</button></summary>
         <pre>${esc(bib)}</pre>
       </details>`).join("");
-  main.appendChild(refs);
+  if (Object.keys(data.references).length) main.appendChild(refs);
 
   main.addEventListener("click", e => {
     const btn = e.target.closest(".copy-btn");

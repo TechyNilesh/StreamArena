@@ -19,8 +19,14 @@ shared harness ([`benchmarks/common.py`](benchmarks/common.py)) built on
 - **Hyperparameters**: library defaults, no tuning. CapyMOA and dataset
   versions are recorded in every result file.
 - **Resources**: wall-clock time, CPU time, and peak RSS are recorded per run.
-- **Aggregation across datasets**: average rank per task (never average raw
-  metric values across datasets).
+- **Aggregation across datasets**: Elo per task, computed as in TabArena /
+  Chatbot Arena — every pair of algorithms "battles" once per dataset on the
+  primary metric (ties = half a win each, each dataset weighs 1), ratings are
+  the Bradley-Terry maximum-likelihood fit (400 Elo = 10:1 odds), pinned so
+  HoeffdingTree (classification) / FIMTDD (regression) = 1000, with 95%
+  intervals from 100 bootstrap resamples of the datasets (`benchmarks/elo.py`).
+  Average rank per task is reported alongside. Raw metric values are never
+  averaged across datasets.
 
 ### Metrics per task
 

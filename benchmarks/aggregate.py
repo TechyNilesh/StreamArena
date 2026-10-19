@@ -2,8 +2,9 @@
 
 Reads benchmarks/results/<task>/<algorithm>/<dataset>__seed<N>.json, averages
 metrics across seeds, ranks algorithms per dataset on the task's primary
-metric, and reports average rank per algorithm (raw metric values are never
-averaged across datasets — scales differ).
+metric, and reports an Elo rating (TabArena-style Bradley-Terry over
+per-dataset battles, see elo.py) and average rank per algorithm. Raw metric
+values are never averaged across datasets — scales differ.
 
 Usage:
     python3 benchmarks/aggregate.py                    # writes LEADERBOARD.md
@@ -18,8 +19,14 @@ from collections import defaultdict
 from pathlib import Path
 
 from common import DEFAULT_RESULTS_ROOT, REPO_ROOT, TASKS
+from elo import elo_ratings
 
-# Per task: metric used for per-dataset ranking (higher_better), plus the
+ELO_BOOTSTRAP_ROUNDS = 100
+
+# Per task: metric used for per-dataset ranking (higher_better), the baseline
+# pinned to Elo 1000 (TabArena pins its default random forest; we pin the
+# classic single-tree learner of each task so Elo reads as "points above or
+# below a Hoeffding tree"), plus the
 # scale-safe display aggregates shown on the leaderboard. Raw kappa_t and RMSE
 # must never be averaged across datasets (unbounded / scale-dependent), so
 # classification shows median kappa_t + mean accuracy and regression shows
@@ -32,6 +39,7 @@ TASK_SPEC = {
         # accuracy/kappa (and even kappa_t) can on autocorrelated streams.
         # Kappa metrics stay as display-only columns for continuity.
         "rank_on": ("log_loss", False),
+        "elo_anchor": "HoeffdingTree",
         "display": [
             ("log_loss", "median", "Median log-loss"),
             ("roc_auc", "mean", "Mean AUC (binary)"),
@@ -42,14 +50,17 @@ TASK_SPEC = {
     },
     "regression": {
         "rank_on": ("rmse", False),
+        "elo_anchor": "FIMTDD",
         "display": [("r2", "median", "Median R²")],
     },
     "clustering": {
         "rank_on": ("ari_mean", True),
+        "elo_anchor": None,  # field mean = 1000
         "display": [("ari_mean", "mean", "Mean ARI")],
     },
     "anomaly_detection": {
         "rank_on": ("auc", True),
+        "elo_anchor": None,
         "display": [("auc", "mean", "Mean AUC")],
     },
 }
@@ -84,8 +95,9 @@ def seed_mean(records, metric):
 
 
 def rank_table(task_runs, spec):
-    """Per-dataset ranks on the seed-averaged ranking metric, plus wins and
-    scale-safe display aggregates.
+    """Per-dataset ranks on the seed-averaged ranking metric, Elo from the
+    pairwise battles those scores imply (see elo.py), wins and scale-safe
+    display aggregates.
 
     Returns (per_algorithm_summary, per_dataset_scores).
     """
@@ -115,10 +127,13 @@ def rank_table(task_runs, spec):
             ranks[algorithm].append(position)
         wins[ordered[0]] += 1
 
+    elo = elo_ratings(scores, higher_better, anchor=spec.get("elo_anchor"), n_bootstrap=ELO_BOOTSTRAP_ROUNDS)
+
     summary = []
     for algorithm, algo_ranks in ranks.items():
         row = {
             "algorithm": algorithm,
+            **elo.get(algorithm, {"elo": None, "elo_low": None, "elo_high": None}),
             "avg_rank": statistics.mean(algo_ranks),
             "wins": wins[algorithm],
             "n_datasets": len(algo_ranks),
@@ -130,12 +145,23 @@ def rank_table(task_runs, spec):
             fn = statistics.median if agg == "median" else statistics.mean
             row[f"display_{dmetric}"] = fn(values) if values else None
         summary.append(row)
-    summary.sort(key=lambda row: row["avg_rank"])
+    # Leaderboard order is Elo (TabArena convention); avg rank breaks ties.
+    summary.sort(key=lambda row: (-(row["elo"] if row["elo"] is not None else -math.inf), row["avg_rank"]))
     return summary, scores
 
 
 def fmt(value, digits=3):
     return "—" if value is None else f"{value:.{digits}f}"
+
+
+def fmt_elo(row):
+    if row.get("elo") is None:
+        return "—"
+    if row.get("elo_low") is None:
+        return f"{row['elo']:.0f}"
+    if round(row["elo_low"]) == round(row["elo_high"]):
+        return f"{row['elo']:.0f} (anchor)"
+    return f"{row['elo']:.0f} [{row['elo_low']:.0f}, {row['elo_high']:.0f}]"
 
 
 def write_markdown(runs, out_path):
@@ -148,12 +174,24 @@ def write_markdown(runs, out_path):
         "",
         "## How to read this leaderboard",
         "",
-        "- **Avg rank** — the leaderboard ordering. On every dataset the "
-        "algorithms are ranked 1st, 2nd, 3rd, … on that task's primary metric "
-        "(seed-averaged), and those per-dataset ranks are averaged. Lower is "
-        "better; 1.00 would mean first place on every dataset. We rank instead "
-        "of averaging raw metric values because raw values are not comparable "
-        "across datasets (different scales, class balances, and difficulty).",
+        "- **Elo** — the leaderboard ordering, computed as in "
+        "[TabArena](https://tabarena.ai) / Chatbot Arena. On every dataset each "
+        "pair of algorithms plays one \"battle\" that the better primary metric "
+        "(seed-averaged) wins; equal scores are a tie worth half a win each, and "
+        "every dataset carries total weight 1. Ratings are the Bradley-Terry "
+        "maximum-likelihood fit of all battles on the chess scale: a 400-point "
+        "gap means 10:1 expected odds of winning a dataset, 100 points ≈ 64%. "
+        "The scale is pinned so the task's classic single-tree learner "
+        "(HoeffdingTree / FIMTDD) sits at 1000; the bracket is a 95% interval "
+        "from 100 bootstrap resamples of the datasets, so overlapping brackets "
+        "mean the order is not settled. Algorithms with partial coverage are "
+        "rated only on the datasets they ran.",
+        "- **Avg rank** — on every dataset the algorithms are ranked 1st, 2nd, "
+        "3rd, … on the primary metric, and those per-dataset ranks are averaged. "
+        "Lower is better; 1.00 would mean first place on every dataset. Both "
+        "Elo and rank are used instead of averaging raw metric values because "
+        "raw values are not comparable across datasets (different scales, "
+        "class balances, and difficulty).",
         "- **Wins** — number of datasets where the algorithm ranked 1st.",
         "- **Median log-loss** — the classification ranking metric: mean "
         "negative log-probability assigned to the true label (nats, lower is "
@@ -195,20 +233,21 @@ def write_markdown(runs, out_path):
         lines += [
             f"## {task.replace('_', ' ').title()}",
             "",
-            f"Ranked per dataset on **{metric}** ({direction}). "
+            f"Elo from per-dataset battles on **{metric}** ({direction}); "
+            f"{spec['elo_anchor'] + ' = 1000' if spec.get('elo_anchor') else 'field mean = 1000'}. "
             f"{len(scores)} datasets, {len(summary)} algorithms.",
             "",
-            "| Rank | Algorithm | Avg rank | Wins | "
+            "| Rank | Algorithm | Elo (95% CI) | Avg rank | Wins | "
             + " | ".join(display_headers)
             + " | #Datasets | Total wallclock (h) |",
-            "|---:|---|---:|---:|" + "---:|" * len(display_headers) + "---:|---:|",
+            "|---:|---|---:|---:|---:|" + "---:|" * len(display_headers) + "---:|---:|",
         ]
         for position, row in enumerate(summary, start=1):
             display_cells = " | ".join(
                 fmt(row[f"display_{dmetric}"], 2) for dmetric, _, _ in spec["display"]
             )
             lines.append(
-                f"| {position} | {row['algorithm']} | {row['avg_rank']:.2f} "
+                f"| {position} | {row['algorithm']} | {fmt_elo(row)} | {row['avg_rank']:.2f} "
                 f"| {row['wins']} | {display_cells} "
                 f"| {row['n_datasets']} | {row['total_wallclock_h']:.2f} |"
             )
@@ -235,6 +274,7 @@ def write_json(runs, out_path):
         data["tasks"][task] = {
             "rank_metric": spec["rank_on"][0],
             "higher_better": spec["rank_on"][1],
+            "elo_anchor": spec.get("elo_anchor"),
             "display_metrics": [
                 {"key": f"display_{m}", "label": label} for m, _, label in spec["display"]
             ],

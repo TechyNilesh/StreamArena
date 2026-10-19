@@ -12,6 +12,7 @@ Protocol details live in BENCHMARK.md at the repo root.
 import argparse
 import json
 import math
+import os
 import platform
 import resource
 import socket
@@ -163,11 +164,11 @@ def _without_timestamp(csv_path):
     if cache.exists() and cache.stat().st_mtime >= csv_path.stat().st_mtime:
         return cache
     cache.parent.mkdir(parents=True, exist_ok=True)
-    tmp = cache.with_suffix(".tmp")
+    tmp = cache.with_suffix(f".{os.getpid()}.tmp")  # unique per process: parallel jobs race here
     with open(csv_path) as src, open(tmp, "w") as dst:
         for line in src:
             dst.write(line.split(",", 1)[1])
-    tmp.rename(cache)
+    os.replace(tmp, cache)  # atomic; last writer wins with identical content
     return cache
 
 

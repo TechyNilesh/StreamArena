@@ -138,6 +138,7 @@ table.board thead th {
   cursor: pointer; user-select: none;
 }
 table.board thead th[data-nosort] { cursor: default; }
+table.board td.elo .ci { display: block; font-size: 0.72em; opacity: 0.65; font-weight: 400; letter-spacing: 0; }
 table.board thead th .dir { color: var(--accent); }
 table.board tbody tr { border-bottom: 1px solid var(--line); }
 table.board tbody tr:last-child { border-bottom: none; }
@@ -275,6 +276,7 @@ footer.colophon a { color: var(--accent-ink); }
   <section class="howto">
     <h2>How to read this board</h2>
     <dl>
+      <dt>Elo</dt><dd>The board ordering, computed as in <a href="https://tabarena.ai">TabArena</a> and Chatbot Arena. On every dataset each pair of algorithms plays one battle, won by the better primary metric (ties are half a win each; every dataset weighs 1). Ratings are the Bradley-Terry maximum-likelihood fit of all battles on the chess scale: 400 points = 10:1 odds of winning a dataset, 100 points ≈ 64%. The task's classic single-tree learner is pinned at 1000, so Elo reads as points above or below a Hoeffding tree. The small range is a 95% interval from 100 bootstrap resamples of the datasets; overlapping ranges mean the order is not settled.</dd>
       <dt>Avg rank</dt><dd>Algorithms are ranked 1st, 2nd, 3rd… on every dataset, then those ranks are averaged. Raw metric values are never averaged across datasets — scales differ.</dd>
       <dt>Wins</dt><dd>Datasets where the algorithm placed first.</dd>
       <dt>Rank per dataset</dt><dd>One cell per dataset (not per time window): teal = ranked 1st on that dataset, clay = ranked last. A solid-teal strip is consistent everywhere; scattered clay shows exactly where it loses. Hover a cell for the dataset name and rank.</dd>
@@ -341,7 +343,7 @@ const TASK_META = {
   clustering: { label: "Clustering", icon: ICON('<path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="7" height="5" x="7" y="7" rx="1"/><rect width="7" height="5" x="10" y="12" rx="1"/>') },
   anomaly_detection: { label: "Anomaly detection", icon: ICON('<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 20h16a2 2 0 0 0 1.73-2Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>') },
 };
-const state = { data: null, task: null, sortKey: "avg_rank", sortAsc: true };
+const state = { data: null, task: null, sortKey: "elo", sortAsc: false };
 
 const fmt = (v, d = 2) => v == null ? "—" : Number(v).toFixed(d);
 
@@ -372,11 +374,12 @@ function renderBoard() {
   const td = state.data.tasks[state.task];
   const displayCols = td.display_metrics;
   const meta = document.querySelector(".task-meta");
-  meta.innerHTML = `Ranked per dataset on <code>${td.rank_metric}</code> (${td.higher_better ? "higher" : "lower"} is better) · ${Object.keys(td.per_dataset).length} datasets · ${td.summary.length} algorithms`;
+  meta.innerHTML = `Elo from per-dataset battles on <code>${td.rank_metric}</code> (${td.higher_better ? "higher" : "lower"} is better) · ${td.elo_anchor ? `<code>${td.elo_anchor}</code> = 1000` : "field mean = 1000"} · ${Object.keys(td.per_dataset).length} datasets · ${td.summary.length} algorithms`;
 
   const cols = [
     { key: "_pos", label: "#", nosort: true },
     { key: "algorithm", label: "Algorithm" },
+    { key: "elo", label: "Elo" },
     { key: "avg_rank", label: "Avg rank" },
     { key: "wins", label: "Wins" },
     { key: "_fp", label: "Rank per dataset", nosort: true },
@@ -402,7 +405,7 @@ function renderBoard() {
     else {
       if (col.key === state.sortKey) th.innerHTML += ` <span class="dir">${state.sortAsc ? "▲" : "▼"}</span>`;
       th.addEventListener("click", () => {
-        state.sortAsc = state.sortKey === col.key ? !state.sortAsc : col.key !== "wins";
+        state.sortAsc = state.sortKey === col.key ? !state.sortAsc : !["wins", "elo"].includes(col.key);
         state.sortKey = col.key;
         renderBoard();
       });
@@ -415,6 +418,13 @@ function renderBoard() {
     const pos = tr.insertCell(); pos.className = "rankcell"; pos.textContent = i + 1;
     const algo = tr.insertCell(); algo.className = "algo"; algo.textContent = row.algorithm;
     if (row.submitted) algo.innerHTML += `<span class="submitted">community</span>`;
+    const el = tr.insertCell(); el.className = "num elo";
+    if (row.elo == null) el.textContent = "—";
+    else {
+      const anchored = row.elo_low != null && Math.round(row.elo_low) === Math.round(row.elo_high);
+      el.innerHTML = `<strong>${Math.round(row.elo)}</strong>` + (row.elo_low == null ? "" : `<span class="ci">${anchored ? "anchor" : `${Math.round(row.elo_low)}–${Math.round(row.elo_high)}`}</span>`);
+      el.title = anchored ? "Reference learner pinned to 1000" : row.elo_low != null ? `95% bootstrap interval ${Math.round(row.elo_low)}–${Math.round(row.elo_high)}` : "";
+    }
     const ar = tr.insertCell(); ar.className = "num"; ar.textContent = fmt(row.avg_rank);
     const w = tr.insertCell(); w.className = "num"; w.textContent = row.wins;
     const fp = tr.insertCell(); fp.className = "fp";
@@ -461,7 +471,7 @@ function renderTabs() {
     const meta = TASK_META[task];
     btn.innerHTML = meta ? meta.icon + meta.label : task;
     btn.addEventListener("click", () => {
-      state.task = task; state.sortKey = "avg_rank"; state.sortAsc = true;
+      state.task = task; state.sortKey = "elo"; state.sortAsc = false;
       renderTabs(); renderBoard();
     });
     nav.appendChild(btn);

@@ -2,95 +2,111 @@
  "tasks": {
   "Classification": [
    {
-    "section": "Real-world",
+    "section": "Real-world (API archives)",
     "columns": [
      "Dataset",
      "#Instances",
      "#Features",
      "#Classes",
-     "Imbalance (IR)",
+     "Span",
      "Source"
     ],
     "rows": [
      [
-      "adult",
-      "48,842",
-      "14",
-      "4",
-      "6.4",
-      "UCI [uci] \u2014 Adult / Census Income"
-     ],
-     [
-      "airlines",
-      "539,383",
-      "7",
-      "2",
-      "1.2",
-      "OpenML [openml] \u2014 Airlines"
-     ],
-     [
-      "electricity",
-      "45,312",
-      "8",
-      "2",
-      "1.4",
-      "Harries [harries1999] \u2014 Electricity Market"
-     ],
-     [
-      "forest_cover",
-      "581,012",
-      "54",
-      "7",
-      "103.1",
-      "UCI [uci] \u2014 Covertype"
-     ],
-     [
-      "insects",
-      "52,848",
-      "33",
+      "airquality_aqi_delhi",
+      "36,449",
+      "25",
       "6",
-      "1.0",
-      "Souza et al. [souza2020]"
+      "2022-08-04 \u2192 2026-09-30",
+      "Open-Meteo air-quality API (CAMS global/European reanalysis), CC BY 4.0"
      ],
      [
-      "nomao",
-      "34,465",
-      "118",
+      "bike_rider_type_nyc",
+      "960,486",
+      "12",
       "2",
-      "2.5",
-      "UCI [uci] \u2014 Nomao"
+      "2016-01-01 \u2192 2025-12-31",
+      "Citi Bike NYC System Data (Lyft), NYCBS Data Use Policy"
      ],
      [
-      "poker",
-      "829,201",
-      "10",
-      "10",
-      "207763.0",
-      "UCI [uci] \u2014 Poker Hand"
-     ],
-     [
-      "real_powersupply",
-      "29,928",
+      "crypto_direction",
+      "918,533",
+      "21",
       "2",
+      "2018-01-01 \u2192 2026-09-30",
+      "Binance public market data archive (data.binance.vision)"
+     ],
+     [
+      "flight_delay_bts",
+      "897,939",
+      "13",
+      "2",
+      "2016-01-01 \u2192 2025-12-31",
+      "US Bureau of Transportation Statistics, Reporting Carrier On-Time Performance, public domain"
+     ],
+     [
+      "flood_potomac",
+      "371,905",
       "24",
-      "1.0",
-      "Zhu [zhu2010]"
-     ],
-     [
-      "real_sensor",
-      "2,219,803",
-      "5",
-      "55",
-      "32.2",
-      "Zhu [zhu2010]"
-     ],
-     [
-      "weather",
-      "18,159",
-      "8",
       "2",
-      "2.2",
-      "Elwell & Polikar [elwell2011]"
+      "2016-01-01 \u2192 2026-10-01",
+      "USGS NWIS Instantaneous Values web service, public domain"
+     ],
+     [
+      "grid_carbon_index_gb",
+      "142,779",
+      "24",
+      "5",
+      "2018-05-11 \u2192 2026-09-30",
+      "NESO Carbon Intensity API, CC BY 4.0"
+     ],
+     [
+      "quake_significant",
+      "452,947",
+      "19",
+      "2",
+      "2010-01-01 \u2192 2026-09-30",
+      "USGS Earthquake Hazards Program ComCat, FDSN event service, public domain"
+     ],
+     [
+      "space_storm_kp",
+      "468,949",
+      "20",
+      "2",
+      "2000-01-01 \u2192 2026-10-01",
+      "GFZ German Research Centre for Geosciences, Kp/Hp30 indices, CC BY 4.0"
+     ],
+     [
+      "weather_rain_auckland",
+      "94,218",
+      "32",
+      "2",
+      "2016-01-01 \u2192 2026-09-30",
+      "Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0"
+     ],
+     [
+      "weather_rain_berlin",
+      "94,218",
+      "32",
+      "2",
+      "2016-01-01 \u2192 2026-09-30",
+      "Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0"
+     ],
+     [
+      "weather_rain_phoenix",
+      "94,218",
+      "32",
+      "2",
+      "2016-01-01 \u2192 2026-09-30",
+      "Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0"
+     ],
+     [
+      "wiki_revert_simple",
+      "943,600",
+      "18",
+      "2",
+      "2016-01-01 \u2192 2026-09-30",
+      "Wikimedia Foundation mediawiki_history dumps, CC0"
      ]
     ]
    },
@@ -101,307 +117,280 @@
      "#Instances",
      "#Features",
      "#Classes",
-     "Imbalance (IR)",
-     "Source"
+     "Drift",
+     "Generator"
     ],
     "rows": [
      [
-      "RBF",
-      "10,000",
-      "10,000",
+      "agrawal_abrupt",
+      "500,000",
+      "9",
       "2",
-      "1.1",
-      "MOA [bifet2010] \u2014 RandomRBF generator"
+      "abrupt @ 250000",
+      "Agrawal"
      ],
      [
-      "RBFm_100k",
-      "100,000",
-      "10",
-      "5",
-      "3.2",
-      "MOA [bifet2010] \u2014 RandomRBF generator"
-     ],
-     [
-      "RTG_2abrupt",
-      "100,000",
-      "30",
-      "5",
-      "13.4",
-      "MOA [bifet2010] \u2014 RandomTreeGenerator"
-     ],
-     [
-      "RTG_highdim_10k",
-      "10,000",
-      "450",
+      "agrawal_gradual",
+      "500,000",
+      "9",
       "2",
-      "1.1",
-      "MOA [bifet2010] \u2014 RandomTreeGenerator"
+      "gradual @ 250000",
+      "Agrawal"
      ],
      [
-      "hyperplane_high_gradual_drift",
+      "hyperplane_abrupt",
       "500,000",
       "10",
       "2",
-      "1.0",
-      "MOA/River [bifet2010][montiel2021] \u2014 Hyperplane"
+      "abrupt @ 250000",
+      "Hyperplane"
      ],
      [
-      "movingRBF",
-      "200,000",
+      "hyperplane_gradual",
+      "500,000",
       "10",
-      "5",
-      "3.3",
-      "MOA [bifet2010] \u2014 Moving RandomRBF"
+      "2",
+      "gradual @ 250000",
+      "Hyperplane"
      ],
      [
-      "sea_high_abrupt_drift",
+      "led_abrupt",
+      "500,000",
+      "24",
+      "10",
+      "abrupt @ 250000",
+      "LED"
+     ],
+     [
+      "led_gradual",
+      "500,000",
+      "24",
+      "10",
+      "gradual @ 250000",
+      "LED"
+     ],
+     [
+      "mixed_abrupt",
+      "500,000",
+      "4",
+      "2",
+      "abrupt @ 250000",
+      "Mixed"
+     ],
+     [
+      "mixed_gradual",
+      "500,000",
+      "4",
+      "2",
+      "gradual @ 250000",
+      "Mixed"
+     ],
+     [
+      "randomtree_abrupt",
+      "500,000",
+      "10",
+      "3",
+      "abrupt @ 250000",
+      "RandomTree"
+     ],
+     [
+      "randomtree_gradual",
+      "500,000",
+      "10",
+      "3",
+      "gradual @ 250000",
+      "RandomTree"
+     ],
+     [
+      "rbf_abrupt",
+      "500,000",
+      "10",
+      "4",
+      "abrupt @ 250000",
+      "RandomRBF"
+     ],
+     [
+      "rbf_gradual",
+      "500,000",
+      "10",
+      "4",
+      "gradual @ 250000",
+      "RandomRBF"
+     ],
+     [
+      "sea_abrupt",
       "500,000",
       "3",
       "2",
-      "1.6",
-      "Street & Kim [street2001] \u2014 SEA generator"
+      "abrupt @ 250000",
+      "SEA"
      ],
      [
-      "sea_high_mixed_drift",
+      "sea_gradual",
       "500,000",
       "3",
       "2",
-      "1.4",
-      "Street & Kim [street2001] \u2014 SEA generator"
+      "gradual @ 250000",
+      "SEA"
      ],
      [
-      "sine_stream_with_drift",
-      "50,000",
-      "4",
+      "stagger_abrupt",
+      "500,000",
+      "3",
       "2",
-      "1.0",
-      "MOA/River [bifet2010][montiel2021] \u2014 Sine"
+      "abrupt @ 250000",
+      "STAGGER"
      ],
      [
-      "synth_blobs_sudden",
-      "100,000",
-      "5",
-      "5",
-      "1.0",
-      "scikit-learn [pedregosa2011] \u2014 make_blobs"
+      "stagger_gradual",
+      "500,000",
+      "3",
+      "2",
+      "gradual @ 250000",
+      "STAGGER"
      ],
      [
-      "synth_rbf_fast",
-      "100,000",
-      "5",
-      "5",
-      "1.3",
-      "MOA [bifet2010] \u2014 RandomRBF generator"
+      "waveform_abrupt",
+      "500,000",
+      "40",
+      "3",
+      "abrupt @ 250000",
+      "Waveform"
      ],
      [
-      "synth_rbf_gradual",
-      "100,000",
-      "5",
-      "5",
-      "1.6",
-      "MOA [bifet2010] \u2014 RandomRBF generator"
-     ],
-     [
-      "synth_rbf_random",
-      "100,000",
-      "4",
-      "4",
-      "3.4",
-      "MOA [bifet2010] \u2014 RandomRBF generator"
+      "waveform_gradual",
+      "500,000",
+      "40",
+      "3",
+      "gradual @ 250000",
+      "Waveform"
      ]
     ]
    }
   ],
   "Regression": [
    {
-    "section": "Real-world",
+    "section": "Real-world (API archives)",
     "columns": [
      "Dataset",
      "#Instances",
      "#Features",
-     "Target",
+     "Horizon",
+     "Span",
      "Source"
     ],
     "rows": [
      [
-      "MetroTraffic",
-      "48,204",
-      "7",
-      "target",
-      "UCI [uci] \u2014 Metro Interstate Traffic Volume"
+      "airquality_pm25_delhi",
+      "36,449",
+      "25",
+      "h=1",
+      "2022-08-04 \u2192 2026-09-30",
+      "Open-Meteo air-quality API (CAMS global/European reanalysis), CC BY 4.0"
      ],
      [
-      "ailerons",
-      "13,750",
-      "40",
-      "target",
-      "DELVE [delve] \u2014 Ailerons"
+      "airquality_pm25_losangeles",
+      "36,449",
+      "25",
+      "h=1",
+      "2022-08-04 \u2192 2026-09-30",
+      "Open-Meteo air-quality API (CAMS global/European reanalysis), CC BY 4.0"
      ],
      [
-      "bike",
-      "17,379",
-      "12",
-      "cnt",
-      "UCI/Kaggle [uci] \u2014 Bike Sharing Demand"
-     ],
-     [
-      "california_housing",
-      "20,640",
-      "8",
-      "medianHouseValue",
-      "StatLib \u2014 California Housing"
-     ],
-     [
-      "elevators",
-      "16,599",
-      "18",
-      "target",
-      "DELVE [delve] \u2014 Elevators"
-     ],
-     [
-      "fifa",
-      "19,178",
-      "28",
-      "wage_eur",
-      "Kaggle \u2014 FIFA player ratings"
-     ],
-     [
-      "sarcos",
-      "48,933",
-      "27",
-      "V22",
-      "SARCOS \u2014 robot arm inverse dynamics"
-     ],
-     [
-      "superconductivity",
-      "21,263",
-      "81",
-      "critical_temp",
-      "UCI [uci] \u2014 Superconductivity Data"
-     ],
-     [
-      "video_transcoding_noID",
-      "68,784",
-      "19",
-      "utime",
-      "UCI [uci] \u2014 Online Video Characteristics and Transcoding Time"
-     ],
-     [
-      "wave_energy",
-      "72,000",
-      "48",
-      "energy_total",
-      "UCI [uci] \u2014 Large-scale Wave Energy Farm"
-     ]
-    ]
-   },
-   {
-    "section": "Synthetic",
-    "columns": [
-     "Dataset",
-     "#Instances",
-     "#Features",
-     "Target",
-     "Source"
-    ],
-    "rows": [
-     [
-      "FriedmanGra",
-      "100,000",
-      "10",
-      "target",
-      "River [montiel2021] \u2014 FriedmanDrift (global recurring abrupt)"
-     ],
-     [
-      "FriedmanGsg",
-      "99,971",
-      "10",
-      "target",
-      "River [montiel2021] \u2014 FriedmanDrift (global slow gradual)"
-     ],
-     [
-      "FriedmanLea",
-      "100,000",
-      "10",
-      "target",
-      "River [montiel2021] \u2014 FriedmanDrift (local expanding abrupt)"
-     ],
-     [
-      "fried",
-      "40,768",
-      "10",
-      "target",
-      "Friedman [friedman1991]"
-     ],
-     [
-      "hyperA",
-      "500,000",
-      "10",
-      "target",
-      "MOA/River [bifet2010][montiel2021] \u2014 Hyperplane (regression)"
-     ]
-    ]
-   }
-  ],
-  "Clustering": [
-   {
-    "section": "Real-world",
-    "columns": [
-     "Dataset",
-     "#Instances",
-     "#Features",
-     "#Classes",
-     "Imbalance (IR)",
-     "Source"
-    ],
-    "rows": [
-     [
-      "adult",
-      "48,842",
-      "14",
-      "4",
-      "6.4",
-      "UCI [uci] \u2014 Adult / Census Income"
-     ],
-     [
-      "electricity",
-      "45,312",
-      "8",
-      "2",
-      "1.4",
-      "Harries [harries1999] \u2014 Electricity Market"
-     ],
-     [
-      "forest_cover",
-      "581,012",
-      "54",
-      "7",
-      "103.1",
-      "UCI [uci] \u2014 Covertype"
-     ],
-     [
-      "insects",
-      "52,848",
+      "bike_demand_nyc",
+      "829,520",
       "33",
-      "6",
-      "1.0",
-      "Souza et al. [souza2020]"
+      "h=1",
+      "2016-01-02 \u2192 2025-12-31",
+      "Citi Bike NYC System Data (Lyft), NYCBS Data Use Policy"
      ],
      [
-      "new_airlines",
-      "539,383",
-      "7",
-      "2",
-      "1.2",
-      "OpenML [openml] \u2014 Airlines"
+      "crypto_btc_1m",
+      "918,533",
+      "21",
+      "h=1",
+      "2018-01-01 \u2192 2026-09-30",
+      "Binance public market data archive (data.binance.vision)"
      ],
      [
-      "vehicle_sensIT",
-      "98,528",
-      "100",
-      "3",
-      "2.2",
-      "UCI [uci] \u2014 SensIT Vehicle"
+      "energy_price_agile",
+      "150,816",
+      "55",
+      "h=48",
+      "2018-02-22 \u2192 2026-09-29",
+      "Octopus Energy public tariff API (Agile Octopus, region C London)"
+     ],
+     [
+      "grid_carbon_gb",
+      "142,779",
+      "24",
+      "h=1",
+      "2018-05-11 \u2192 2026-09-30",
+      "NESO Carbon Intensity API, CC BY 4.0"
+     ],
+     [
+      "grid_load_de",
+      "376,880",
+      "25",
+      "h=4",
+      "2016-01-01 \u2192 2026-09-30",
+      "Energy-Charts (Fraunhofer ISE) public_power API, CC BY 4.0"
+     ],
+     [
+      "river_discharge_potomac",
+      "371,901",
+      "24",
+      "h=4",
+      "2016-01-01 \u2192 2026-10-01",
+      "USGS NWIS Instantaneous Values web service, public domain"
+     ],
+     [
+      "taxi_demand_nyc",
+      "876,370",
+      "34",
+      "h=1",
+      "2016-01-02 \u2192 2026-01-02",
+      "NYC Taxi & Limousine Commission trip record data, public"
+     ],
+     [
+      "tide_level_battery",
+      "934,841",
+      "20",
+      "h=10",
+      "2016-01-01 \u2192 2026-09-30",
+      "NOAA CO-OPS Tides & Currents API, public domain"
+     ],
+     [
+      "weather_temp_auckland",
+      "94,217",
+      "20",
+      "h=1",
+      "2016-01-01 \u2192 2026-09-30",
+      "Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0"
+     ],
+     [
+      "weather_temp_berlin",
+      "94,217",
+      "20",
+      "h=1",
+      "2016-01-01 \u2192 2026-09-30",
+      "Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0"
+     ],
+     [
+      "weather_temp_phoenix",
+      "94,217",
+      "20",
+      "h=1",
+      "2016-01-01 \u2192 2026-09-30",
+      "Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0"
+     ],
+     [
+      "weather_wind_hamburg",
+      "94,217",
+      "20",
+      "h=1",
+      "2016-01-01 \u2192 2026-09-30",
+      "Open-Meteo historical weather API (ERA5), Zippenfenig 2023, CC BY 4.0"
      ]
     ]
    },
@@ -411,110 +400,126 @@
      "Dataset",
      "#Instances",
      "#Features",
-     "#Classes",
-     "Imbalance (IR)",
-     "Source"
+     "\u2014",
+     "Drift",
+     "Generator"
     ],
     "rows": [
      [
-      "hyperplane_high_gradual_drift",
+      "friedman_abrupt",
       "500,000",
       "10",
-      "2",
-      "1.0",
-      "MOA/River [bifet2010][montiel2021] \u2014 Hyperplane"
+      "\u2014",
+      "abrupt @ 250000",
+      "Friedman"
      ],
      [
-      "movingRBF",
-      "200,000",
+      "friedman_gradual",
+      "500,000",
       "10",
-      "5",
-      "3.3",
-      "MOA [bifet2010] \u2014 Moving RandomRBF"
+      "\u2014",
+      "gradual @ 250000",
+      "Friedman"
      ],
      [
-      "moving_squares",
-      "200,000",
-      "2",
-      "4",
-      "1.0",
-      "MOA [bifet2010] \u2014 Moving Squares"
-     ],
-     [
-      "sea_high_abrupt_drift",
+      "hyperplane_reg_abrupt",
       "500,000",
-      "3",
-      "2",
-      "1.6",
-      "Street & Kim [street2001] \u2014 SEA generator"
+      "10",
+      "\u2014",
+      "abrupt @ 250000",
+      "HyperplaneRegression"
      ],
      [
-      "sea_high_mixed_drift",
+      "hyperplane_reg_gradual",
       "500,000",
-      "3",
-      "2",
-      "1.4",
-      "Street & Kim [street2001] \u2014 SEA generator"
+      "10",
+      "\u2014",
+      "gradual @ 250000",
+      "HyperplaneRegression"
      ],
      [
-      "synth_RandomRBFDrift",
-      "100,000",
-      "4",
-      "4",
-      "3.4",
-      "MOA [bifet2010] \u2014 RandomRBF generator"
+      "mv_abrupt",
+      "500,000",
+      "10",
+      "\u2014",
+      "abrupt @ 250000",
+      "Mv"
      ],
      [
-      "synthetic_blobs_100k_samples_5features_8clusters",
-      "100,000",
-      "5",
-      "8",
-      "1.0",
-      "scikit-learn [pedregosa2011] \u2014 make_blobs"
-     ]
-    ]
-   }
-  ],
-  "Anomaly Detection": [
-   {
-    "section": null,
-    "columns": [
-     "Dataset",
-     "#Instances",
-     "#Features",
-     "Anomaly Rate",
-     "Source"
-    ],
-    "rows": [
+      "mv_gradual",
+      "500,000",
+      "10",
+      "\u2014",
+      "gradual @ 250000",
+      "Mv"
+     ],
      [
-      "13_fraud",
-      "284,807",
-      "29",
-      "0.17%",
-      "ODDS [rayana2016] / ADBench [han2022]"
+      "planes2d_abrupt",
+      "500,000",
+      "10",
+      "\u2014",
+      "abrupt @ 250000",
+      "Planes2D"
+     ],
+     [
+      "planes2d_gradual",
+      "500,000",
+      "10",
+      "\u2014",
+      "gradual @ 250000",
+      "Planes2D"
+     ],
+     [
+      "poisson_demand_abrupt",
+      "500,000",
+      "31",
+      "\u2014",
+      "abrupt @ 250000",
+      "PoissonDemand"
+     ],
+     [
+      "poisson_demand_gradual",
+      "500,000",
+      "31",
+      "\u2014",
+      "gradual @ 250000",
+      "PoissonDemand"
+     ],
+     [
+      "regime_walk_abrupt",
+      "500,000",
+      "19",
+      "\u2014",
+      "abrupt @ 250000",
+      "RegimeSwitchingWalk"
+     ],
+     [
+      "regime_walk_gradual",
+      "500,000",
+      "19",
+      "\u2014",
+      "gradual @ 250000",
+      "RegimeSwitchingWalk"
+     ],
+     [
+      "seasonal_sensor_abrupt",
+      "500,000",
+      "13",
+      "\u2014",
+      "abrupt @ 250000",
+      "SeasonalSensor"
+     ],
+     [
+      "seasonal_sensor_gradual",
+      "500,000",
+      "13",
+      "\u2014",
+      "gradual @ 250000",
+      "SeasonalSensor"
      ]
     ]
    }
   ]
  },
- "references": {
-  "uci": "@misc{uci,\n  title        = {{UCI} Machine Learning Repository},\n  author       = {Dua, Dheeru and Graff, Casey},\n  year         = {2019},\n  institution  = {University of California, Irvine, School of Information and Computer Sciences},\n  url          = {https://archive.ics.uci.edu}\n}",
-  "openml": "@article{openml,\n  title   = {{OpenML}: Networked Science in Machine Learning},\n  author  = {Vanschoren, Joaquin and van Rijn, Jan N. and Bischl, Bernd and Torgo, Luis},\n  journal = {ACM SIGKDD Explorations Newsletter},\n  volume  = {15},\n  number  = {2},\n  pages   = {49--60},\n  year    = {2013}\n}",
-  "delve": "@misc{delve,\n  title        = {{DELVE}: Data for Evaluating Learning in Valid Experiments},\n  author       = {Rasmussen, Carl Edward and Neal, Radford M. and Hinton, Geoffrey and van Camp, Drew and Revow, Michael and Ghahramani, Zoubin and Kustra, Rafal and Tibshirani, Robert},\n  institution  = {University of Toronto, Department of Computer Science},\n  url          = {https://www.cs.toronto.edu/~delve/}\n}",
-  "guyon2004": "@inproceedings{guyon2004,\n  title     = {Result Analysis of the {NIPS} 2003 Feature Selection Challenge},\n  author    = {Guyon, Isabelle and Gunn, Steve and Ben-Hur, Asa and Dror, Gideon},\n  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},\n  volume    = {17},\n  year      = {2004}\n}",
-  "lecun1998": "@article{lecun1998,\n  title   = {Gradient-Based Learning Applied to Document Recognition},\n  author  = {LeCun, Yann and Bottou, L{\\'e}on and Bengio, Yoshua and Haffner, Patrick},\n  journal = {Proceedings of the IEEE},\n  volume  = {86},\n  number  = {11},\n  pages   = {2278--2324},\n  year    = {1998}\n}",
-  "harries1999": "@techreport{harries1999,\n  title       = {{SPLICE-2} Comparative Evaluation: Electricity Pricing},\n  author      = {Harries, Michael},\n  institution = {University of New South Wales, School of Computer Science and Engineering},\n  year        = {1999}\n}",
-  "souza2020": "@article{souza2020,\n  title   = {Challenges in Benchmarking Stream Learning Algorithms with Real-World Data},\n  author  = {Souza, Vinicius M. A. and dos Reis, Denis M. and Maletzke, Andre G. and Batista, Gustavo E. A. P. A.},\n  journal = {Data Mining and Knowledge Discovery},\n  volume  = {34},\n  pages   = {1805--1858},\n  year    = {2020}\n}",
-  "zhu2010": "@misc{zhu2010,\n  title  = {Stream Data Mining Repository},\n  author = {Zhu, Xingquan},\n  year   = {2010},\n  url    = {https://www.cse.fau.edu/~xqzhu/stream.html}\n}",
-  "elwell2011": "@article{elwell2011,\n  title   = {Incremental Learning of Concept Drift in Nonstationary Environments},\n  author  = {Elwell, Ryan and Polikar, Robi},\n  journal = {IEEE Transactions on Neural Networks},\n  volume  = {22},\n  number  = {10},\n  pages   = {1517--1531},\n  year    = {2011}\n}",
-  "street2001": "@inproceedings{street2001,\n  title     = {A Streaming Ensemble Algorithm ({SEA}) for Large-Scale Classification},\n  author    = {Street, W. Nick and Kim, YongSeog},\n  booktitle = {Proceedings of the 7th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},\n  pages     = {377--382},\n  year      = {2001}\n}",
-  "agrawal1993": "@article{agrawal1993,\n  title   = {Database Mining: A Performance Perspective},\n  author  = {Agrawal, Rakesh and Imielinski, Tomasz and Swami, Arun},\n  journal = {IEEE Transactions on Knowledge and Data Engineering},\n  volume  = {5},\n  number  = {6},\n  pages   = {914--925},\n  year    = {1993}\n}",
-  "bifet2010": "@article{bifet2010,\n  title   = {{MOA}: Massive Online Analysis},\n  author  = {Bifet, Albert and Holmes, Geoffrey and Kirkby, Richard and Pfahringer, Bernhard},\n  journal = {Journal of Machine Learning Research},\n  volume  = {11},\n  pages   = {1601--1604},\n  year    = {2010}\n}",
-  "montiel2021": "@article{montiel2021,\n  title   = {River: Machine Learning for Streaming Data in Python},\n  author  = {Montiel, Jacob and Halford, Max and Mastelini, Saulo Martiello and Bolmier, Geoffrey and Sourty, Raphael and Vaysse, Robin and Zouitine, Adil and Gomes, Heitor Murilo and Read, Jesse and Abdessalem, Talel and Bifet, Albert},\n  journal = {Journal of Machine Learning Research},\n  volume  = {22},\n  number  = {110},\n  pages   = {1--8},\n  year    = {2021}\n}",
-  "friedman1991": "@article{friedman1991,\n  title   = {Multivariate Adaptive Regression Splines},\n  author  = {Friedman, Jerome H.},\n  journal = {The Annals of Statistics},\n  volume  = {19},\n  number  = {1},\n  pages   = {1--67},\n  year    = {1991}\n}",
-  "pedregosa2011": "@article{pedregosa2011,\n  title   = {Scikit-learn: Machine Learning in {P}ython},\n  author  = {Pedregosa, Fabian and Varoquaux, Ga{\\\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and Vanderplas, Jake and Passos, Alexandre and Cournapeau, David and Brucher, Matthieu and Perrot, Matthieu and Duchesnay, {\\'E}douard},\n  journal = {Journal of Machine Learning Research},\n  volume  = {12},\n  pages   = {2825--2830},\n  year    = {2011}\n}",
-  "katakis2010": "@article{katakis2010,\n  title   = {Tracking Recurring Contexts Using Ensemble Classifiers: An Application to Email Filtering},\n  author  = {Katakis, Ioannis and Tsoumakas, Grigorios and Vlahavas, Ioannis},\n  journal = {Knowledge and Information Systems},\n  volume  = {22},\n  number  = {3},\n  pages   = {371--391},\n  year    = {2010}\n}",
-  "rayana2016": "@misc{rayana2016,\n  title        = {{ODDS} Library},\n  author       = {Rayana, Shebuti},\n  year         = {2016},\n  institution  = {Stony Brook University, Department of Computer Science},\n  url          = {http://odds.cs.stonybrook.edu}\n}",
-  "han2022": "@inproceedings{han2022,\n  title     = {{ADBench}: Anomaly Detection Benchmark},\n  author    = {Han, Songqiao and Hu, Xiyang and Huang, Hailiang and Jiang, Mingqi and Zhao, Yue},\n  booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Datasets and Benchmarks Track},\n  volume    = {35},\n  year      = {2022}\n}"
- }
+ "references": {}
 }
